@@ -428,3 +428,4 @@
   window.AtlasGlobe = { init: initGlobe };
 
 })();
+
