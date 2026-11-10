@@ -36,20 +36,27 @@ from agents import MasterOrchestrator, OUTPUTS_DIR
 load_dotenv()
 
 BASE_URL = os.getenv("BASE_URL", "http://localhost:8000").rstrip("/")
-UPLOAD_DIR = os.path.join(os.getcwd(), "uploads")
-TEMPLATES_DIR = os.path.join(os.getcwd(), "templates")
+BASE_DIR = Path(__file__).resolve().parent
+UPLOAD_DIR = os.path.join(BASE_DIR, "uploads")
+TEMPLATES_DIR = os.path.join(BASE_DIR, "templates")
+STATIC_DIR = os.path.join(BASE_DIR, "static")
+
 os.makedirs(OUTPUTS_DIR, exist_ok=True)
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 os.makedirs(TEMPLATES_DIR, exist_ok=True)
+os.makedirs(STATIC_DIR, exist_ok=True)
 
 # Generate baseline datasets on startup if missing
-if not os.path.exists("supply_chain_manifest.csv"):
-    print("[Startup] Generating baseline supply_chain_manifest.csv...")
-    data_generator.generate_supply_chain_manifest("supply_chain_manifest.csv")
+default_manifest = os.path.join(BASE_DIR, "supply_chain_manifest.csv")
+corrupt_manifest = os.path.join(BASE_DIR, "corrupt_test_manifest.csv")
 
-if not os.path.exists("corrupt_test_manifest.csv"):
+if not os.path.exists(default_manifest):
+    print("[Startup] Generating baseline supply_chain_manifest.csv...")
+    data_generator.generate_supply_chain_manifest(default_manifest)
+
+if not os.path.exists(corrupt_manifest):
     print("[Startup] Generating corrupt_test_manifest.csv...")
-    data_generator.generate_corrupt_manifest("corrupt_test_manifest.csv")
+    data_generator.generate_corrupt_manifest(corrupt_manifest)
 
 app = FastAPI(
     title="Atlas (SupplyChain360 AI)",
@@ -67,20 +74,48 @@ app.add_middleware(
 )
 
 # Mount outputs directory for static files (PNG matrix, PDF audit, CSV schedule)
-app.mount("/outputs", StaticFiles(directory="outputs"), name="outputs")
+app.mount("/outputs", StaticFiles(directory=OUTPUTS_DIR), name="outputs")
 
 # Mount static assets for the landing page UI (CSS, JS, SVG assets)
-STATIC_DIR = os.path.join(os.getcwd(), "static")
-os.makedirs(STATIC_DIR, exist_ok=True)
-app.mount("/static", StaticFiles(directory="static"), name="static")
+app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 
 # Initialize Master Orchestrator
 orchestrator = MasterOrchestrator(base_url=BASE_URL)
 
 
-@app.get("/", response_model=ServiceStatusResponse)
-async def root():
-    """Service status and discovery endpoint."""
+@app.get("/", response_class=HTMLResponse)
+async def root(request: Request):
+    """
+    Root entrypoint:
+    - Serves the animated 3D Landing Page for browser visits.
+    - Preserves Nonilion discovery JSON when client requests application/json.
+    """
+    accept = request.headers.get("accept", "").lower()
+    if "application/json" in accept and "text/html" not in accept:
+        return JSONResponse(content={
+            "service": "SupplyChain360 AI (Atlas)",
+            "status": "online",
+            "docs": "/docs",
+            "demo_ui": "/demo-ui",
+            "dashboard": "/dashboard",
+            "landing": "/landing",
+        })
+    template_file = os.path.join(TEMPLATES_DIR, "landing.html")
+    if os.path.exists(template_file):
+        with open(template_file, "r", encoding="utf-8") as f:
+            return HTMLResponse(content=f.read())
+    return JSONResponse(content={
+        "service": "SupplyChain360 AI (Atlas)",
+        "status": "online",
+        "docs": "/docs",
+        "demo_ui": "/demo-ui"
+    })
+
+
+@app.get("/api/status", response_model=ServiceStatusResponse)
+@app.get("/status", response_model=ServiceStatusResponse)
+async def service_status():
+    """Service status and discovery endpoint for Nonilion / API clients."""
     return {
         "service": "SupplyChain360 AI (Atlas)",
         "status": "online",
@@ -224,6 +259,8 @@ async def upload_csv(file: UploadFile = File(...), message: Optional[str] = Form
 
 
 @app.get("/landing", response_class=HTMLResponse)
+@app.get("/landing.html", response_class=HTMLResponse)
+@app.get("/index.html", response_class=HTMLResponse)
 async def landing_page():
     """
     Animated landing page for Atlas – SupplyChain360 AI.
@@ -239,6 +276,8 @@ async def landing_page():
     )
 
 
+@app.get("/dashboard", response_class=HTMLResponse)
+@app.get("/dashboard.html", response_class=HTMLResponse)
 @app.get("/demo-ui", response_class=HTMLResponse)
 async def demo_ui():
     """
