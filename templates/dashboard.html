@@ -190,6 +190,128 @@
         }
     </style>
 </head>
+<!-- dashboard.html inside <body> -->
+<div class="relative w-full h-screen overflow-hidden bg-[#060913]">
+  <!-- Hidden Video Element for sampling -->
+  <video id="heroVideo" src="{{ url_for('static', filename='video.mp4') }}" autoplay loop muted playsinline crossorigin="anonymous" class="hidden"></video>
+  
+  <!-- Anti-Gravity Canvas -->
+  <canvas id="pixelCanvas" class="absolute inset-0 z-10 w-full h-full pointer-events-auto"></canvas>
+
+  <!-- Overlay UI Content (Tailwind Glassmorphism) -->
+  <div class="relative z-20 flex flex-col justify-center h-full max-w-4xl px-12 pointer-events-none text-white">
+    <h1 class="text-5xl font-extrabold tracking-tight mb-4 drop-shadow-md">
+      AtlasAI • Smarter Logistics
+    </h1>
+    <p class="text-lg text-slate-300 max-w-xl mb-8">
+      Real-time autonomous supply chain optimization, route tracking, and AI risk monitoring.
+    </p>
+    <div class="flex gap-4 pointer-events-auto">
+      <button class="px-6 py-3 bg-indigo-600 hover:bg-indigo-500 font-semibold rounded-lg shadow-lg transition">
+        Explore Dashboard
+      </button>
+      <button class="px-6 py-3 border border-slate-600 hover:bg-white/10 font-semibold rounded-lg backdrop-blur-md transition">
+        Book Demo
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const video = document.getElementById('heroVideo');
+  const canvas = document.getElementById('pixelCanvas');
+  const ctx = canvas.getContext('2d', { willReadFrequently: true });
+
+  let width, height;
+  let particles = [];
+  const mouse = { x: -1000, y: -1000, radius: 120 };
+
+  function resize() {
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  window.addEventListener('mousemove', (e) => {
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
+  });
+
+  function processFrame() {
+    if (video.paused || video.ended) return;
+
+    const tempCanvas = document.createElement('canvas');
+    const tempCtx = tempCanvas.getContext('2d');
+    tempCanvas.width = width;
+    tempCanvas.height = height;
+    tempCtx.drawImage(video, 0, 0, width, height);
+
+    const imgData = tempCtx.getImageData(0, 0, width, height).data;
+    particles = [];
+    const gap = 7; // Performance tuning (6-8 is smooth)
+
+    for (let y = 0; y < height; y += gap) {
+      for (let x = 0; x < width; x += gap) {
+        const index = (y * width + x) * 4;
+        const a = imgData[index + 3];
+
+        if (a > 128) {
+          const r = imgData[index];
+          const g = imgData[index + 1];
+          const b = imgData[index + 2];
+
+          particles.push({
+            x: x,
+            y: y,
+            baseX: x,
+            baseY: y,
+            vx: 0,
+            vy: 0,
+            color: `rgb(${r},${g},${b})`
+          });
+        }
+      }
+    }
+  }
+
+  function render() {
+    ctx.clearRect(0, 0, width, height);
+    processFrame();
+
+    for (let i = 0; i < particles.length; i++) {
+      let p = particles[i];
+
+      let dx = mouse.x - p.x;
+      let dy = mouse.y - p.y;
+      let dist = Math.sqrt(dx * dx + dy * dy);
+
+      if (dist < mouse.radius) {
+        let angle = Math.atan2(dy, dx);
+        let force = (mouse.radius - dist) / mouse.radius;
+        p.vx -= Math.cos(angle) * force * 6;
+        p.vy -= Math.sin(angle) * force * 6;
+      }
+
+      p.vx += (p.baseX - p.x) * 0.08;
+      p.vy += (p.baseY - p.y) * 0.08;
+      p.vx *= 0.85;
+      p.vy *= 0.85;
+
+      p.x += p.vx;
+      p.y += p.vy;
+
+      ctx.fillStyle = p.color;
+      ctx.fillRect(p.x, p.y, 3, 3);
+    }
+
+    requestAnimationFrame(render);
+  }
+
+  video.addEventListener('play', () => {
+    render();
+  });
+</script>
 <body class="h-screen w-screen overflow-hidden select-none">
 
     <!-- ====================================================================== -->

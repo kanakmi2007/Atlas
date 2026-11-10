@@ -22,7 +22,7 @@ from fastapi.responses import HTMLResponse, JSONResponse, FileResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
-
+from pathlib import Path
 import data_generator
 from schemas import (
     WebhookRequest,
