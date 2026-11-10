@@ -161,11 +161,16 @@ async def handle_webhook(request: Request):
                 except Exception as e:
                     print(f"[Warning] Failed to fetch remote CSV from {file_url}: {e}")
 
-    # Fallback to default demo manifest if explicit audit is requested without custom file
+    # Detect if user specifically requested corrupt / broken test file
     query_lower = query.lower()
+    if not csv_path and any(k in query_lower for k in ["corrupt", "broken", "guardrail"]):
+        if os.path.exists("corrupt_test_manifest.csv"):
+            csv_path = "corrupt_test_manifest.csv"
+
+    # Fallback to default demo manifest if explicit audit is requested without custom file
     wants_demo = any(
         term in query_lower
-        for term in ["demo", "audit", "manifest", "run", "supply_chain_manifest", "analyze"]
+        for term in ["demo", "audit", "manifest", "run", "supply_chain_manifest", "analyze", "shipment", "route", "sea"]
     )
     if not csv_path and (wants_demo or query_lower == ""):
         if os.path.exists("supply_chain_manifest.csv"):
@@ -186,6 +191,31 @@ async def handle_webhook(request: Request):
     }
 
     return JSONResponse(content=response_payload)
+
+
+@app.post("/upload-csv")
+async def upload_csv(file: UploadFile = File(...), message: Optional[str] = Form(None)):
+    """
+    Dedicated CSV upload endpoint that saves uploaded CSV and runs audit directly.
+    """
+    safe_filename = f"upload_{uuid.uuid4().hex[:8]}_{file.filename}"
+    csv_path = os.path.join(UPLOAD_DIR, safe_filename)
+    with open(csv_path, "wb") as buffer:
+        shutil.copyfileobj(file.file, buffer)
+    
+    query = message or f"Audit uploaded manifest: {file.filename}"
+    result = orchestrator.run(query=query, csv_path=csv_path)
+    
+    return JSONResponse(content={
+        "status": result.get("status", "success"),
+        "reply": result.get("reply", ""),
+        "message": result.get("reply", ""),
+        "text": result.get("reply", ""),
+        "total_at_risk_usd": result.get("total_at_risk_usd"),
+        "diagnostics": result.get("diagnostics", []),
+        "attachments": result.get("attachments", []),
+        "filename": file.filename,
+    })
 
 
 @app.get("/demo-ui", response_class=HTMLResponse)

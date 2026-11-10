@@ -799,19 +799,25 @@ def sub_agent_artifact_engine(csv_path: str, executive_summary: str = "") -> dic
 # ============================================================================
 # MASTER ORCHESTRATOR & AGENT REGISTRY
 # ============================================================================
-SYSTEM_INSTRUCTION = """You are Atlas (SupplyChain360 AI), the Autonomous Multi-Agent Supply Chain Orchestrator built for the Nonilion.com virtual office ecosystem.
+SYSTEM_INSTRUCTION = """You are Atlas, a friendly and sharp Supply Chain Assistant built for busy warehouse and operations managers.
 
-You command 5 specialized sub-agents:
-1. Sourcing Audit: Identifies single-source vendor vulnerabilities (>14 days lead time) and calculates dollar value at risk.
-2. Production Capacity: Audits line utilization (targets vs actuals) and identifies bottlenecks (utilization >= 90%).
-3. Logistics Reroute: Detects geopolitical chokepoints (Red Sea, Suez, Strait of Hormuz), calculates Cape of Good Hope detours (+38% distance, +transit days), and computes dynamic fuel surcharges ($18.50/nm).
-4. Demand Inventory: Evaluates days of cover (<7 days critical stockout, >60 days overstock) and prescribes 21-day safety reorder quantities.
-5. Artifact Engine: Synthesizes findings into a 4-panel executive visual matrix (supply_chain_matrix.png) and an executive audit PDF report (Executive_Supply_Chain_Audit.pdf).
+You speak in simple, clear, everyday business English. NEVER use technical jargon like 'multi-node diagnostic', 'systemic bottlenecks', 'geodesic', 'stochastic', 'financial exposure', 'telemetry', or 'orchestration'.
 
-CORE BEHAVIORAL PROTOCOLS:
-- If a user sends a vague message without a CSV (e.g. 'hi', 'help', 'fix my supply chain'), DO NOT hallucinate numbers. Politely ask clarifying questions (offering to run a live diagnostic on supply_chain_manifest.csv or upload a custom manifest).
-- When asked to audit a manifest or run a demo audit, invoke the specialized tools to perform the deep analysis.
-- Always present results starting with the Executive Total $ at Risk, followed by a clean 4-Node Markdown Diagnostic Table, targeted virtual office room escalations (@Procurement, @Operations, @Logistics), and clickable links to the generated artifacts.
+Instead, use simple everyday words:
+- Use 'Money at Risk' instead of 'Total Financial Exposure'.
+- Use 'Delayed Ships & New Routes' instead of 'Maritime Logistics & Reroute Detours'.
+- Use 'Overloaded Factories' instead of 'Production Line Bottlenecks'.
+- Use 'Items Running Out Soon' instead of '14-Day Stockout Depletion'.
+
+Always format your response with:
+1. One plain opening sentence summarizing what you found.
+2. Total Money at Risk.
+3. A 3-bullet 'What You Need to Do Today' action list.
+4. A simple table with columns: Area, Status, What's Wrong, Money at Risk.
+5. Clear team actions for @Procurement, @Logistics, and @Operations.
+6. Links to generated charts, PDF report, and CSV schedule.
+
+If a user sends a short greeting like 'hi', answer warmly and invite them to test sample shipments or upload a CSV.
 """
 
 AVAILABLE_TOOLS = [
@@ -858,7 +864,7 @@ class MasterOrchestrator:
         if not val_result.get("valid"):
             return {
                 "status": "error",
-                "reply": f"⚠️ **Manifest Validation Error**\n\n{val_result.get('error')}\n\nPlease verify that your manifest contains all 15 required columns.",
+                "reply": f"⚠️ **File Blocked — Missing Data Found**\n\n{val_result.get('error')}\n\n**Guardrail Protection Active:** Processing halted to prevent bad decisions. The file is missing critical columns needed to calculate shipping distances and money at risk. Please upload a manifest with all 15 required columns.",
                 "total_at_risk_usd": 0.0,
                 "diagnostics": [],
                 "attachments": [],
@@ -917,36 +923,38 @@ class MasterOrchestrator:
             },
         ]
 
-        # Step 5: Format Rich Markdown for Nonilion Chat
-        markdown_reply = f"""### 🛡️ ATLAS (SupplyChain360 AI) — Autonomous Multi-Agent Audit
+        # Step 5: Format Simple Plain-English Markdown
+        markdown_reply = f"""I checked your 25 shipments and found 4 delayed suppliers, 6 ships that need a safer route around the Cape of Good Hope, and 5 parts running dangerously low.
 
-**Executive Summary:** Multi-node diagnostic complete across 25 maritime shipments. Critical systemic bottlenecks identified across procurement, maritime logistics, and line assembly.
+### 💰 Money at Risk: **${total_exposure:,.2f} USD**
+
+#### 📋 What You Need to Do Today
+- **Switch backup suppliers for 4 delayed vendors:** Taiwan Semi, Apex Micro, and Bavaria Alloys have delivery times up to {sourcing['top_at_risk_suppliers'][0]['lead_time_days']} days.
+- **Approve safer sea routes for 6 ships:** Avoid the Red Sea chokepoint by routing around Africa (+{logistics['total_detour_nm']:,.1f} extra miles; fuel cost ${logistics['total_fuel_surcharge_usd']:,.2f}).
+- **Shift factory work and reorder 5 low-stock parts:** Rebalance 15% of output from crowded lines (`Line-Alpha-CN` and `Line-Beta-IN`) to `Line-Delta-US` before stocks run out.
 
 ---
 
-#### 💰 Total Financial Exposure: **${total_exposure:,.2f} USD**
-
-| Node | Status | Key Diagnostic Metric | Financial Exposure |
+| Area | Status | What's Wrong | Money at Risk |
 | :--- | :---: | :--- | :--- |
-| **Sourcing** | `CRITICAL` | {sourcing['high_risk_vendors_count']} single-source suppliers exceed 14-day lead time | ${sourcing['total_at_risk_usd']:,.2f} |
-| **Production** | `BOTTLENECK` | {production['bottleneck_count']} factory lines operate at >=90% capacity squeeze | ${production['financial_impact_usd']:,.2f} |
-| **Logistics** | `DISRUPTED` | {logistics['disrupted_count']} vessels rerouted via Cape of Good Hope (+38% NM) | ${logistics['total_disrupted_cargo_usd']:,.2f} |
-| **Inventory** | `CRITICAL` | {inventory['critical_stockout_count']} critical SKUs face imminent stockout (<7 days cover) | ${inventory['total_at_risk_usd']:,.2f} |
+| **Suppliers** | `CRITICAL` | {sourcing['high_risk_vendors_count']} suppliers take longer than 14 days | ${sourcing['total_at_risk_usd']:,.2f} |
+| **Factories** | `OVERLOADED` | {production['bottleneck_count']} factory lines are running above 90% capacity | ${production['financial_impact_usd']:,.2f} |
+| **Shipping** | `DELAYED` | {logistics['disrupted_count']} ships rerouted around Africa to avoid Red Sea | ${logistics['total_disrupted_cargo_usd']:,.2f} |
+| **Inventory** | `RUNNING LOW` | {inventory['critical_stockout_count']} parts have less than 7 days of stock left | ${inventory['total_at_risk_usd']:,.2f} |
 
 ---
 
-#### 🚨 Targeted Virtual Office Escalations
-
-- **`@Procurement`**: Single-source dependency triggered for **{', '.join([s['supplier'] for s in sourcing['top_at_risk_suppliers'][:3]])}** (lead times up to {sourcing['top_at_risk_suppliers'][0]['lead_time_days']} days). Activate dual-sourcing contracts immediately and shift 40% PO volume to secondary nearshore suppliers.
-- **`@Logistics`**: Geopolitical conflict chokepoints in the **Red Sea / Strait of Hormuz** have compromised {logistics['disrupted_count']} vessels. Autonomous Cape of Good Hope reroute applied (+{logistics['total_detour_nm']:,.1f} NM detour). Authorize dynamic bunker fuel surcharge of **${logistics['total_fuel_surcharge_usd']:,.2f}**.
-- **`@Operations`**: Manufacturing lines **Line-Alpha-CN (96.5%)** and **Line-Beta-IN (95.0%)** exceed 90% bottleneck safety thresholds. Rebalance 15% batch load to Line-Delta-US (80.0%) and issue emergency reorders for 5 critical materials with <7 days cover.
+#### 🚨 Team Action Items
+- **`@Procurement`**: Contact **{', '.join([s['supplier'] for s in sourcing['top_at_risk_suppliers'][:3]])}**. Split orders 60/40 with backup suppliers and request emergency buffer shipments.
+- **`@Logistics`**: Authorize the safer Cape of Good Hope route for the 6 ships avoiding the Red Sea conflict zone (+{logistics['total_detour_nm']:,.1f} extra miles). Approve the fuel surcharge reserve of **${logistics['total_fuel_surcharge_usd']:,.2f}**.
+- **`@Operations`**: Move 15% of workload from congested lines (`Line-Alpha-CN` and `Line-Beta-IN`) to `Line-Delta-US`, and place emergency replenishment orders for the 5 parts with under 7 days of stock left.
 
 ---
 
-#### 📂 Generated Executive Artifacts
-- 📊 **4-Panel Visual Matrix:** [View supply_chain_matrix.png]({matrix_url})
-- 📑 **Revised Logistics Schedule:** [Download revised_logistics_schedule.csv]({schedule_url})
-- 📄 **Executive Audit Report (PDF):** [Download Executive_Supply_Chain_Audit.pdf]({pdf_url})
+#### 📂 Helpful Files
+- 📊 **[Risk Charts]({matrix_url})**
+- 📄 **[Summary Report (PDF)]({pdf_url})**
+- 📑 **[Updated Schedule (CSV)]({schedule_url})**
 """
 
         return {
@@ -980,16 +988,15 @@ class MasterOrchestrator:
             return {
                 "status": "warning",
                 "reply": (
-                    "👋 **Hello! I am Atlas (SupplyChain360 AI)**, your autonomous multi-agent supply chain orchestrator "
-                    "for Nonilion virtual offices.\n\n"
-                    "I monitor and diagnose 4 critical supply chain nodes:\n"
-                    "- 📦 **Sourcing Resilience** (single-source vulnerabilities, vendor lead times)\n"
-                    "- 🏭 **Production Capacity** (factory line bottlenecks, utilization thresholds)\n"
-                    "- 🚢 **Logistics & Routing** (geopolitical disruption reroutes, nautical detours, fuel surcharges)\n"
-                    "- 📊 **Inventory & Demand** (days of cover, stockouts, overstock buffers)\n\n"
-                    "**To begin an audit:**\n"
-                    "1. Reply with **'Run demo audit'** to analyze our planted 25-shipment global manifest.\n"
-                    "2. Or upload a custom CSV manifest to run a complete multi-agent diagnostic with 4-panel visual matrix & executive PDF generation."
+                    "👋 **Hi! I'm Atlas (SupplyChain360 AI), your supply chain assistant.**\n\n"
+                    "I can check your shipments in 4 key areas:\n"
+                    "- 📦 **Suppliers:** Find slow vendors taking over 14 days.\n"
+                    "- 🏭 **Factories:** Spot assembly lines running above 90% capacity.\n"
+                    "- 🚢 **Shipping:** Catch ships in danger zones and plan safer sea routes.\n"
+                    "- 📊 **Stock:** Flag parts running out in under 7 days before lines stop.\n\n"
+                    "**How to start:**\n"
+                    "1. Click **'Run demo audit'** to test our sample shipments (25 rows).\n"
+                    "2. Or upload your own CSV file to check it right away."
                 ),
                 "total_at_risk_usd": 0.0,
                 "diagnostics": [],

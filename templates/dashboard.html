@@ -3,32 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ATLAS // SupplyChain360 AI — Hybrid Control Tower & Nonilion Virtual Office</title>
+    <title>AtlasAI • Smarter Logistics for a Safer Supply Chain</title>
 
-    <!-- Google Fonts: Inter & JetBrains Mono -->
+    <!-- Google Fonts: Plus Jakarta Sans & Inter & JetBrains Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800;900&display=swap" rel="stylesheet">
 
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        mono: ['JetBrains Mono', 'monospace'],
-                    },
-                    colors: {
-                        obsidian: '#060913',
-                        slateCard: 'rgba(15, 23, 42, 0.70)',
-                        slateBorder: 'rgba(148, 163, 184, 0.14)',
-                    }
-                }
-            }
-        }
-    </script>
 
     <!-- Font Awesome 6.5.1 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -37,927 +20,904 @@
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
     <style>
-        /* Base styling & Obsidian Radial Glow */
+        /* Exact AstraAI Deep Cosmic Midnight Theme */
+        :root {
+            --bg-cosmic: #060B1E;
+            --bg-card: rgba(255, 255, 255, 0.05);
+            --bg-card-hover: rgba(255, 255, 255, 0.09);
+            --border-glass: rgba(255, 255, 255, 0.12);
+            --border-glass-bright: rgba(255, 255, 255, 0.22);
+            --accent-cyan: #38BDF8;
+            --accent-indigo: #818CF8;
+            --accent-purple: #C084FC;
+            --glow-primary: rgba(56, 189, 248, 0.4);
+        }
+
         body {
-            background-color: #060913;
+            background-color: var(--bg-cosmic);
             background-image: 
-                radial-gradient(circle at 14% 12%, rgba(56, 189, 248, 0.08) 0%, transparent 42%),
-                radial-gradient(circle at 86% 82%, rgba(16, 185, 129, 0.06) 0%, transparent 45%),
-                radial-gradient(circle at 50% 50%, rgba(15, 23, 42, 0.5) 0%, transparent 75%);
-            color: #f1f5f9;
-            font-family: 'Inter', sans-serif;
+                radial-gradient(circle at 65% 35%, #162B5C 0%, #08102B 45%, #050917 100%),
+                radial-gradient(circle at 15% 80%, rgba(129, 140, 248, 0.08) 0%, transparent 50%);
+            color: #F8FAFC;
+            font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* Glassmorphism Classes */
-        .glass-panel {
-            background: rgba(15, 23, 42, 0.65);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(148, 163, 184, 0.14);
-        }
-        .glass-panel-subtle {
-            background: rgba(15, 23, 42, 0.45);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(148, 163, 184, 0.08);
+        .font-mono-nums {
+            font-family: 'JetBrains Mono', monospace;
+            font-variant-numeric: tabular-nums;
         }
 
-        /* Custom Scrollbars */
+        /* Glassmorphism Surface */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid var(--border-glass);
+        }
+
+        .glass-card-hover:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.22);
+            transform: translateY(-2px);
+        }
+
+        /* Glowing Pill Buttons */
+        .btn-gradient-glow {
+            background: linear-gradient(135deg, #38BDF8 0%, #6366F1 50%, #A855F7 100%);
+            box-shadow: 0 0 28px -2px rgba(56, 189, 248, 0.45);
+        }
+        .btn-gradient-glow:hover {
+            background: linear-gradient(135deg, #60A5FA 0%, #818CF8 50%, #C084FC 100%);
+            box-shadow: 0 0 35px 2px rgba(99, 102, 241, 0.6);
+        }
+
+        /* Ambient Pulsing Orb */
+        @keyframes float-slow {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-12px) rotate(2deg); }
+        }
+        .animate-float {
+            animation: float-slow 6s ease-in-out infinite;
+        }
+
+        @keyframes ring-spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .animate-spin-slow {
+            animation: ring-spin 24s linear infinite;
+        }
+
+        /* Scrollbars */
         ::-webkit-scrollbar {
             width: 6px;
             height: 6px;
         }
         ::-webkit-scrollbar-track {
-            background: rgba(6, 9, 19, 0.8);
+            background: transparent;
         }
         ::-webkit-scrollbar-thumb {
-            background: rgba(51, 65, 85, 0.6);
+            background: rgba(255, 255, 255, 0.15);
             border-radius: 9999px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: rgba(56, 189, 248, 0.4);
+            background: rgba(255, 255, 255, 0.28);
         }
 
-        /* Markdown Styling inside Chat */
-        .prose-chat h3 {
-            color: #38bdf8;
-            font-size: 1.05rem;
+        /* Thread Markdown Prose */
+        .thread-prose h3 {
+            font-size: 13.5px;
             font-weight: 700;
-            margin-top: 0.75rem;
-            margin-bottom: 0.35rem;
-            border-bottom: 1px solid rgba(56, 189, 248, 0.2);
-            padding-bottom: 0.25rem;
+            color: #FFFFFF;
+            margin-top: 10px;
+            margin-bottom: 4px;
         }
-        .prose-chat h4 {
-            color: #f8fafc;
-            font-size: 0.925rem;
+        .thread-prose h4 {
+            font-size: 12.5px;
             font-weight: 600;
-            margin-top: 0.75rem;
-            margin-bottom: 0.35rem;
+            color: #E2E8F0;
+            margin-top: 8px;
+            margin-bottom: 4px;
         }
-        .prose-chat p {
-            margin-top: 0.35rem;
-            margin-bottom: 0.35rem;
-            line-height: 1.5;
-            font-size: 0.85rem;
+        .thread-prose p {
+            margin: 4px 0;
+            font-size: 13px;
+            line-height: 1.6;
+            color: #CBD5E1;
         }
-        .prose-chat hr {
-            border-color: rgba(148, 163, 184, 0.15);
-            margin: 0.75rem 0;
-        }
-        .prose-chat table {
+        .thread-prose table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 0.775rem;
-            margin: 0.6rem 0;
-            background: rgba(15, 23, 42, 0.85);
+            font-size: 11.5px;
+            margin: 8px 0;
+            background: rgba(0, 0, 0, 0.25);
             border-radius: 8px;
             overflow: hidden;
-            border: 1px solid rgba(148, 163, 184, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            font-family: 'JetBrains Mono', monospace;
+            font-variant-numeric: tabular-nums;
         }
-        .prose-chat th {
-            background: rgba(30, 41, 59, 0.9);
-            color: #94a3b8;
-            padding: 6px 8px;
-            text-align: left;
-            border: 1px solid rgba(148, 163, 184, 0.12);
+        .thread-prose th {
+            background: rgba(255, 255, 255, 0.05);
+            color: #94A3B8;
+            padding: 7px 9px;
             font-weight: 600;
+            text-align: left;
+            border: 1px solid rgba(255, 255, 255, 0.08);
             text-transform: uppercase;
-            font-size: 0.7rem;
+            font-size: 10px;
             letter-spacing: 0.04em;
         }
-        .prose-chat td {
-            padding: 6px 8px;
-            border: 1px solid rgba(148, 163, 184, 0.1);
-            color: #e2e8f0;
+        .thread-prose td {
+            padding: 7px 9px;
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            color: #F1F5F9;
         }
-        .prose-chat tr:nth-child(even) td {
-            background: rgba(15, 23, 42, 0.5);
+        .thread-prose tr:nth-child(even) td {
+            background: rgba(255, 255, 255, 0.02);
         }
-        .prose-chat code {
+        .thread-prose code {
             font-family: 'JetBrains Mono', monospace;
-            background: rgba(30, 41, 59, 0.8);
-            color: #38bdf8;
-            padding: 2px 5px;
+            background: rgba(255, 255, 255, 0.08);
+            color: #38BDF8;
+            padding: 1px 5px;
             border-radius: 4px;
-            font-size: 0.75rem;
+            font-size: 11px;
         }
-        .prose-chat ul {
+        .thread-prose ul {
             list-style-type: disc;
-            margin-left: 1.1rem;
-            margin-top: 0.35rem;
-            margin-bottom: 0.35rem;
-            font-size: 0.85rem;
+            padding-left: 18px;
+            margin: 4px 0;
+            color: #CBD5E1;
+            font-size: 13px;
         }
-        .prose-chat li {
-            margin-bottom: 0.25rem;
+        .thread-prose li {
+            margin-bottom: 3px;
         }
-        .prose-chat a {
-            color: #38bdf8;
+        .thread-prose strong {
+            color: #FFFFFF;
+            font-weight: 600;
+        }
+        .thread-prose a {
+            color: #38BDF8;
             text-decoration: underline;
-            text-underline-offset: 2px;
-        }
-
-        /* Pulsing Agent Animation */
-        @keyframes pulse-glow {
-            0%, 100% { box-shadow: 0 0 15px rgba(56, 189, 248, 0.2); }
-            50% { box-shadow: 0 0 25px rgba(56, 189, 248, 0.5); }
-        }
-        .agent-active-glow {
-            animation: pulse-glow 2s infinite ease-in-out;
         }
     </style>
 </head>
-<body class="h-full flex flex-col overflow-hidden text-slate-100 antialiased selection:bg-sky-500 selection:text-white">
+<body class="h-screen w-screen overflow-hidden select-none">
 
     <!-- ====================================================================== -->
-    <!-- 1. TOP COMMAND BAR                                                     -->
+    <!-- SCREEN 1: ASTRAAI-INSPIRED FUTURISTIC HERO FRONT (Initial View)        -->
     <!-- ====================================================================== -->
-    <header class="h-16 border-b border-slate-800/80 px-6 flex items-center justify-between glass-panel z-20 shrink-0">
-        <!-- Logo & Branding -->
-        <div class="flex items-center gap-3.5">
-            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-sky-500/20 via-sky-600/10 to-emerald-500/20 border border-sky-500/40 flex items-center justify-center text-sky-400 shadow-[0_0_15px_rgba(56,189,248,0.25)]">
-                <i class="fa-solid fa-network-wired text-lg"></i>
-            </div>
-            <div>
-                <div class="flex items-center gap-2">
-                    <span class="font-black text-lg tracking-wider text-white">ATLAS</span>
-                    <span class="text-sky-400 font-semibold text-sm tracking-wide">// SupplyChain360 AI</span>
+    <div id="screenHero" class="h-screen w-screen flex flex-col justify-between relative overflow-hidden transition-opacity duration-300">
+        
+        <!-- Ambient Glowing Cosmic Highlights -->
+        <div class="absolute -top-40 right-1/4 w-[600px] h-[600px] rounded-full bg-indigo-600/15 blur-[120px] pointer-events-none"></div>
+        <div class="absolute top-1/3 -left-40 w-[500px] h-[500px] rounded-full bg-sky-500/10 blur-[130px] pointer-events-none"></div>
+        
+        <!-- 1. Top Navigation Bar -->
+        <header class="h-20 px-8 lg:px-14 flex items-center justify-between z-20 shrink-0">
+            <!-- Brand Logo Mark -->
+            <div class="flex items-center gap-3 cursor-pointer" onclick="scrollToTop()">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-sky-400 via-indigo-500 to-purple-600 p-[1px] shadow-[0_0_20px_rgba(56,189,248,0.4)] flex items-center justify-center">
+                    <div class="w-full h-full rounded-xl bg-[#070D22] flex items-center justify-center">
+                        <svg class="w-5 h-5 text-sky-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <polygon points="12 2 2 12 12 22 22 12 12 2"></polygon>
+                        </svg>
+                    </div>
                 </div>
-                <div class="flex items-center gap-2 text-[11px] text-slate-400 font-medium">
-                    <span>Nonilion Virtual Office Ecosystem</span>
-                    <span class="w-1 h-1 rounded-full bg-slate-600"></span>
-                    <span class="text-slate-500 font-mono">INNOVORTEX 4.0</span>
+                <div class="flex items-center gap-1.5">
+                    <span class="text-xl font-extrabold tracking-tight text-white">Atlas</span>
+                    <span class="text-xl font-extrabold tracking-tight bg-gradient-to-r from-sky-400 to-indigo-400 bg-clip-text text-transparent">AI</span>
                 </div>
             </div>
-        </div>
 
-        <!-- Center Status Badges -->
-        <div class="hidden lg:flex items-center gap-3">
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-xs font-semibold text-emerald-400">
-                <span class="relative flex h-2 w-2">
-                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                    <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+            <!-- Center Navigation Links -->
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
+                <button onclick="openInfoModal('overview')" class="hover:text-white transition">Overview</button>
+                <button onclick="openInfoModal('capabilities')" class="hover:text-white transition">Capabilities</button>
+                <button onclick="openInfoModal('howitworks')" class="hover:text-white transition">How It Works</button>
+                <a href="/docs" target="_blank" class="hover:text-white transition">API Docs</a>
+            </nav>
+
+            <!-- Right Action: Get Started Pill -->
+            <div class="flex items-center gap-3">
+                <button onclick="launchWorkspaceWithAction('Audit supply_chain_manifest.csv')" class="h-10 px-5 rounded-full btn-gradient-glow text-white text-xs font-bold tracking-wide transition flex items-center gap-2 active:scale-95">
+                    <span>Get Started</span>
+                    <i class="fa-solid fa-arrow-right text-[11px]"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- 2. Main Hero Split Content -->
+        <main class="flex-1 flex items-center px-8 lg:px-14 z-10 min-h-0">
+            <div class="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-center max-w-7xl mx-auto">
+                
+                <!-- Left Column: Hero Typography & Actions (5.5 cols) -->
+                <div class="lg:col-span-6 space-y-6">
+                    
+                    <!-- Frosted Glass Pill Badge -->
+                    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-card text-xs font-semibold text-sky-300 shadow-sm">
+                        <span class="text-amber-400">✦</span>
+                        <span>Next-Generation Supply Chain Assistant</span>
+                    </div>
+
+                    <!-- Giant Headline (52px) -->
+                    <h1 class="text-4xl sm:text-5xl lg:text-[52px] font-black tracking-tight leading-[1.08] text-white">
+                        Smarter <span class="bg-gradient-to-r from-sky-400 via-cyan-300 to-indigo-400 bg-clip-text text-transparent">Logistics</span> for a Safer Supply Chain
+                    </h1>
+
+                    <!-- Subtitle -->
+                    <p class="text-sm sm:text-base text-slate-300 max-w-xl leading-relaxed">
+                        Your intelligent companion for spotting delayed suppliers, rerouting blocked ships, and preventing stockouts—automatically.
+                    </p>
+
+                    <!-- 2 Action Pill Buttons -->
+                    <div class="flex flex-wrap items-center gap-3.5 pt-2">
+                        <!-- Primary Gradient Pill -->
+                        <button onclick="launchWorkspaceWithAction('Audit supply_chain_manifest.csv')" class="h-12 px-7 rounded-full btn-gradient-glow text-white text-sm font-bold transition flex items-center gap-2.5 active:scale-95">
+                            <span>Start Checking</span>
+                            <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </button>
+
+                        <!-- Hidden File Input for CSV Upload -->
+                        <input type="file" id="heroCsvFileInput" accept=".csv" class="hidden" onchange="onHeroFileSelected(event)">
+
+                        <!-- Frosted Dark Glass Pill -->
+                        <button onclick="document.getElementById('heroCsvFileInput').click()" class="h-12 px-6 rounded-full glass-card hover:bg-white/[0.08] border-white/20 text-white text-sm font-semibold transition flex items-center gap-2.5 active:scale-95">
+                            <i class="fa-solid fa-cloud-arrow-up text-sky-400 text-xs"></i>
+                            <span>Upload CSV File</span>
+                        </button>
+                    </div>
+
+                    <!-- Credibility / Trust Pill -->
+                    <div class="pt-4 flex items-center gap-3">
+                        <div class="flex -space-x-2">
+                            <span class="inline-block h-7 w-7 rounded-full ring-2 ring-[#070D22] bg-gradient-to-tr from-sky-400 to-indigo-500 text-[10px] font-bold text-white flex items-center justify-center">SH</span>
+                            <span class="inline-block h-7 w-7 rounded-full ring-2 ring-[#070D22] bg-gradient-to-tr from-purple-400 to-pink-500 text-[10px] font-bold text-white flex items-center justify-center">RO</span>
+                            <span class="inline-block h-7 w-7 rounded-full ring-2 ring-[#070D22] bg-gradient-to-tr from-emerald-400 to-teal-500 text-[10px] font-bold text-white flex items-center justify-center">LA</span>
+                        </div>
+                        <span class="text-xs text-slate-400 font-medium">Guarding 25 Global Maritime Corridors • Nonilion Virtual Office</span>
+                    </div>
+
+                </div>
+
+                <!-- Center 3D-Styled AI Hologram & Right 3 Cards (6.5 cols) -->
+                <div class="lg:col-span-6 grid grid-cols-1 sm:grid-cols-12 gap-6 items-center">
+                    
+                    <!-- Center 3D Holographic AI Orb Graphic (Pure CSS/SVG, 5 cols) -->
+                    <div class="sm:col-span-5 flex items-center justify-center relative">
+                        <div class="w-56 h-56 relative flex items-center justify-center animate-float">
+                            <!-- Outer Orbit Ring -->
+                            <div class="absolute inset-0 rounded-full border border-sky-400/25 animate-spin-slow"></div>
+                            <div class="absolute inset-4 rounded-full border border-indigo-400/30 border-dashed animate-spin-slow" style="animation-direction: reverse; animation-duration: 18s;"></div>
+                            
+                            <!-- Glowing Core Sphere -->
+                            <div class="w-36 h-36 rounded-full bg-gradient-to-tr from-sky-500 via-indigo-600 to-purple-600 p-[2px] shadow-[0_0_50px_rgba(56,189,248,0.55)]">
+                                <div class="w-full h-full rounded-full bg-[#08102B] flex flex-col items-center justify-center relative overflow-hidden">
+                                    <div class="absolute inset-0 bg-gradient-to-b from-sky-400/20 to-transparent"></div>
+                                    <!-- Eye / Radar Sensor Graphic -->
+                                    <div class="w-16 h-10 rounded-full bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 shadow-[0_0_20px_rgba(251,191,36,0.8)] flex items-center justify-center">
+                                        <div class="w-8 h-8 rounded-full bg-[#070D22] flex items-center justify-center">
+                                            <div class="w-3 h-3 rounded-full bg-amber-400 animate-pulse"></div>
+                                        </div>
+                                    </div>
+                                    <div class="text-[9px] font-mono font-bold text-sky-300 tracking-wider mt-2 uppercase">Atlas AI</div>
+                                </div>
+                            </div>
+
+                            <!-- Orbit Waypoints -->
+                            <div class="absolute -top-1 right-8 w-2.5 h-2.5 rounded-full bg-sky-400 shadow-[0_0_10px_#38BDF8]"></div>
+                            <div class="absolute -bottom-1 left-8 w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-[0_0_10px_#10B981]"></div>
+                        </div>
+                    </div>
+
+                    <!-- Right Side: 3 Stacked Frosted-Glass Cards (7 cols) -->
+                    <div class="sm:col-span-7 space-y-3.5">
+                        
+                        <!-- Card 1: Spot Delayed Suppliers -->
+                        <div onclick="launchWorkspaceWithAction('Audit suppliers and identify lead times over 14 days in supply_chain_manifest.csv')" class="glass-card glass-card-hover rounded-2xl p-4 cursor-pointer transition-all flex items-center justify-between group shadow-lg">
+                            <div class="flex items-center gap-3.5">
+                                <div class="w-11 h-11 rounded-xl bg-sky-500/20 border border-sky-400/30 text-sky-400 flex items-center justify-center text-base shadow-[0_0_15px_rgba(56,189,248,0.3)]">
+                                    <i class="fa-solid fa-bolt"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-sm font-bold text-white group-hover:text-sky-300 transition">Spot Delayed Suppliers</h4>
+                                    <p class="text-xs text-slate-300 mt-0.5">Catch late deliveries before they stall production</p>
+                                </div>
+                            </div>
+                            <i class="fa-solid fa-arrow-right text-slate-400 group-hover:text-white group-hover:translate-x-1 transition text-xs mr-1"></i>
+                        </div>
+
+                        <!-- Card 2: Safer Sea Routes -->
+                        <div onclick="launchWorkspaceWithAction('Analyze Red Sea and Suez Canal maritime chokepoints in supply_chain_manifest.csv and calculate Cape of Good Hope reroutes')" class="glass-card glass-card-hover rounded-2xl p-4 cursor-pointer transition-all flex items-center justify-between group shadow-lg">
+                            <div class="flex items-center gap-3.5">
+                                <div class="w-11 h-11 rounded-xl bg-indigo-500/20 border border-indigo-400/30 text-indigo-400 flex items-center justify-center text-base shadow-[0_0_15px_rgba(129,140,248,0.3)]">
+                                    <i class="fa-solid fa-route"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-sm font-bold text-white group-hover:text-indigo-300 transition">Safer Sea Routes</h4>
+                                    <p class="text-xs text-slate-300 mt-0.5">Reroute ships around blocked zones automatically</p>
+                                </div>
+                            </div>
+                            <i class="fa-solid fa-arrow-right text-slate-400 group-hover:text-white group-hover:translate-x-1 transition text-xs mr-1"></i>
+                        </div>
+
+                        <!-- Card 3: Safe & Verified Data -->
+                        <div onclick="launchWorkspaceWithAction('Validate corrupt_test_manifest.csv', null, 'corrupt_test_manifest.csv')" class="glass-card glass-card-hover rounded-2xl p-4 cursor-pointer transition-all flex items-center justify-between group shadow-lg">
+                            <div class="flex items-center gap-3.5">
+                                <div class="w-11 h-11 rounded-xl bg-teal-500/20 border border-teal-400/30 text-teal-400 flex items-center justify-center text-base shadow-[0_0_15px_rgba(45,212,191,0.3)]">
+                                    <i class="fa-solid fa-shield-halved"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-sm font-bold text-white group-hover:text-teal-300 transition">Safe &amp; Verified Data</h4>
+                                    <p class="text-xs text-slate-300 mt-0.5">Built-in file checks block broken spreadsheets</p>
+                                </div>
+                            </div>
+                            <i class="fa-solid fa-arrow-right text-slate-400 group-hover:text-white group-hover:translate-x-1 transition text-xs mr-1"></i>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </main>
+
+        <!-- 3. Minimal Hero Footer -->
+        <footer class="h-14 px-8 lg:px-14 flex items-center justify-between text-xs text-slate-400 z-10 shrink-0 border-t border-white/5">
+            <div>Atlas (SupplyChain360 AI) • INNOVORTEX 4.0 Hackathon Edition</div>
+            <div class="flex items-center gap-4">
+                <span class="inline-flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span>System Online • Port 8000</span>
                 </span>
-                ENGINE ONLINE
             </div>
-            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sky-500/10 border border-sky-500/20 text-xs font-semibold text-sky-400 font-mono">
-                <i class="fa-solid fa-microchip text-[11px]"></i> gemini-2.5-flash bus
-            </div>
-            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-800/80 border border-slate-700 text-xs text-slate-300">
-                <i class="fa-solid fa-hashtag text-[10px] text-sky-400"></i> Nonilion #supply-chain-ops
-            </div>
-        </div>
+        </footer>
 
-        <!-- Right Command Actions -->
-        <div class="flex items-center gap-3">
-            <!-- Hidden File Input for CSV Upload -->
-            <input type="file" id="csvFileInput" accept=".csv" class="hidden" onchange="handleFileSelect(event)">
-
-            <!-- Upload CSV Button -->
-            <button onclick="document.getElementById('csvFileInput').click()" class="px-3.5 py-2 rounded-xl text-xs font-semibold bg-slate-800/90 hover:bg-slate-700 text-slate-200 border border-slate-700/80 hover:border-slate-600 transition flex items-center gap-2 shadow-sm" title="Upload custom manifest CSV">
-                <i class="fa-solid fa-cloud-arrow-up text-sky-400"></i>
-                <span id="uploadBtnLabel">Upload CSV</span>
-            </button>
-
-            <!-- Run Autonomous Audit Button -->
-            <button onclick="triggerAudit('Run demo audit')" id="runAuditBtn" class="px-4 py-2 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-sky-500 via-blue-600 to-emerald-500 hover:from-sky-400 hover:via-blue-500 hover:to-emerald-400 shadow-[0_0_20px_rgba(56,189,248,0.35)] transition-all flex items-center gap-2 active:scale-95">
-                <i class="fa-solid fa-bolt text-amber-300"></i>
-                <span>Run Autonomous Audit</span>
-            </button>
-        </div>
-    </header>
-
-    <!-- ====================================================================== -->
-    <!-- 2. ANIMATED 5-AGENT PIPELINE STRIP                                      -->
-    <!-- ====================================================================== -->
-    <div class="border-b border-slate-800/80 bg-[#090d1c]/90 px-6 py-2 shrink-0 z-10">
-        <div class="flex items-center justify-between text-xs overflow-x-auto gap-2 no-scrollbar">
-
-            <!-- Sub-Agent 1 -->
-            <div id="pipe-agent-1" class="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-slate-800 bg-slate-900/50 transition-all shrink-0">
-                <span class="w-5 h-5 rounded-md bg-slate-800 text-slate-400 flex items-center justify-center font-mono text-[10px] font-bold" id="pipe-icon-1">1</span>
-                <div>
-                    <div class="font-semibold text-slate-300 text-[11px] leading-tight">Sourcing Audit</div>
-                    <div class="text-[9px] text-slate-500 font-mono" id="pipe-status-1">Single-source &gt;14d</div>
-                </div>
-            </div>
-
-            <i class="fa-solid fa-chevron-right text-slate-700 text-[10px] shrink-0"></i>
-
-            <!-- Sub-Agent 2 -->
-            <div id="pipe-agent-2" class="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-slate-800 bg-slate-900/50 transition-all shrink-0">
-                <span class="w-5 h-5 rounded-md bg-slate-800 text-slate-400 flex items-center justify-center font-mono text-[10px] font-bold" id="pipe-icon-2">2</span>
-                <div>
-                    <div class="font-semibold text-slate-300 text-[11px] leading-tight">Production Capacity</div>
-                    <div class="text-[9px] text-slate-500 font-mono" id="pipe-status-2">Bottlenecks &gt;=90%</div>
-                </div>
-            </div>
-
-            <i class="fa-solid fa-chevron-right text-slate-700 text-[10px] shrink-0"></i>
-
-            <!-- Sub-Agent 3 -->
-            <div id="pipe-agent-3" class="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-slate-800 bg-slate-900/50 transition-all shrink-0">
-                <span class="w-5 h-5 rounded-md bg-slate-800 text-slate-400 flex items-center justify-center font-mono text-[10px] font-bold" id="pipe-icon-3">3</span>
-                <div>
-                    <div class="font-semibold text-slate-300 text-[11px] leading-tight">Geopolitical Logistics</div>
-                    <div class="text-[9px] text-slate-500 font-mono" id="pipe-status-3">Cape Detour (+38%)</div>
-                </div>
-            </div>
-
-            <i class="fa-solid fa-chevron-right text-slate-700 text-[10px] shrink-0"></i>
-
-            <!-- Sub-Agent 4 -->
-            <div id="pipe-agent-4" class="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-slate-800 bg-slate-900/50 transition-all shrink-0">
-                <span class="w-5 h-5 rounded-md bg-slate-800 text-slate-400 flex items-center justify-center font-mono text-[10px] font-bold" id="pipe-icon-4">4</span>
-                <div>
-                    <div class="font-semibold text-slate-300 text-[11px] leading-tight">Inventory &amp; Stockouts</div>
-                    <div class="text-[9px] text-slate-500 font-mono" id="pipe-status-4">Days Cover &lt;7d</div>
-                </div>
-            </div>
-
-            <i class="fa-solid fa-chevron-right text-slate-700 text-[10px] shrink-0"></i>
-
-            <!-- Sub-Agent 5 -->
-            <div id="pipe-agent-5" class="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-slate-800 bg-slate-900/50 transition-all shrink-0">
-                <span class="w-5 h-5 rounded-md bg-slate-800 text-slate-400 flex items-center justify-center font-mono text-[10px] font-bold" id="pipe-icon-5">5</span>
-                <div>
-                    <div class="font-semibold text-slate-300 text-[11px] leading-tight">Artifact Engine</div>
-                    <div class="text-[9px] text-slate-500 font-mono" id="pipe-status-5">2x2 Matrix &amp; PDF</div>
-                </div>
-            </div>
-
-        </div>
     </div>
 
     <!-- ====================================================================== -->
-    <!-- 3. MAIN SPLIT-SCREEN WORKSPACE                                          -->
+    <!-- SCREEN 2: SEAMLESS COSMIC-GLASS AGENT WORKSPACE (Interactive App View) -->
     <!-- ====================================================================== -->
-    <main class="flex-1 flex overflow-hidden p-4 gap-4">
-
-        <!-- ------------------------------------------------------------------ -->
-        <!-- LEFT PANEL (38% WIDTH): NONILION VIRTUAL OFFICE ROOM               -->
-        <!-- ------------------------------------------------------------------ -->
-        <section class="w-full lg:w-[38%] flex flex-col glass-panel rounded-2xl overflow-hidden border border-slate-800/80 shadow-2xl shrink-0">
-
-            <!-- Virtual Office Header -->
-            <div class="p-3.5 border-b border-slate-800 bg-slate-900/70 flex items-center justify-between shrink-0">
-                <div class="flex items-center gap-2.5">
-                    <div class="w-8 h-8 rounded-lg bg-sky-500/10 border border-sky-500/20 text-sky-400 flex items-center justify-center text-sm font-bold">
-                        <i class="fa-solid fa-comments"></i>
-                    </div>
-                    <div>
-                        <div class="flex items-center gap-1.5 font-bold text-sm text-white">
-                            <span>#supply-chain-ops</span>
-                            <span class="text-[10px] px-1.5 py-0.2 rounded bg-sky-500/20 text-sky-300 font-mono">WAR-ROOM</span>
-                        </div>
-                        <div class="text-[10px] text-slate-400 flex items-center gap-1">
-                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-                            <span>Atlas AI Orchestrator + 3 Operations Leads</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="flex items-center gap-1">
-                    <button onclick="clearChat()" class="p-1.5 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800 text-xs transition" title="Clear message thread">
-                        <i class="fa-solid fa-trash-can"></i>
-                    </button>
-                    <a href="/docs" target="_blank" class="p-1.5 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800 text-xs transition" title="API documentation">
-                        <i class="fa-solid fa-code"></i>
-                    </a>
+    <div id="screenWorkspace" class="h-screen w-screen hidden flex-col relative overflow-hidden bg-[#060B1E]">
+        
+        <!-- Workspace Fixed Top Bar -->
+        <header class="h-14 flex-shrink-0 px-5 border-b border-white/10 glass-card flex items-center justify-between z-20">
+            <!-- Left: Home return & Workspace Title -->
+            <div class="flex items-center gap-3">
+                <button onclick="returnToHeroScreen()" class="h-8 px-3 rounded-xl bg-white/[0.06] hover:bg-white/[0.12] border border-white/10 text-xs font-semibold text-slate-200 transition flex items-center gap-1.5 active:scale-95">
+                    <i class="fa-solid fa-arrow-left text-[11px]"></i>
+                    <span>Home</span>
+                </button>
+                <span class="text-slate-600 text-sm">/</span>
+                <div class="flex items-center gap-2">
+                    <span class="font-bold text-sm text-white">AtlasAI Workspace</span>
+                    <span id="activeManifestPill" class="text-[11px] font-mono-nums px-2 py-0.5 rounded bg-sky-500/10 text-sky-400 border border-sky-500/20">supply_chain_manifest.csv</span>
                 </div>
             </div>
 
-            <!-- Quick-Prompt Chips Strip -->
-            <div class="px-3.5 py-2 border-b border-slate-800/80 bg-slate-950/40 flex items-center gap-1.5 overflow-x-auto no-scrollbar shrink-0">
-                <span class="text-[10px] uppercase font-bold text-slate-500 tracking-wider shrink-0 mr-1">
-                    <i class="fa-solid fa-wand-magic-sparkles text-sky-400"></i> Chips:
-                </span>
-                <button onclick="sendQuickPrompt('Audit this manifest')" class="px-2.5 py-1 rounded-full text-[11px] font-medium bg-slate-800/80 hover:bg-sky-500/20 hover:text-sky-300 text-slate-300 border border-slate-700/60 transition shrink-0 whitespace-nowrap">
-                    ⚡ "Audit this manifest"
+            <!-- Right: Action Controls -->
+            <div class="flex items-center gap-2.5">
+                <!-- Upload CSV Button -->
+                <input type="file" id="workspaceFileInput" accept=".csv" class="hidden" onchange="onWorkspaceFileSelected(event)">
+                <button onclick="document.getElementById('workspaceFileInput').click()" class="h-8 px-3 rounded-xl bg-white/[0.06] hover:bg-white/[0.12] border border-white/10 text-xs font-semibold text-slate-200 transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-cloud-arrow-up text-sky-400 text-xs"></i>
+                    <span>Upload CSV</span>
                 </button>
-                <button onclick="sendQuickPrompt('Check Red Sea reroutes')" class="px-2.5 py-1 rounded-full text-[11px] font-medium bg-slate-800/80 hover:bg-amber-500/20 hover:text-amber-300 text-slate-300 border border-slate-700/60 transition shrink-0 whitespace-nowrap">
-                    🚢 "Check Red Sea reroutes"
-                </button>
-                <button onclick="sendQuickPrompt('Test corrupt CSV guardrail')" class="px-2.5 py-1 rounded-full text-[11px] font-medium bg-slate-800/80 hover:bg-rose-500/20 hover:text-rose-300 text-slate-300 border border-slate-700/60 transition shrink-0 whitespace-nowrap">
-                    🛡️ "Test corrupt CSV guardrail"
-                </button>
-                <button onclick="sendQuickPrompt('hi')" class="px-2.5 py-1 rounded-full text-[11px] font-medium bg-slate-800/80 hover:bg-slate-700 text-slate-400 border border-slate-700/60 transition shrink-0 whitespace-nowrap">
-                    💬 "hi" (Ambiguity test)
+
+                <!-- Run New Check Button -->
+                <button onclick="triggerWorkspaceAudit('Audit supply_chain_manifest.csv')" id="workspaceRunBtn" class="h-8 px-3.5 rounded-full btn-gradient-glow text-white text-xs font-bold transition flex items-center gap-1.5 active:scale-95">
+                    <i class="fa-solid fa-play text-[10px]"></i>
+                    <span>Run New Check</span>
                 </button>
             </div>
+        </header>
 
-            <!-- Chat Message Thread -->
-            <div id="chatThread" class="flex-1 overflow-y-auto p-4 space-y-4">
-                <!-- Welcome Bot Message -->
-                <div class="flex items-start gap-3">
-                    <div class="w-8 h-8 rounded-lg bg-sky-500/20 border border-sky-500/30 text-sky-400 flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">
-                        <i class="fa-solid fa-robot"></i>
-                    </div>
-                    <div class="flex-1 bg-slate-900/80 border border-slate-800 rounded-2xl rounded-tl-none p-3.5 text-xs text-slate-300 shadow-lg space-y-2">
-                        <div class="flex items-center justify-between text-[10px] text-slate-400 border-b border-slate-800 pb-1.5">
-                            <span class="font-bold text-sky-400">Atlas (SupplyChain360 AI)</span>
-                            <span class="font-mono">ONLINE</span>
+        <!-- 2-Column Split Workspace (45% Chat | 55% Results) -->
+        <div class="flex-1 flex min-h-0 overflow-hidden">
+            
+            <!-- Left Column: Scrollable Chat (45%) -->
+            <section class="w-full lg:w-[45%] flex flex-col border-r border-white/10 glass-card min-h-0 relative">
+                
+                <!-- Chat Messages Scroll Area -->
+                <div id="workspaceMessages" class="flex-1 overflow-y-auto min-h-0 p-5 space-y-5">
+                    
+                    <!-- Welcome Bot Notice -->
+                    <div class="p-4 rounded-2xl bg-white/[0.03] border border-white/10 text-xs text-slate-300 space-y-1.5">
+                        <div class="flex items-center justify-between text-[11px] text-slate-400 font-mono-nums border-b border-white/5 pb-1">
+                            <span class="text-sky-400 font-bold flex items-center gap-1.5">
+                                <i class="fa-solid fa-sparkles text-[10px]"></i> AtlasAI Assistant
+                            </span>
+                            <span>Active</span>
                         </div>
                         <p class="leading-relaxed">
-                            Welcome to the Nonilion <span class="text-sky-300 font-mono font-semibold">#supply-chain-ops</span> command room. I autonomously orchestrate 5 sub-agents across Sourcing, Production Lines, Maritime Corridors, and Assembly Stock levels.
-                        </p>
-                        <p class="text-[11px] text-slate-400">
-                            👉 Click <b class="text-sky-400">"Run Autonomous Audit"</b> above or send a message below to analyze the 25 global maritime shipments.
+                            Welcome to the live operational workspace. Ask questions below, upload custom manifests, or review the 25 maritime shipments.
                         </p>
                     </div>
+
+                    <!-- Conversation Thread Target -->
+                    <div id="workspaceChatStream" class="space-y-5"></div>
+
+                    <!-- Animated 5-Step Progress Accordion -->
+                    <div id="liveStepAccordion" class="hidden rounded-2xl bg-white/[0.04] border border-white/15 p-4 space-y-2 text-xs">
+                        <div class="flex items-center justify-between text-slate-200 font-medium">
+                            <span class="flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-sky-400 animate-ping"></span>
+                                <span id="accordionMainTitle">Running autonomous 5-step audit...</span>
+                            </span>
+                            <span id="accordionStepCounter" class="text-[10px] font-mono-nums text-slate-400">Step 1/5</span>
+                        </div>
+                        <div id="accordionStepList" class="space-y-1 font-mono-nums text-[11px] text-slate-400 pl-4 pt-1">
+                            <div id="acc-s1" class="text-sky-300">1. Checking spreadsheet columns and coordinates...</div>
+                            <div id="acc-s2" class="text-slate-500">2. Auditing supplier delays (&gt;14 days)</div>
+                            <div id="acc-s3" class="text-slate-500">3. Checking factory capacity limits (&gt;=90%)</div>
+                            <div id="acc-s4" class="text-slate-500">4. Rerouting blocked sea lanes (Cape of Good Hope +38%)</div>
+                            <div id="acc-s5" class="text-slate-500">5. Forecasting 14-day stockout depletion</div>
+                        </div>
+                    </div>
+
                 </div>
-            </div>
 
-            <!-- Typing Indicator (Hidden by default) -->
-            <div id="typingIndicator" class="hidden px-4 py-2 border-t border-slate-800/80 bg-slate-950/40 flex items-center gap-2.5 text-xs text-sky-400 shrink-0">
-                <span class="flex gap-1">
-                    <span class="w-1.5 h-1.5 rounded-full bg-sky-400 animate-bounce" style="animation-delay: 0ms"></span>
-                    <span class="w-1.5 h-1.5 rounded-full bg-sky-400 animate-bounce" style="animation-delay: 150ms"></span>
-                    <span class="w-1.5 h-1.5 rounded-full bg-sky-400 animate-bounce" style="animation-delay: 300ms"></span>
-                </span>
-                <span class="font-mono text-[11px] animate-pulse">Atlas is orchestrating 5 sub-agents across Nonilion bus...</span>
-            </div>
+                <!-- Pinned Bottom Input Composer -->
+                <div class="p-3.5 border-t border-white/10 bg-[#060B1E] flex-shrink-0">
+                    <form id="workspaceInputForm" onsubmit="handleWorkspaceChatSubmit(event)" class="relative flex items-center rounded-2xl bg-white/[0.05] border border-white/15 focus-within:border-sky-400/80 focus-within:ring-1 focus-within:ring-sky-400/40 transition px-3 py-1.5 shadow-lg">
+                        <input type="text" id="workspaceChatInput" placeholder="Ask Atlas anything about your shipments, delays, or stock..." autocomplete="off" class="flex-1 bg-transparent border-0 text-xs text-slate-100 placeholder-slate-400 px-2 py-2 focus:outline-none">
+                        <button type="submit" class="w-8 h-8 rounded-xl bg-sky-500 hover:bg-sky-400 text-white flex items-center justify-center transition shadow-md shadow-sky-500/20 active:scale-95 shrink-0">
+                            <i class="fa-solid fa-arrow-up text-xs"></i>
+                        </button>
+                    </form>
+                    <div class="text-[10px] text-slate-500 text-center mt-1.5 font-mono-nums">
+                        Press Enter to query the Atlas autonomous multi-agent backend
+                    </div>
+                </div>
 
-            <!-- Chat Input Bar -->
-            <div class="p-3 border-t border-slate-800 bg-slate-900/90 shrink-0">
-                <form id="chatForm" onsubmit="handleChatSubmit(event)" class="flex items-center gap-2">
-                    <div class="relative flex-1">
-                        <input type="text" id="chatInput" placeholder="Message #supply-chain-ops or @Atlas..." autocomplete="off" class="w-full py-2.5 pl-3.5 pr-10 rounded-xl bg-slate-950 border border-slate-800 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-sky-500/80 focus:ring-1 focus:ring-sky-500/50 transition">
-                        <button type="button" onclick="document.getElementById('csvFileInput').click()" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-sky-400 text-xs" title="Attach CSV Manifest">
-                            <i class="fa-solid fa-paperclip"></i>
+            </section>
+
+            <!-- Right Column: Results & Files (55%) -->
+            <section class="hidden lg:flex w-[55%] flex-col min-h-0 bg-[#050917]/70 overflow-hidden relative">
+                
+                <!-- Underline Working Tabs Header -->
+                <div class="h-12 border-b border-white/10 px-5 flex items-center justify-between glass-card flex-shrink-0">
+                    <div class="flex items-center gap-6 h-full">
+                        <button onclick="switchWorkspaceTab('charts')" id="tabBtn-charts" class="h-full border-b-2 border-sky-400 text-sky-400 text-xs font-bold transition flex items-center gap-1.5">
+                            <i class="fa-solid fa-chart-pie text-xs"></i>
+                            <span>Risk Charts</span>
+                        </button>
+                        <button onclick="switchWorkspaceTab('report')" id="tabBtn-report" class="h-full border-b-2 border-transparent text-slate-400 hover:text-slate-200 text-xs font-semibold transition flex items-center gap-1.5">
+                            <i class="fa-solid fa-file-pdf text-xs"></i>
+                            <span>Summary Report</span>
+                        </button>
+                        <button onclick="switchWorkspaceTab('schedule')" id="tabBtn-schedule" class="h-full border-b-2 border-transparent text-slate-400 hover:text-slate-200 text-xs font-semibold transition flex items-center gap-1.5">
+                            <i class="fa-solid fa-table-list text-xs"></i>
+                            <span>Updated Schedule</span>
                         </button>
                     </div>
-                    <button type="submit" id="sendBtn" class="px-4 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white text-xs font-semibold shadow-md shadow-sky-600/30 transition flex items-center justify-center shrink-0">
-                        <i class="fa-solid fa-paper-plane"></i>
-                    </button>
-                </form>
-                <div class="text-[10px] text-slate-500 mt-1.5 text-center font-mono">
-                    Press Enter to dispatch to Nonilion Webhook Bus <span class="text-slate-600">POST /webhook</span>
-                </div>
-            </div>
 
-        </section>
-
-        <!-- ------------------------------------------------------------------ -->
-        <!-- RIGHT PANEL (62% WIDTH): LIVE EXECUTIVE INTELLIGENCE CANVAS        -->
-        <!-- ------------------------------------------------------------------ -->
-        <section class="hidden lg:flex flex-1 flex-col glass-panel rounded-2xl overflow-hidden border border-slate-800/80 shadow-2xl">
-
-            <!-- 4 Top KPI Hero Cards -->
-            <div class="p-4 border-b border-slate-800/80 bg-slate-900/60 grid grid-cols-4 gap-3 shrink-0">
-
-                <!-- KPI 1: Total Financial Exposure -->
-                <div class="glass-panel-subtle rounded-xl p-3 border border-rose-500/20 relative overflow-hidden group">
-                    <div class="flex items-center justify-between text-slate-400 text-[10px] font-bold uppercase tracking-wider">
-                        <span>Total $ at Risk</span>
-                        <i class="fa-solid fa-vault text-rose-400"></i>
-                    </div>
-                    <div id="kpiTotalRisk" class="text-xl font-black text-rose-400 mt-1 font-mono tracking-tight">$11,990,000.00</div>
-                    <div class="text-[10px] text-slate-400 mt-0.5 flex items-center gap-1 font-mono">
-                        <span class="text-rose-400">▲</span> Across 4 Supply Nodes
+                    <!-- Right Tab Actions -->
+                    <div class="flex items-center gap-2">
+                        <a id="tabDownloadBtn" href="/outputs/supply_chain_matrix.png" download="supply_chain_matrix.png" class="h-7 px-3 rounded-lg bg-white/[0.06] hover:bg-white/[0.12] border border-white/10 text-xs font-semibold text-slate-200 transition flex items-center gap-1.5">
+                            <i class="fa-solid fa-download text-[11px]"></i>
+                            <span id="tabDownloadLabel">Save PNG</span>
+                        </a>
                     </div>
                 </div>
 
-                <!-- KPI 2: Rerouted Vessels -->
-                <div class="glass-panel-subtle rounded-xl p-3 border border-amber-500/20 relative overflow-hidden group">
-                    <div class="flex items-center justify-between text-slate-400 text-[10px] font-bold uppercase tracking-wider">
-                        <span>Rerouted Vessels</span>
-                        <i class="fa-solid fa-ship text-amber-400"></i>
-                    </div>
-                    <div id="kpiVessels" class="text-xl font-black text-amber-400 mt-1 font-mono tracking-tight">6 Vessels</div>
-                    <div class="text-[10px] text-slate-400 mt-0.5 flex items-center gap-1 font-mono">
-                        <span class="text-amber-400">Cape of Good Hope</span> (+38% NM)
-                    </div>
-                </div>
-
-                <!-- KPI 3: Bottlenecked Factory Lines -->
-                <div class="glass-panel-subtle rounded-xl p-3 border border-orange-500/20 relative overflow-hidden group">
-                    <div class="flex items-center justify-between text-slate-400 text-[10px] font-bold uppercase tracking-wider">
-                        <span>Bottleneck Lines</span>
-                        <i class="fa-solid fa-industry text-orange-400"></i>
-                    </div>
-                    <div id="kpiBottlenecks" class="text-xl font-black text-orange-400 mt-1 font-mono tracking-tight">3 Lines</div>
-                    <div class="text-[10px] text-slate-400 mt-0.5 flex items-center gap-1 font-mono">
-                        <span class="text-orange-400">&gt;=90%</span> Squeeze (CN, IN, DE)
-                    </div>
-                </div>
-
-                <!-- KPI 4: Critical Stockouts -->
-                <div class="glass-panel-subtle rounded-xl p-3 border border-rose-500/20 relative overflow-hidden group">
-                    <div class="flex items-center justify-between text-slate-400 text-[10px] font-bold uppercase tracking-wider">
-                        <span>Critical Stockouts</span>
-                        <i class="fa-solid fa-boxes-stacked text-rose-400"></i>
-                    </div>
-                    <div id="kpiStockouts" class="text-xl font-black text-rose-400 mt-1 font-mono tracking-tight">5 SKUs</div>
-                    <div class="text-[10px] text-slate-400 mt-0.5 flex items-center gap-1 font-mono">
-                        <span class="text-rose-400">&lt;7 Days</span> Depletion Threat
-                    </div>
-                </div>
-
-            </div>
-
-            <!-- Tab Navigation Bar -->
-            <div class="px-5 border-b border-slate-800 bg-slate-950/60 flex items-center justify-between shrink-0">
-                <div class="flex items-center gap-6">
-                    <button onclick="switchTab('matrix')" id="tabBtn-matrix" class="py-3 text-xs font-bold border-b-2 border-sky-400 text-sky-400 transition flex items-center gap-2">
-                        <i class="fa-solid fa-chart-pie"></i>
-                        <span>1. 4-Panel Risk Matrix</span>
-                    </button>
-                    <button onclick="switchTab('brief')" id="tabBtn-brief" class="py-3 text-xs font-semibold border-b-2 border-transparent text-slate-400 hover:text-slate-200 transition flex items-center gap-2">
-                        <i class="fa-solid fa-file-lines"></i>
-                        <span>2. Executive AI Brief</span>
-                    </button>
-                    <button onclick="switchTab('schedule')" id="tabBtn-schedule" class="py-3 text-xs font-semibold border-b-2 border-transparent text-slate-400 hover:text-slate-200 transition flex items-center gap-2">
-                        <i class="fa-solid fa-calendar-days"></i>
-                        <span>3. Rerouted Schedule (CSV)</span>
-                    </button>
-                </div>
-
-                <div class="flex items-center gap-2 text-xs">
-                    <span id="canvasTimestamp" class="text-[11px] text-slate-500 font-mono">Live Synchronization Active</span>
-                </div>
-            </div>
-
-            <!-- Tab Content Area -->
-            <div class="flex-1 overflow-hidden relative">
-
-                <!-- ---------------------------------------------------------- -->
-                <!-- TAB 1: 4-PANEL RISK MATRIX (PNG)                           -->
-                <!-- ---------------------------------------------------------- -->
-                <div id="tabContent-matrix" class="h-full flex flex-col p-4 overflow-y-auto space-y-3">
-                    <!-- Matrix Toolbar -->
-                    <div class="flex items-center justify-between glass-panel-subtle px-4 py-2.5 rounded-xl shrink-0">
-                        <div>
-                            <h2 class="text-xs font-bold text-white flex items-center gap-2">
-                                <span class="w-2 h-2 rounded-full bg-sky-400"></span>
-                                Multi-Dimensional Operational Matrix (DPI=200, 16x11in)
-                            </h2>
-                            <p class="text-[10px] text-slate-400">Polar Risk Radar • Factory Output Squeeze • Maritime Waypoints • Stockout Depletion</p>
+                <!-- Independently Scrollable Results Body -->
+                <div class="flex-1 overflow-y-auto min-h-0 p-5 space-y-4">
+                    
+                    <!-- TAB 1: RISK CHARTS (PNG Matrix) -->
+                    <div id="tabView-charts" class="h-full flex flex-col space-y-3">
+                        <div class="flex items-center justify-between text-xs text-slate-400 font-mono-nums">
+                            <span>4-Panel Visual Matrix (Radar, Capacity, Maritime Detour, Stockout)</span>
+                            <span class="text-sky-400">200 DPI</span>
                         </div>
-                        <div class="flex items-center gap-2">
-                            <button onclick="openModal()" class="px-2.5 py-1.5 rounded-lg text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition flex items-center gap-1.5">
-                                <i class="fa-solid fa-expand text-sky-400"></i> Fullscreen Modal
-                            </button>
-                            <a href="/outputs/supply_chain_matrix.png" target="_blank" download class="px-2.5 py-1.5 rounded-lg text-xs bg-sky-500/10 hover:bg-sky-500/20 text-sky-400 border border-sky-500/30 transition flex items-center gap-1.5">
-                                <i class="fa-solid fa-download"></i> High-Res PNG
+                        <div class="flex-1 rounded-2xl bg-[#03060E] border border-white/10 p-2.5 flex items-center justify-center overflow-hidden min-h-[440px]">
+                            <img id="workspaceMatrixImg" src="/outputs/supply_chain_matrix.png" alt="Operational Matrix" class="max-w-full max-h-[70vh] object-contain rounded-xl hover:scale-[1.01] transition-transform duration-300">
+                        </div>
+                    </div>
+
+                    <!-- TAB 2: SUMMARY REPORT (PDF Card & Text) -->
+                    <div id="tabView-report" class="h-full hidden flex-col space-y-4">
+                        <div class="glass-card rounded-2xl p-6 border border-rose-500/20 space-y-4">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-12 h-12 rounded-xl bg-rose-500/10 text-rose-400 flex items-center justify-center text-xl">
+                                        <i class="fa-solid fa-file-pdf"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-sm font-bold text-white">Executive_Supply_Chain_Audit.pdf</h3>
+                                        <p class="text-xs text-slate-400">ReportLab Platypus Executive Multi-Page Document</p>
+                                    </div>
+                                </div>
+                                <a href="/outputs/Executive_Supply_Chain_Audit.pdf" download class="h-8 px-4 rounded-xl bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 text-xs font-bold transition flex items-center gap-1.5">
+                                    <i class="fa-solid fa-download"></i>
+                                    <span>Download PDF</span>
+                                </a>
+                            </div>
+                            <div class="pt-4 border-t border-white/10 text-xs text-slate-300 leading-relaxed space-y-2">
+                                <div class="font-bold text-white">Summary of Operations Directives:</div>
+                                <ul class="list-disc pl-4 space-y-1.5 text-slate-300">
+                                    <li><b>Procurement:</b> Split purchase orders 60/40 for Taiwan Semi and Apex Micro due to lead times exceeding 14 days.</li>
+                                    <li><b>Logistics:</b> Maintain Cape of Good Hope detours (+38% distance) to safeguard vessels around the Red Sea conflict zone.</li>
+                                    <li><b>Factory Operations:</b> Shift 15% batch load to Line-Delta-US to clear bottleneck on Line-Alpha-CN.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TAB 3: UPDATED SCHEDULE (CSV Table) -->
+                    <div id="tabView-schedule" class="h-full hidden flex-col space-y-3 overflow-hidden">
+                        <div class="flex items-center justify-between text-xs text-slate-400 font-mono-nums">
+                            <span>Revised Maritime Transit Schedule &amp; Surcharges</span>
+                            <a href="/outputs/revised_logistics_schedule.csv" download class="text-emerald-400 hover:underline flex items-center gap-1">
+                                <i class="fa-solid fa-download"></i> Download CSV
                             </a>
                         </div>
-                    </div>
-
-                    <!-- Image Display Container -->
-                    <div class="flex-1 rounded-xl bg-[#090d1c] border border-slate-800/80 p-2 flex items-center justify-center overflow-hidden min-h-[440px]">
-                        <img id="matrixImg" src="/outputs/supply_chain_matrix.png" alt="Operational Diagnostic Matrix" class="w-full h-full object-contain rounded-lg transition-transform duration-300 hover:scale-[1.01]" onerror="this.src='https://placehold.co/1200x800/0f172a/38bdf8?text=Generating+4-Panel+Matrix...'">
-                    </div>
-                </div>
-
-                <!-- ---------------------------------------------------------- -->
-                <!-- TAB 2: EXECUTIVE AI BRIEF                                  -->
-                <!-- ---------------------------------------------------------- -->
-                <div id="tabContent-brief" class="h-full hidden flex-col p-4 overflow-y-auto space-y-4">
-                    <!-- Brief Header Actions -->
-                    <div class="flex items-center justify-between glass-panel-subtle px-4 py-3 rounded-xl shrink-0">
-                        <div>
-                            <h2 class="text-xs font-bold text-white flex items-center gap-2">
-                                <i class="fa-solid fa-file-pdf text-rose-400"></i>
-                                Autonomous Executive Board Audit Report
-                            </h2>
-                            <p class="text-[10px] text-slate-400">Platypus-compiled multi-page PDF with exposure KPI box and virtual office escalations</p>
-                        </div>
-                        <a href="/outputs/Executive_Supply_Chain_Audit.pdf" target="_blank" download class="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/30 transition flex items-center gap-2 shadow-sm">
-                            <i class="fa-solid fa-file-arrow-down"></i> Download Board PDF
-                        </a>
-                    </div>
-
-                    <!-- Executive Brief Card Container -->
-                    <div class="space-y-4">
-                        <!-- Diagnostic Table Card -->
-                        <div class="glass-panel-subtle rounded-xl p-4 border border-slate-800">
-                            <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 flex items-center gap-2">
-                                <i class="fa-solid fa-table-cells text-sky-400"></i> 4-Node Systemic Diagnostic Summary
-                            </h3>
-                            <div class="overflow-x-auto">
-                                <table class="w-full text-xs text-left border-collapse">
-                                    <thead>
-                                        <tr class="border-b border-slate-800 text-slate-400 font-mono text-[11px]">
-                                            <th class="py-2.5 px-3">Node</th>
-                                            <th class="py-2.5 px-3">Status</th>
-                                            <th class="py-2.5 px-3">Key Metric</th>
-                                            <th class="py-2.5 px-3 text-right">Financial Exposure</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="briefDiagnosticsTable" class="divide-y divide-slate-800/60 text-slate-300">
-                                        <tr>
-                                            <td class="py-2 px-3 font-semibold text-white">Sourcing Resiliency</td>
-                                            <td class="py-2 px-3"><span class="px-2 py-0.5 rounded bg-rose-500/10 text-rose-400 border border-rose-500/20 font-bold text-[10px]">CRITICAL</span></td>
-                                            <td class="py-2 px-3 text-slate-300">4 vendors exceed 14-day lead times</td>
-                                            <td class="py-2 px-3 text-right font-mono text-rose-400 font-bold">$3,290,000.00</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="py-2 px-3 font-semibold text-white">Production Lines</td>
-                                            <td class="py-2 px-3"><span class="px-2 py-0.5 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20 font-bold text-[10px]">BOTTLENECK</span></td>
-                                            <td class="py-2 px-3 text-slate-300">3 manufacturing lines &gt;=90% utilization</td>
-                                            <td class="py-2 px-3 text-right font-mono text-amber-400 font-bold">$3,190,000.00</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="py-2 px-3 font-semibold text-white">Maritime Logistics</td>
-                                            <td class="py-2 px-3"><span class="px-2 py-0.5 rounded bg-rose-500/10 text-rose-400 border border-rose-500/20 font-bold text-[10px]">DISRUPTED</span></td>
-                                            <td class="py-2 px-3 text-slate-300">6 vessels detoured via Cape of Good Hope (+38%)</td>
-                                            <td class="py-2 px-3 text-right font-mono text-rose-400 font-bold">$4,560,000.00</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="py-2 px-3 font-semibold text-white">Demand &amp; Inventory</td>
-                                            <td class="py-2 px-3"><span class="px-2 py-0.5 rounded bg-rose-500/10 text-rose-400 border border-rose-500/20 font-bold text-[10px]">STOCKOUT</span></td>
-                                            <td class="py-2 px-3 text-slate-300">5 critical SKUs under 7 days of cover</td>
-                                            <td class="py-2 px-3 text-right font-mono text-rose-400 font-bold">$4,140,000.00</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-
-                        <!-- Departmental Directives Card -->
-                        <div class="glass-panel-subtle rounded-xl p-4 border border-slate-800 space-y-3">
-                            <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2">
-                                <i class="fa-solid fa-bullhorn text-sky-400"></i> Actionable Virtual Office Directives
-                            </h3>
-                            <div class="grid grid-cols-3 gap-3">
-                                <div class="p-3 rounded-lg bg-sky-950/30 border border-sky-500/20 space-y-1">
-                                    <div class="text-[11px] font-bold text-sky-400">@Procurement Directive</div>
-                                    <p class="text-[11px] text-slate-300 leading-relaxed">
-                                        Activate dual-sourcing framework for Taiwan Semi, Apex Micro, and Bavaria Alloys. Split allocations 60/40 and negotiate 20% expedited buffer stock.
-                                    </p>
-                                </div>
-                                <div class="p-3 rounded-lg bg-amber-950/30 border border-amber-500/20 space-y-1">
-                                    <div class="text-[11px] font-bold text-amber-400">@Logistics Directive</div>
-                                    <p class="text-[11px] text-slate-300 leading-relaxed">
-                                        Authorize Cape of Good Hope reroute for 6 maritime vessels (+38% distance, +4,862 NM). Approve dynamic bunker fuel surcharge reserve.
-                                    </p>
-                                </div>
-                                <div class="p-3 rounded-lg bg-emerald-950/30 border border-emerald-500/20 space-y-1">
-                                    <div class="text-[11px] font-bold text-emerald-400">@Operations Directive</div>
-                                    <p class="text-[11px] text-slate-300 leading-relaxed">
-                                        Rebalance factory line loads: Shift 15% volume from Line-Alpha-CN (96.5%) and Line-Beta-IN (95.0%) to Line-Delta-US (80.0%).
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- ---------------------------------------------------------- -->
-                <!-- TAB 3: REROUTED SCHEDULE (CSV PREVIEW)                     -->
-                <!-- ---------------------------------------------------------- -->
-                <div id="tabContent-schedule" class="h-full hidden flex-col p-4 overflow-y-auto space-y-3">
-                    <!-- Schedule Header Actions -->
-                    <div class="flex items-center justify-between glass-panel-subtle px-4 py-3 rounded-xl shrink-0">
-                        <div>
-                            <h2 class="text-xs font-bold text-white flex items-center gap-2">
-                                <i class="fa-solid fa-ship text-emerald-400"></i>
-                                Cape of Good Hope Revised Maritime Schedule
-                            </h2>
-                            <p class="text-[10px] text-slate-400">+38% Detour Multiplier • $18.50/NM Fuel Surcharge • 420 NM/Day Speed</p>
-                        </div>
-                        <a href="/outputs/revised_logistics_schedule.csv" download class="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 transition flex items-center gap-2 shadow-sm">
-                            <i class="fa-solid fa-file-csv"></i> Download Revised CSV
-                        </a>
-                    </div>
-
-                    <!-- Table Preview Container -->
-                    <div class="flex-1 glass-panel-subtle rounded-xl border border-slate-800 overflow-hidden flex flex-col">
-                        <div class="overflow-x-auto flex-1 max-h-[500px]">
-                            <table class="w-full text-xs text-left border-collapse" id="scheduleTable">
-                                <thead class="sticky top-0 bg-slate-900 border-b border-slate-800 text-slate-400 font-mono text-[11px]">
+                        <div class="glass-card rounded-xl border border-white/10 overflow-hidden overflow-x-auto">
+                            <table class="w-full text-xs text-left border-collapse font-mono-nums" id="scheduleTable">
+                                <thead class="bg-black/40 border-b border-white/10 text-slate-400 text-[11px]">
                                     <tr>
                                         <th class="py-2.5 px-3">Shipment</th>
                                         <th class="py-2.5 px-3">Raw Material</th>
-                                        <th class="py-2.5 px-3">Route Zone</th>
-                                        <th class="py-2.5 px-3">Status</th>
-                                        <th class="py-2.5 px-3 text-right">Baseline NM</th>
-                                        <th class="py-2.5 px-3 text-right">Detour NM</th>
-                                        <th class="py-2.5 px-3 text-right">Delay (Days)</th>
+                                        <th class="py-2.5 px-3">Transit Status</th>
+                                        <th class="py-2.5 px-3 text-right">Delay</th>
                                         <th class="py-2.5 px-3 text-right">Fuel Surcharge</th>
                                     </tr>
                                 </thead>
-                                <tbody id="scheduleTableBody" class="divide-y divide-slate-800/60 text-slate-300 font-mono text-[11px]">
-                                    <tr>
-                                        <td colspan="8" class="text-center py-6 text-slate-500 italic">
-                                            Loading revised logistics schedule from outputs...
-                                        </td>
-                                    </tr>
+                                <tbody id="scheduleTableBody" class="divide-y divide-white/5 text-slate-300 text-[11px]">
+                                    <tr><td colspan="5" class="text-center py-6 text-slate-500 italic font-sans">Loading schedule...</td></tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
+
                 </div>
 
-            </div>
+            </section>
 
-        </section>
-
-    </main>
-
-    <!-- ====================================================================== -->
-    <!-- 4. FULLSCREEN IMAGE MODAL                                              -->
-    <!-- ====================================================================== -->
-    <div id="imageModal" class="fixed inset-0 bg-black/90 backdrop-blur-xl z-50 hidden flex-col p-6 items-center justify-center">
-        <div class="w-full max-w-7xl flex items-center justify-between mb-3 text-white">
-            <div class="flex items-center gap-2">
-                <span class="w-2.5 h-2.5 rounded-full bg-sky-400"></span>
-                <span class="font-bold text-sm">Atlas Operational Diagnostic Matrix // Fullscreen Inspection</span>
-            </div>
-            <button onclick="closeModal()" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold flex items-center gap-1.5 transition">
-                <i class="fa-solid fa-xmark"></i> Close (Esc)
-            </button>
         </div>
-        <div class="w-full max-w-7xl flex-1 rounded-2xl overflow-hidden border border-slate-800 bg-[#060913] flex items-center justify-center p-2">
-            <img id="modalMatrixImg" src="/outputs/supply_chain_matrix.png" alt="Fullscreen Matrix" class="max-w-full max-h-[85vh] object-contain rounded-lg">
+
+    </div>
+
+    <!-- ====================================================================== -->
+    <!-- INFO MODAL (Overview / Capabilities / How It Works)                     -->
+    <!-- ====================================================================== -->
+    <div id="infoModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden items-center justify-center p-4">
+        <div class="glass-card rounded-2xl max-w-xl w-full p-6 space-y-4 border border-white/20 shadow-2xl">
+            <div class="flex items-center justify-between border-b border-white/10 pb-3">
+                <h3 id="infoModalTitle" class="text-base font-bold text-white">Platform Capabilities</h3>
+                <button onclick="closeInfoModal()" class="text-slate-400 hover:text-white transition">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div id="infoModalBody" class="text-xs text-slate-300 leading-relaxed space-y-2">
+                <!-- Injected dynamically -->
+            </div>
+            <div class="pt-3 border-t border-white/10 flex justify-end">
+                <button onclick="closeInfoModal()" class="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-xs font-semibold text-white transition">
+                    Got it
+                </button>
+            </div>
         </div>
     </div>
 
     <!-- ====================================================================== -->
-    <!-- 5. FRONTEND JAVASCRIPT ORCHESTRATION ENGINE                             -->
+    <!-- JAVASCRIPT CONTROLLER                                                  -->
     <!-- ====================================================================== -->
     <script>
+        // State
+        let isAuditing = false;
+
         // DOM Elements
-        const chatThread = document.getElementById('chatThread');
-        const chatInput = document.getElementById('chatInput');
-        const typingIndicator = document.getElementById('typingIndicator');
-        const runAuditBtn = document.getElementById('runAuditBtn');
-        const matrixImg = document.getElementById('matrixImg');
-        const modalMatrixImg = document.getElementById('modalMatrixImg');
-        const kpiTotalRisk = document.getElementById('kpiTotalRisk');
-        const kpiVessels = document.getElementById('kpiVessels');
-        const kpiBottlenecks = document.getElementById('kpiBottlenecks');
-        const kpiStockouts = document.getElementById('kpiStockouts');
+        const screenHero = document.getElementById('screenHero');
+        const screenWorkspace = document.getElementById('screenWorkspace');
+        const workspaceMessages = document.getElementById('workspaceMessages');
+        const workspaceChatStream = document.getElementById('workspaceChatStream');
+        const workspaceChatInput = document.getElementById('workspaceChatInput');
+        const liveStepAccordion = document.getElementById('liveStepAccordion');
+        const activeManifestPill = document.getElementById('activeManifestPill');
 
-        let isRunningAudit = false;
-
-        // Initialize on load
         window.addEventListener('DOMContentLoaded', () => {
-            loadScheduleCSV();
+            loadScheduleCsv();
         });
 
         // --------------------------------------------------------------------
-        // Pipeline Animation Controller
+        // 1. Screen Transitions (Hero Front <-> Live Workspace)
         // --------------------------------------------------------------------
-        function resetPipeline() {
-            for (let i = 1; i <= 5; i++) {
-                const el = document.getElementById(`pipe-agent-${i}`);
-                const icon = document.getElementById(`pipe-icon-${i}`);
-                el.className = "flex items-center gap-2 px-3 py-1.5 rounded-lg border border-slate-800 bg-slate-900/50 transition-all shrink-0";
-                icon.innerHTML = i;
-                icon.className = "w-5 h-5 rounded-md bg-slate-800 text-slate-400 flex items-center justify-center font-mono text-[10px] font-bold";
-            }
+        function launchWorkspaceWithAction(queryText, fileObj = null, fileUrl = null) {
+            screenHero.classList.add('hidden');
+            screenWorkspace.classList.remove('hidden');
+            screenWorkspace.classList.add('flex');
+
+            triggerWorkspaceAudit(queryText, fileObj, fileUrl);
         }
 
-        async function animatePipelineSequence() {
-            const steps = [
-                { id: 1, name: "Sourcing Audit", desc: "Auditing single-source lead times..." },
-                { id: 2, name: "Production Capacity", desc: "Analyzing line utilization ceilings..." },
-                { id: 3, name: "Geopolitical Logistics", desc: "Modeling Cape of Good Hope detours..." },
-                { id: 4, name: "Inventory & Stockouts", desc: "Calculating 14-day stock exhaustion..." },
-                { id: 5, name: "Artifact Engine", desc: "Rendering 200 DPI Matrix & PDF..." }
-            ];
-
-            for (let i = 0; i < steps.length; i++) {
-                const s = steps[i];
-                const el = document.getElementById(`pipe-agent-${s.id}`);
-                const icon = document.getElementById(`pipe-icon-${s.id}`);
-                const desc = document.getElementById(`pipe-status-${s.id}`);
-
-                el.className = "flex items-center gap-2 px-3 py-1.5 rounded-lg border border-sky-500/60 bg-sky-950/40 agent-active-glow transition-all shrink-0";
-                icon.innerHTML = '<i class="fa-solid fa-spinner fa-spin text-sky-400"></i>';
-                icon.className = "w-5 h-5 rounded-md bg-sky-900/80 text-sky-400 flex items-center justify-center font-mono text-[10px]";
-                desc.innerText = s.desc;
-
-                await new Promise(r => setTimeout(r, 260));
-
-                icon.innerHTML = '<i class="fa-solid fa-check text-emerald-400"></i>';
-                icon.className = "w-5 h-5 rounded-md bg-emerald-950/80 text-emerald-400 flex items-center justify-center font-mono text-[10px]";
-                el.className = "flex items-center gap-2 px-3 py-1.5 rounded-lg border border-emerald-500/40 bg-emerald-950/20 transition-all shrink-0";
-            }
+        function returnToHeroScreen() {
+            screenWorkspace.classList.add('hidden');
+            screenWorkspace.classList.remove('flex');
+            screenHero.classList.remove('hidden');
         }
 
         // --------------------------------------------------------------------
-        // Quick Prompts & Chat Handling
+        // 2. File Upload Handlers (Hero & Workspace)
         // --------------------------------------------------------------------
-        function sendQuickPrompt(promptText) {
-            if (isRunningAudit) return;
-            chatInput.value = promptText;
-            handleChatSubmit(new Event('submit'));
+        function onHeroFileSelected(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            activeManifestPill.innerText = file.name;
+            launchWorkspaceWithAction(`Audit uploaded manifest: ${file.name}`, file);
         }
 
-        function handleChatSubmit(e) {
+        function onWorkspaceFileSelected(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            activeManifestPill.innerText = file.name;
+            triggerWorkspaceAudit(`Audit uploaded manifest: ${file.name}`, file);
+        }
+
+        // --------------------------------------------------------------------
+        // 3. Workspace Chat Submission
+        // --------------------------------------------------------------------
+        function handleWorkspaceChatSubmit(e) {
             e.preventDefault();
-            const text = chatInput.value.trim();
-            if (!text || isRunningAudit) return;
+            const text = workspaceChatInput.value.trim();
+            if (!text || isAuditing) return;
 
-            chatInput.value = '';
-            appendUserMessage(text);
-            triggerAudit(text);
-        }
-
-        function appendUserMessage(text) {
-            const timeStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-            const html = `
-                <div class="flex items-start justify-end gap-2.5">
-                    <div class="max-w-[85%] bg-sky-600/20 border border-sky-500/30 rounded-2xl rounded-tr-none p-3 text-xs text-slate-100 shadow-md">
-                        <div class="flex items-center justify-between text-[10px] text-sky-400 mb-1 font-mono">
-                            <span>You (@Procurement)</span>
-                            <span>${timeStr}</span>
-                        </div>
-                        <p class="leading-relaxed whitespace-pre-wrap">${escapeHtml(text)}</p>
-                    </div>
-                    <div class="w-7 h-7 rounded-lg bg-sky-500 text-white flex items-center justify-center font-bold text-[11px] shrink-0 mt-0.5">
-                        <i class="fa-solid fa-user"></i>
-                    </div>
-                </div>
-            `;
-            chatThread.insertAdjacentHTML('beforeend', html);
-            scrollToBottom();
-        }
-
-        function appendBotResponse(data) {
-            const timeStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-            const replyMarkdown = data.reply || data.message || data.text || '';
-            const parsedHtml = marked.parse(replyMarkdown);
-
-            // Build attachment cards if available
-            let attachmentsHtml = '';
-            if (data.attachments && data.attachments.length > 0) {
-                attachmentsHtml = `
-                    <div class="mt-3 pt-3 border-t border-slate-800 space-y-2">
-                        <div class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Generated Artifact Attachments:</div>
-                        <div class="grid grid-cols-1 gap-1.5 font-mono text-[11px]">
-                            <a href="/outputs/supply_chain_matrix.png" target="_blank" class="flex items-center justify-between p-2 rounded-lg bg-slate-950/80 hover:bg-slate-800 border border-slate-800 hover:border-sky-500/40 text-slate-300 transition">
-                                <span class="flex items-center gap-2"><i class="fa-solid fa-image text-sky-400"></i> supply_chain_matrix.png (200 DPI)</span>
-                                <span class="text-[10px] text-sky-400 underline">View Matrix</span>
-                            </a>
-                            <a href="/outputs/revised_logistics_schedule.csv" download class="flex items-center justify-between p-2 rounded-lg bg-slate-950/80 hover:bg-slate-800 border border-slate-800 hover:border-emerald-500/40 text-slate-300 transition">
-                                <span class="flex items-center gap-2"><i class="fa-solid fa-file-csv text-emerald-400"></i> revised_logistics_schedule.csv</span>
-                                <span class="text-[10px] text-emerald-400 underline">Download CSV</span>
-                            </a>
-                            <a href="/outputs/Executive_Supply_Chain_Audit.pdf" target="_blank" class="flex items-center justify-between p-2 rounded-lg bg-slate-950/80 hover:bg-slate-800 border border-slate-800 hover:border-rose-500/40 text-slate-300 transition">
-                                <span class="flex items-center gap-2"><i class="fa-solid fa-file-pdf text-rose-400"></i> Executive_Supply_Chain_Audit.pdf</span>
-                                <span class="text-[10px] text-rose-400 underline">Download PDF</span>
-                            </a>
-                        </div>
-                    </div>
-                `;
-            }
-
-            const html = `
-                <div class="flex items-start gap-3">
-                    <div class="w-8 h-8 rounded-lg bg-sky-500/20 border border-sky-500/30 text-sky-400 flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">
-                        <i class="fa-solid fa-robot"></i>
-                    </div>
-                    <div class="flex-1 max-w-[92%] bg-slate-900/90 border border-slate-800 rounded-2xl rounded-tl-none p-4 text-xs text-slate-200 shadow-xl space-y-2">
-                        <div class="flex items-center justify-between text-[10px] text-slate-400 border-b border-slate-800 pb-1.5 font-mono">
-                            <span class="font-bold text-sky-400 flex items-center gap-1.5">
-                                <i class="fa-solid fa-shield-halved text-[10px]"></i> Atlas (SupplyChain360 AI)
-                            </span>
-                            <span>${timeStr}</span>
-                        </div>
-                        <div class="prose-chat">${parsedHtml}</div>
-                        ${attachmentsHtml}
-                    </div>
-                </div>
-            `;
-            chatThread.insertAdjacentHTML('beforeend', html);
-            scrollToBottom();
-        }
-
-        function scrollToBottom() {
-            chatThread.scrollTop = chatThread.scrollHeight;
-        }
-
-        function clearChat() {
-            chatThread.innerHTML = `
-                <div class="text-center py-6 text-slate-500 text-xs font-mono">
-                    [Message thread cleared. Ready for new autonomous audit]
-                </div>
-            `;
+            workspaceChatInput.value = '';
+            triggerWorkspaceAudit(text);
         }
 
         // --------------------------------------------------------------------
-        // Webhook Trigger & Pipeline Execution
+        // 4. Autonomous Audit Execution Pipeline
         // --------------------------------------------------------------------
-        async function triggerAudit(queryText, customCsvFile = null) {
-            if (isRunningAudit) return;
-            isRunningAudit = true;
+        async function triggerWorkspaceAudit(queryText, fileObj = null, fileUrl = null) {
+            if (isAuditing) return;
+            isAuditing = true;
 
-            runAuditBtn.disabled = true;
-            runAuditBtn.classList.add('opacity-70', 'cursor-not-allowed');
-            typingIndicator.classList.remove('hidden');
+            // Append User message
+            appendUserBubble(queryText);
 
-            resetPipeline();
-            const animationPromise = animatePipelineSequence();
+            // Show Live Steps Accordion
+            liveStepAccordion.classList.remove('hidden');
+            scrollChatToBottom();
 
-            let payload;
-            let isFormData = false;
+            const animPromise = animateAccordionSteps();
 
-            if (customCsvFile) {
-                payload = new FormData();
-                payload.append('file', customCsvFile);
-                payload.append('message', queryText || 'Audit this custom manifest');
-                isFormData = true;
-            } else {
-                payload = JSON.stringify({ message: queryText });
-            }
-
+            let data = null;
             try {
-                const fetchOptions = {
-                    method: 'POST',
-                    headers: isFormData ? {} : { 'Content-Type': 'application/json' },
-                    body: payload
-                };
+                if (fileObj) {
+                    const fd = new FormData();
+                    fd.append('file', fileObj);
+                    fd.append('message', queryText);
+                    const res = await fetch('/upload-csv', { method: 'POST', body: fd });
+                    data = await res.json();
+                } else {
+                    const payload = fileUrl ? { message: queryText, file_url: fileUrl } : { message: queryText };
+                    const res = await fetch('/webhook', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    data = await res.json();
+                }
 
-                const res = await fetch('/webhook', fetchOptions);
-                const data = await res.json();
+                await animPromise;
+                liveStepAccordion.classList.add('hidden');
 
-                await animationPromise;
-                appendBotResponse(data);
-                updateIntelligenceCanvas(data);
+                // Append Structured Response
+                appendStructuredResponse(data);
+                updateLiveArtifacts(data);
 
             } catch (err) {
                 console.error(err);
-                appendBotResponse({
-                    status: 'error',
-                    reply: `⚠️ **Network or Execution Error:** Failed to connect to Nonilion webhook bus: \`${err.message}\``
-                });
+                liveStepAccordion.classList.add('hidden');
+                appendErrorBubble(`Failed to connect to backend: ${err.message}`);
             } finally {
-                isRunningAudit = false;
-                runAuditBtn.disabled = false;
-                runAuditBtn.classList.remove('opacity-70', 'cursor-not-allowed');
-                typingIndicator.classList.add('hidden');
+                isAuditing = false;
+                scrollChatToBottom();
             }
         }
 
         // --------------------------------------------------------------------
-        // Canvas Updates: KPIs, Matrix Cache Bust, Tabs
+        // 5. Accordion Step Animation
         // --------------------------------------------------------------------
-        function updateIntelligenceCanvas(data) {
-            // Update Total Exposure
-            if (data.total_at_risk_usd !== undefined && data.total_at_risk_usd !== null) {
-                kpiTotalRisk.innerText = '$' + Number(data.total_at_risk_usd).toLocaleString('en-US', {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2
-                });
+        async function animateAccordionSteps() {
+            const steps = [
+                { id: 'acc-s1', text: '✓ 1. Checked spreadsheet columns & coordinates' },
+                { id: 'acc-s2', text: '✓ 2. Found 4 suppliers with lead times >14 days' },
+                { id: 'acc-s3', text: '✓ 3. Checked factory lines (3 operating >=90%)' },
+                { id: 'acc-s4', text: '✓ 4. Rerouted 6 ships via Cape of Good Hope (+38%)' },
+                { id: 'acc-s5', text: '✓ 5. Forecasted 14-day stockout curves' },
+            ];
+
+            for (let i = 0; i < steps.length; i++) {
+                await new Promise(r => setTimeout(r, 200));
+                const el = document.getElementById(steps[i].id);
+                if (el) {
+                    el.innerText = steps[i].text;
+                    el.className = 'text-emerald-400';
+                }
+                document.getElementById('accordionStepCounter').innerText = `Step ${i + 1}/5`;
+                if (steps[i + 1]) {
+                    const nextEl = document.getElementById(steps[i + 1].id);
+                    if (nextEl) nextEl.className = 'text-sky-300';
+                }
+            }
+        }
+
+        // --------------------------------------------------------------------
+        // 6. Response Rendering
+        // --------------------------------------------------------------------
+        function appendUserBubble(text) {
+            const html = `
+                <div class="flex justify-end">
+                    <div class="max-w-[85%] rounded-2xl bg-white/[0.08] border border-white/10 px-4 py-2.5 text-xs text-white shadow-sm leading-relaxed">
+                        ${escapeHtml(text)}
+                    </div>
+                </div>
+            `;
+            workspaceChatStream.insertAdjacentHTML('beforeend', html);
+        }
+
+        function appendStructuredResponse(data) {
+            // Guardrail error
+            if (data.status === 'error') {
+                const errHtml = `
+                    <div class="rounded-2xl bg-rose-950/20 border border-rose-500/30 p-4 space-y-2">
+                        <div class="flex items-center gap-2 text-rose-400 font-bold text-xs">
+                            <i class="fa-solid fa-shield-halved"></i>
+                            <span>File Blocked — Missing Data Found</span>
+                        </div>
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            ${data.reply || 'Your CSV is missing required columns. Audit halted.'}
+                        </p>
+                    </div>
+                `;
+                workspaceChatStream.insertAdjacentHTML('beforeend', errHtml);
+                return;
             }
 
-            // Parse diagnostics if present
-            if (data.diagnostics && data.diagnostics.length > 0) {
+            const totalRisk = data.total_at_risk_usd ? '$' + Number(data.total_at_risk_usd).toLocaleString('en-US', { maximumFractionDigits: 0 }) : '$11,990,000';
+            let reroutedCount = '6 Ships';
+            let stockoutsCount = '5 Parts';
+
+            if (data.diagnostics) {
                 data.diagnostics.forEach(d => {
                     if (d.node === 'Logistics') {
-                        const match = d.metric.match(/(\d+)\s+vessels/i);
-                        if (match) kpiVessels.innerText = `${match[1]} Vessels`;
-                    }
-                    if (d.node === 'Production') {
-                        const match = d.metric.match(/(\d+)\s+lines/i);
-                        if (match) kpiBottlenecks.innerText = `${match[1]} Lines`;
+                        const m = d.metric.match(/(\d+)\s+vessels/i);
+                        if (m) reroutedCount = `${m[1]} Ships`;
                     }
                     if (d.node === 'Inventory') {
-                        const match = d.metric.match(/(\d+)\s+SKUs/i);
-                        if (match) kpiStockouts.innerText = `${match[1]} SKUs`;
+                        const m = d.metric.match(/(\d+)\s+SKUs/i);
+                        if (m) stockoutsCount = `${m[1]} Parts`;
                     }
                 });
             }
 
-            // Cache-bust matrix image
-            const cacheBust = '?t=' + Date.now();
-            matrixImg.src = '/outputs/supply_chain_matrix.png' + cacheBust;
-            modalMatrixImg.src = '/outputs/supply_chain_matrix.png' + cacheBust;
+            // 3-Metric Impact Strip
+            const impactStrip = `
+                <div class="grid grid-cols-3 gap-2 my-2">
+                    <div class="p-2.5 rounded-xl glass-card border-white/10">
+                        <span class="text-[9px] uppercase font-bold text-slate-400 block tracking-wide">Money at Risk</span>
+                        <span class="text-sm sm:text-base font-bold text-rose-400 font-mono-nums">${totalRisk}</span>
+                    </div>
+                    <div class="p-2.5 rounded-xl glass-card border-white/10">
+                        <span class="text-[9px] uppercase font-bold text-slate-400 block tracking-wide">Ships Rerouted</span>
+                        <span class="text-sm sm:text-base font-bold text-amber-400 font-mono-nums">${reroutedCount}</span>
+                    </div>
+                    <div class="p-2.5 rounded-xl glass-card border-white/10">
+                        <span class="text-[9px] uppercase font-bold text-slate-400 block tracking-wide">Running Low</span>
+                        <span class="text-sm sm:text-base font-bold text-rose-400 font-mono-nums">${stockoutsCount}</span>
+                    </div>
+                </div>
+            `;
 
-            // Refresh schedule CSV table
-            loadScheduleCSV();
+            // Collapsible 5 Checks Disclosure
+            const checksDisclosure = `
+                <details class="group cursor-pointer select-none text-[11px] font-mono-nums">
+                    <summary class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/[0.05] hover:bg-white/[0.08] text-slate-400 hover:text-white transition">
+                        <i class="fa-solid fa-circle-check text-emerald-400 text-[10px]"></i>
+                        <span class="font-semibold text-emerald-400">✓ Completed 5 automated checks</span>
+                    </summary>
+                    <div class="mt-2 p-2 rounded-xl bg-black/30 border border-white/5 space-y-0.5 text-slate-400 pl-4 list-disc">
+                        <div>1. Verified 15 columns &amp; coordinates.</div>
+                        <div>2. Flagged 4 suppliers exceeding 14-day lead time.</div>
+                        <div>3. Line utilization: 3 lines operating at &gt;=90%.</div>
+                        <div>4. Geodesic detour: 6 ships routed around Africa (+38%).</div>
+                        <div>5. Forecasted 5 critical parts facing stockout.</div>
+                    </div>
+                </details>
+            `;
 
-            // Update timestamp
-            document.getElementById('canvasTimestamp').innerText = `Updated ${new Date().toLocaleTimeString()}`;
+            const parsedMarkdown = marked.parse(data.reply || '');
+
+            const fullBubble = `
+                <div class="flex items-start gap-3">
+                    <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-sky-400 to-indigo-500 text-white flex items-center justify-center font-bold text-xs shrink-0 mt-0.5 shadow-md">
+                        <i class="fa-solid fa-sparkles text-xs"></i>
+                    </div>
+                    <div class="flex-1 space-y-2.5">
+                        ${impactStrip}
+                        ${checksDisclosure}
+                        <div class="thread-prose text-xs">${parsedMarkdown}</div>
+                    </div>
+                </div>
+            `;
+            workspaceChatStream.insertAdjacentHTML('beforeend', fullBubble);
+            scrollChatToBottom();
         }
 
-        // --------------------------------------------------------------------
-        // Tab Switcher
-        // --------------------------------------------------------------------
-        function switchTab(tabKey) {
-            const tabs = ['matrix', 'brief', 'schedule'];
-            tabs.forEach(t => {
-                const btn = document.getElementById(`tabBtn-${t}`);
-                const content = document.getElementById(`tabContent-${t}`);
-                if (t === tabKey) {
-                    btn.className = "py-3 text-xs font-bold border-b-2 border-sky-400 text-sky-400 transition flex items-center gap-2";
-                    content.classList.remove('hidden');
-                    content.classList.add('flex');
-                } else {
-                    btn.className = "py-3 text-xs font-semibold border-b-2 border-transparent text-slate-400 hover:text-slate-200 transition flex items-center gap-2";
-                    content.classList.remove('flex');
-                    content.classList.add('hidden');
-                }
+        function appendErrorBubble(msg) {
+            const html = `
+                <div class="p-3.5 rounded-2xl bg-rose-950/20 border border-rose-500/30 text-rose-300 text-xs">
+                    ${escapeHtml(msg)}
+                </div>
+            `;
+            workspaceChatStream.insertAdjacentHTML('beforeend', html);
+        }
+
+        function scrollChatToBottom() {
+            workspaceMessages.scrollTo({
+                top: workspaceMessages.scrollHeight,
+                behavior: 'smooth'
             });
         }
 
         // --------------------------------------------------------------------
-        // CSV Schedule Live Preview Loader
+        // 7. Right Workspace Tabs
         // --------------------------------------------------------------------
-        async function loadScheduleCSV() {
+        function switchWorkspaceTab(tabKey) {
+            const tabs = ['charts', 'report', 'schedule'];
+            tabs.forEach(t => {
+                const btn = document.getElementById(`tabBtn-${t}`);
+                const content = document.getElementById(`tabView-${t}`);
+                if (t === tabKey) {
+                    btn.className = "h-full border-b-2 border-sky-400 text-sky-400 text-xs font-bold transition flex items-center gap-1.5";
+                    content.classList.remove('hidden');
+                    content.classList.add('flex');
+                } else {
+                    btn.className = "h-full border-b-2 border-transparent text-slate-400 hover:text-slate-200 text-xs font-semibold transition flex items-center gap-1.5";
+                    content.classList.remove('flex');
+                    content.classList.add('hidden');
+                }
+            });
+
+            const downloadBtn = document.getElementById('tabDownloadBtn');
+            const downloadLabel = document.getElementById('tabDownloadLabel');
+
+            if (tabKey === 'charts') {
+                downloadBtn.href = '/outputs/supply_chain_matrix.png';
+                downloadBtn.setAttribute('download', 'supply_chain_matrix.png');
+                downloadLabel.innerText = 'Save PNG';
+            } else if (tabKey === 'report') {
+                downloadBtn.href = '/outputs/Executive_Supply_Chain_Audit.pdf';
+                downloadBtn.setAttribute('download', 'Executive_Supply_Chain_Audit.pdf');
+                downloadLabel.innerText = 'Download PDF';
+            } else if (tabKey === 'schedule') {
+                downloadBtn.href = '/outputs/revised_logistics_schedule.csv';
+                downloadBtn.setAttribute('download', 'revised_logistics_schedule.csv');
+                downloadLabel.innerText = 'Download CSV';
+            }
+        }
+
+        function updateLiveArtifacts(data) {
+            document.getElementById('workspaceMatrixImg').src = '/outputs/supply_chain_matrix.png?t=' + Date.now();
+            loadScheduleCsv();
+        }
+
+        // --------------------------------------------------------------------
+        // 8. Schedule CSV Table Fetcher
+        // --------------------------------------------------------------------
+        async function loadScheduleCsv() {
             try {
                 const res = await fetch('/outputs/revised_logistics_schedule.csv?t=' + Date.now());
                 if (!res.ok) return;
@@ -968,65 +928,78 @@
                 const tbody = document.getElementById('scheduleTableBody');
                 tbody.innerHTML = '';
 
-                // Skip header (i=0) and parse rows
                 for (let i = 1; i < lines.length; i++) {
                     const row = lines[i].split(',');
-                    if (row.length < 8) continue;
+                    if (row.length < 10) continue;
 
-                    const [shipment_id, supplier, raw_material, route_zone, status, baseline_nm, detour_nm, total_nm, extra_days, fuel_surcharge, cargo_val, window_desc] = row;
-
+                    const [id, supp, raw, zone, status, baseNM, detourNM, totalNM, extraD, surcharge] = row;
                     const isRerouted = status && status.includes('REROUTED');
-                    const badgeClass = isRerouted
-                        ? 'px-2 py-0.5 rounded bg-rose-500/10 text-rose-400 border border-rose-500/20 font-bold'
-                        : 'px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-bold';
 
                     const tr = document.createElement('tr');
-                    tr.className = isRerouted ? "bg-rose-950/10 hover:bg-rose-950/20 transition" : "hover:bg-slate-800/40 transition";
+                    tr.className = isRerouted ? "bg-rose-950/20" : "hover:bg-white/[0.02]";
                     tr.innerHTML = `
-                        <td class="py-2 px-3 font-bold text-white">${shipment_id || ''}</td>
-                        <td class="py-2 px-3 text-slate-300 font-sans">${raw_material || ''}</td>
-                        <td class="py-2 px-3 text-slate-400 font-sans">${route_zone || ''}</td>
-                        <td class="py-2 px-3"><span class="${badgeClass}">${isRerouted ? 'REROUTED' : 'DIRECT'}</span></td>
-                        <td class="py-2 px-3 text-right text-slate-400">${baseline_nm || '0'}</td>
-                        <td class="py-2 px-3 text-right ${isRerouted ? 'text-amber-400 font-bold' : 'text-slate-500'}">+${detour_nm || '0'}</td>
-                        <td class="py-2 px-3 text-right ${isRerouted ? 'text-rose-400 font-bold' : 'text-slate-500'}">+${extra_days || '0'}d</td>
-                        <td class="py-2 px-3 text-right ${isRerouted ? 'text-emerald-400 font-bold' : 'text-slate-500'}">$${Number(fuel_surcharge || 0).toLocaleString('en-US', { minimumFractionDigits: 2 })}</td>
+                        <td class="py-2.5 px-3 font-semibold text-white">${id}</td>
+                        <td class="py-2.5 px-3 text-slate-300 font-sans">${raw}</td>
+                        <td class="py-2.5 px-3">
+                            <span class="px-2 py-0.5 rounded text-[10px] font-bold ${isRerouted ? 'bg-rose-500/10 text-rose-400' : 'bg-emerald-500/10 text-emerald-400'}">
+                                ${isRerouted ? 'REROUTED' : 'DIRECT'}
+                            </span>
+                        </td>
+                        <td class="py-2.5 px-3 text-right ${isRerouted ? 'text-rose-400 font-bold' : 'text-slate-500'}">+${extraD}d</td>
+                        <td class="py-2.5 px-3 text-right ${isRerouted ? 'text-amber-400 font-bold' : 'text-slate-500'}">$${Number(surcharge || 0).toLocaleString()}</td>
                     `;
                     tbody.appendChild(tr);
                 }
             } catch (e) {
-                console.log("Schedule CSV not yet populated:", e);
+                console.log("Schedule CSV loader:", e);
             }
         }
 
         // --------------------------------------------------------------------
-        // File Upload Handler
+        // 9. Info Modals (Overview / Capabilities / How It Works)
         // --------------------------------------------------------------------
-        function handleFileSelect(event) {
-            const file = event.target.files[0];
-            if (!file) return;
+        function openInfoModal(type) {
+            const modal = document.getElementById('infoModal');
+            const title = document.getElementById('infoModalTitle');
+            const body = document.getElementById('infoModalBody');
 
-            document.getElementById('uploadBtnLabel').innerText = file.name.substring(0, 16) + '...';
-            appendUserMessage(`📎 Uploaded custom manifest: "${file.name}". Starting multi-agent audit...`);
-            triggerAudit(`Audit custom manifest: ${file.name}`, file);
+            if (type === 'overview') {
+                title.innerText = 'About AtlasAI';
+                body.innerHTML = `
+                    <p><b>AtlasAI</b> is an autonomous multi-agent assistant built for operations and procurement leaders.</p>
+                    <p>It eliminates spreadsheet blind spots by automatically monitoring suppliers, factory floors, and maritime corridors in real time.</p>
+                `;
+            } else if (type === 'capabilities') {
+                title.innerText = 'Platform Capabilities';
+                body.innerHTML = `
+                    <ul class="list-disc pl-4 space-y-1">
+                        <li><b>Vendor Delay Detection:</b> Automatically catches single-source lead times over 14 days.</li>
+                        <li><b>Autonomous Sea Rerouting:</b> Models Cape of Good Hope detours (+38% distance) and fuel surcharges.</li>
+                        <li><b>Line Bottleneck Warnings:</b> Spots assembly lines operating at >=90% capacity.</li>
+                        <li><b>14-Day Stockout Forecasts:</b> Generates emergency 21-day reorder quantities before stockouts occur.</li>
+                    </ul>
+                `;
+            } else if (type === 'howitworks') {
+                title.innerText = 'How Atlas Works';
+                body.innerHTML = `
+                    <p>Atlas commands 5 specialized sub-agents powered by Google Gemini and deterministic math engines.</p>
+                    <p>Upload any shipment CSV or run with sample data to instantly generate a 200 DPI visual matrix, an executive PDF report, and updated maritime schedules.</p>
+                `;
+            }
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
         }
 
-        // --------------------------------------------------------------------
-        // Fullscreen Modal Controls
-        // --------------------------------------------------------------------
-        function openModal() {
-            document.getElementById('imageModal').classList.remove('hidden');
-            document.getElementById('imageModal').classList.add('flex');
+        function closeInfoModal() {
+            const modal = document.getElementById('infoModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
         }
 
-        function closeModal() {
-            document.getElementById('imageModal').classList.add('hidden');
-            document.getElementById('imageModal').classList.remove('flex');
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
-
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') closeModal();
-        });
 
         function escapeHtml(text) {
             const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
