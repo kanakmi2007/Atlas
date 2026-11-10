@@ -1,663 +1,506 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Atlas AI — Autonomous Supply Chain Agent</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <title>Atlas AI — Autonomous Supply Chain Command</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
   <style>
-    :root {
-      --bg-deep: #050918;
-      --bg-panel: #0B1126;
-      --bg-glass: rgba(255, 255, 255, 0.05);
-      --border-glass: rgba(255, 255, 255, 0.11);
-      --text-main: #F8FAFC;
-      --text-muted: #94A3B8;
-      --cyan: #38BDF8;
-      --violet: #818CF8;
-      --emerald: #10B981;
-      --amber: #F59E0B;
-      --rose: #F43F5E;
-    }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body {
-      height: 100%;
-      width: 100%;
-      overflow: hidden;
-      font-family: 'Inter', sans-serif;
-      background: var(--bg-deep);
-      color: var(--text-main);
-      font-size: 13px;
-    }
-
-    /* ================= HERO VIEW (ASTRA STYLE) ================= */
-    #hero-view {
-      position: relative;
-      height: 100vh;
-      width: 100vw;
-      display: flex;
-      flex-direction: column;
-      background: radial-gradient(circle at 62% 45%, #172B5E 0%, #070D22 55%, #040712 100%);
-      overflow-y: auto;
-    }
-
-    .bg-orb {
-      position: fixed;
-      border-radius: 50%;
-      filter: blur(90px);
-      pointer-events: none;
-      z-index: 0;
-    }
-    .orb-1 { width: 420px; height: 420px; background: rgba(56, 189, 248, 0.16); top: 10%; left: 45%; }
-    .orb-2 { width: 360px; height: 360px; background: rgba(129, 140, 248, 0.16); bottom: 10%; right: 15%; }
-
-    .hero-nav {
-      position: relative;
-      z-index: 10;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 20px 48px;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 18px;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-    }
-    .brand-icon {
-      width: 30px; height: 30px;
-      border-radius: 8px;
-      background: linear-gradient(135deg, #38BDF8, #818CF8);
-      display: grid; place-items: center;
-    }
-
-    .nav-links { display: flex; gap: 28px; color: var(--text-muted); font-size: 13px; }
-    .nav-links span { cursor: pointer; transition: color 0.15s; }
-    .nav-links span:hover { color: #FFF; }
-
-    .btn-gradient {
-      background: linear-gradient(135deg, #38BDF8 0%, #818CF8 100%);
-      color: #050918;
-      font-weight: 600;
-      border: none;
-      border-radius: 999px;
-      padding: 10px 22px;
-      font-size: 13px;
-      cursor: pointer;
-      box-shadow: 0 0 24px rgba(56, 189, 248, 0.35);
-      transition: transform 0.15s, box-shadow 0.15s;
-    }
-    .btn-gradient:hover { transform: translateY(-1px); box-shadow: 0 0 32px rgba(56, 189, 248, 0.55); }
-
-    .btn-glass {
-      background: var(--bg-glass);
-      color: var(--text-main);
-      border: 1px solid var(--border-glass);
-      backdrop-filter: blur(14px);
-      border-radius: 999px;
-      padding: 10px 22px;
-      font-size: 13px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: background 0.15s, border-color 0.15s;
-    }
-    .btn-glass:hover { background: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.25); }
-
-    .hero-main {
-      position: relative;
-      z-index: 10;
-      flex: 1;
-      max-width: 1240px;
-      width: 100%;
-      margin: 0 auto;
-      padding: 20px 48px;
-      display: grid;
-      grid-template-columns: 1.15fr 0.7fr 1fr;
-      align-items: center;
-      gap: 32px;
-    }
-
-    .pill-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 14px;
-      border-radius: 999px;
-      background: rgba(56, 189, 248, 0.1);
-      border: 1px solid rgba(56, 189, 248, 0.25);
-      color: #7DD3FC;
-      font-size: 12px;
-      margin-bottom: 20px;
-    }
-
-    .hero-title {
-      font-size: 48px;
-      font-weight: 700;
-      line-height: 1.12;
-      letter-spacing: -0.03em;
-      margin-bottom: 18px;
-    }
-    .hero-title span {
-      background: linear-gradient(90deg, #38BDF8, #A5B4FC);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .hero-sub {
-      color: var(--text-muted);
-      font-size: 15px;
-      line-height: 1.6;
-      max-width: 480px;
-      margin-bottom: 28px;
-    }
-
-    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
-
-    /* Center Holographic Core */
-    .ai-core {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      pointer-events: none;
-    }
-    .core-ring {
-      width: 210px; height: 210px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 35% 30%, #1E3A8A, #090E24 70%);
-      border: 2px solid rgba(56, 189, 248, 0.45);
-      box-shadow: 0 0 60px rgba(56, 189, 248, 0.28), inset 0 0 30px rgba(129, 140, 248, 0.35);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-    }
-    .core-visor {
-      width: 124px; height: 74px;
-      border-radius: 22px;
-      background: #040712;
-      border: 1.5px solid rgba(56, 189, 248, 0.5);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 24px;
-    }
-    .core-eye {
-      width: 18px; height: 18px;
-      border-radius: 50%;
-      background: #38BDF8;
-      box-shadow: 0 0 16px #38BDF8;
-    }
-
-    /* Right Floating Glass Cards */
-    .glass-cards { display: flex; flex-direction: column; gap: 16px; }
-    .feature-card {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      text-align: left;
-      width: 100%;
-      padding: 18px 20px;
-      border-radius: 16px;
-      background: rgba(255, 255, 255, 0.055);
-      border: 1px solid rgba(255, 255, 255, 0.13);
-      backdrop-filter: blur(18px);
-      color: var(--text-main);
-      cursor: pointer;
-      transition: transform 0.15s, border-color 0.15s, background 0.15s;
-    }
-    .feature-card:hover {
-      transform: translateX(4px);
-      background: rgba(255, 255, 255, 0.09);
-      border-color: rgba(56, 189, 248, 0.5);
-    }
-    .card-left { display: flex; align-items: center; gap: 14px; }
-    .card-icon {
-      width: 40px; height: 40px;
-      border-radius: 11px;
-      display: grid; place-items: center;
-      background: rgba(56, 189, 248, 0.15);
-      color: var(--cyan);
-      flex-shrink: 0;
-    }
-    .card-title { font-size: 14px; font-weight: 600; margin-bottom: 3px; }
-    .card-desc { font-size: 12px; color: var(--text-muted); }
-
-    /* ================= WORKSPACE VIEW (3-PANE NATIVE APP) ================= */
-    #workspace-view {
-      display: none;
-      flex-direction: column;
-      height: 100vh;
-      width: 100vw;
-      overflow: hidden;
-      background: #060A17;
-    }
-
-    .ws-topbar {
-      height: 48px;
-      flex-shrink: 0;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 18px;
-      border-bottom: 1px solid var(--border-glass);
-      background: #080D1E;
-    }
-
-    .ws-body {
-      flex: 1;
-      display: flex;
-      min-height: 0;
-      overflow: hidden;
-    }
-
-    /* Left Rail */
-    .ws-sidebar {
-      width: 220px;
-      flex-shrink: 0;
-      border-right: 1px solid var(--border-glass);
-      background: #070B19;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      padding: 14px 10px;
-    }
-    .rail-label {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--text-muted);
-      padding: 8px 10px 6px;
-    }
-    .rail-btn {
-      width: 100%;
-      text-align: left;
-      background: transparent;
-      border: 1px solid transparent;
-      color: #CBD5E1;
-      padding: 9px 10px;
-      border-radius: 8px;
-      font-size: 12.5px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 9px;
-      margin-bottom: 4px;
-    }
-    .rail-btn:hover { background: rgba(255, 255, 255, 0.06); color: #FFF; }
-
-    /* Middle Chat Column */
-    .ws-chat {
-      width: 44%;
-      border-right: 1px solid var(--border-glass);
-      display: flex;
-      flex-direction: column;
-      min-height: 0;
-      background: #090F22;
-    }
-    .chat-header {
-      height: 42px;
-      flex-shrink: 0;
-      padding: 0 16px;
-      border-bottom: 1px solid var(--border-glass);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-weight: 600;
-      color: #E2E8F0;
-    }
-    #chat-messages {
-      flex: 1;
-      overflow-y: auto;
-      min-height: 0;
-      padding: 18px;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      scroll-behavior: smooth;
-    }
-    .msg-user {
-      align-self: flex-end;
-      background: rgba(56, 189, 248, 0.16);
-      border: 1px solid rgba(56, 189, 248, 0.3);
-      padding: 10px 14px;
-      border-radius: 14px 14px 4px 14px;
-      max-width: 82%;
-      line-height: 1.5;
-    }
-    .msg-ai {
-      align-self: flex-start;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid var(--border-glass);
-      padding: 14px 16px;
-      border-radius: 14px 14px 14px 4px;
-      width: 100%;
-      line-height: 1.6;
-    }
-    .msg-ai ul { padding-left: 18px; margin: 8px 0; }
-    .msg-ai li { margin-bottom: 5px; }
-
-    .metrics-strip {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-      margin: 12px 0;
-    }
-    .metric-box {
-      background: rgba(0, 0, 0, 0.3);
-      border: 1px solid var(--border-glass);
-      border-radius: 8px;
-      padding: 8px 10px;
-    }
-    .metric-title { font-size: 11px; color: var(--text-muted); }
-    .metric-val { font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 600; color: var(--cyan); margin-top: 2px; }
-
-    details.steps-box {
-      background: rgba(0, 0, 0, 0.25);
-      border: 1px solid var(--border-glass);
-      border-radius: 8px;
-      padding: 8px 12px;
-      margin-bottom: 10px;
-      font-size: 12px;
-    }
-    details.steps-box summary { cursor: pointer; color: var(--emerald); font-weight: 500; }
-    .step-item { padding: 4px 0; color: var(--text-muted); border-top: 1px solid rgba(255,255,255,0.05); margin-top: 4px; }
-
-    .chat-composer {
-      flex-shrink: 0;
-      padding: 12px 16px;
-      border-top: 1px solid var(--border-glass);
-      background: #080D1E;
-      display: flex;
-      gap: 8px;
-    }
-    .chat-input {
-      flex: 1;
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid var(--border-glass);
-      border-radius: 10px;
-      padding: 10px 12px;
-      color: #FFF;
-      font-size: 13px;
-      outline: none;
-    }
-    .chat-input:focus { border-color: var(--cyan); }
-
-    /* Right Workspace Canvas */
-    .ws-canvas {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      min-height: 0;
-      background: #060A17;
-    }
-    .canvas-tabs {
-      height: 42px;
-      flex-shrink: 0;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 16px;
-      border-bottom: 1px solid var(--border-glass);
-      background: #080D1E;
-    }
-    .tab-group { display: flex; gap: 6px; }
-    .tab-btn {
-      background: transparent;
-      border: none;
-      color: var(--text-muted);
-      padding: 6px 12px;
-      border-radius: 6px;
-      font-size: 12.5px;
-      font-weight: 500;
-      cursor: pointer;
-    }
-    .tab-btn.active { background: rgba(56, 189, 248, 0.15); color: var(--cyan); }
-
-    .canvas-body {
-      flex: 1;
-      overflow-y: auto;
-      min-height: 0;
-      padding: 20px;
-    }
-
-    table.data-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 12px;
-    }
-    table.data-table th, table.data-table td {
-      padding: 9px 10px;
-      text-align: left;
-      border-bottom: 1px solid var(--border-glass);
-    }
-    table.data-table th { color: var(--text-muted); font-weight: 600; background: rgba(255,255,255,0.03); }
-
-    .btn-sm {
-      padding: 6px 12px;
-      border-radius: 7px;
-      font-size: 12px;
-      font-weight: 500;
-      cursor: pointer;
-      border: 1px solid var(--border-glass);
-      background: rgba(255,255,255,0.06);
-      color: #F8FAFC;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .btn-sm:hover { background: rgba(255,255,255,0.12); }
-    .btn-sm.primary { background: var(--cyan); color: #050918; border-color: var(--cyan); font-weight: 600; }
-
-    @media (max-width: 960px) {
-      .hero-main { grid-template-columns: 1fr; padding: 20px; }
-      .ws-sidebar { display: none; }
-      .ws-chat { width: 50%; }
-    }
+    body { background-color: #050814; color: #F8FAFC; }
+    .glass { background: rgba(15, 23, 42, 0.65); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.08); }
+    .prose-chat ul { list-style-type: disc; padding-left: 1.25rem; margin: 0.5rem 0; }
+    .prose-chat li { margin-bottom: 0.35rem; }
+    .prose-chat strong { color: #38BDF8; font-weight: 600; }
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(148, 163, 184, 0.2); border-radius: 999px; }
   </style>
 </head>
-<body>
+<body class="h-screen w-screen overflow-hidden antialiased selection:bg-sky-500/30">
 
-  <!-- Hidden CSV File Picker -->
-  <input type="file" id="csv-picker" accept=".csv" style="display:none" />
+  <input type="file" id="csv-picker" accept=".csv" class="hidden" />
 
-  <!-- ==================== SCREEN 1: HERO VIEW ==================== -->
-  <div id="hero-view">
-    <div class="bg-orb orb-1"></div>
-    <div class="bg-orb orb-2"></div>
-
-    <header class="hero-nav">
-      <div class="brand">
-        <div class="brand-icon">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#050918" stroke-width="2.5">
-            <polygon points="12 2 22 12 12 22 2 12 12 2"></polygon>
-          </svg>
+  <!-- ==================== HERO LANDING ==================== -->
+  <div id="hero-view" class="relative h-screen w-screen overflow-y-auto bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-sky-900/30 via-[#050814] to-[#03050C] flex flex-col">
+    <!-- Top Navbar -->
+    <header class="max-w-7xl w-full mx-auto px-8 py-6 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-sky-400 to-indigo-500 flex items-center justify-center shadow-lg shadow-sky-500/25">
+          <i data-lucide="compass" class="w-5 h-5 text-slate-950 stroke-[2.5]"></i>
         </div>
-        <span>Atlas AI</span>
+        <span class="text-lg font-bold tracking-tight">Atlas<span class="text-sky-400">AI</span></span>
       </div>
-      <nav class="nav-links">
-        <span id="nav-workspace">Live Workspace</span>
-        <span id="nav-sample">Sample Audit</span>
-        <span id="nav-routes">Sea Route Check</span>
+      <nav class="hidden md:flex items-center gap-8 text-sm text-slate-400">
+        <button id="nav-workspace" class="hover:text-white transition">Command Center</button>
+        <button id="nav-simulator" class="hover:text-white transition">Risk Simulator</button>
+        <button id="nav-scorecard" class="hover:text-white transition">Vendor Grades</button>
       </nav>
-      <button id="btn-get-started" class="btn-gradient">Get Started →</button>
+      <button id="btn-get-started" class="px-5 py-2.5 rounded-full text-sm font-semibold bg-gradient-to-r from-sky-400 to-indigo-400 text-slate-950 shadow-lg shadow-sky-500/25 hover:opacity-95 transition flex items-center gap-2">
+        Open Workspace <i data-lucide="arrow-right" class="w-4 h-4"></i>
+      </button>
     </header>
 
-    <main class="hero-main">
-      <div>
-        <div class="pill-badge">✦ Autonomous Supply Chain Assistant</div>
-        <h1 class="hero-title">Smarter <span>Logistics</span> for a Safer Supply Chain</h1>
-        <p class="hero-sub">
-          Your intelligent companion for spotting delayed suppliers, rerouting blocked ships, and preventing warehouse stockouts—in plain English.
+    <!-- Main Hero Grid -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-8 py-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      <div class="lg:col-span-7 space-y-6">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-sky-500/10 border border-sky-400/20 text-sky-300 text-xs font-medium">
+          <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> Autonomous Supply Chain Intelligence
+        </div>
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.1]">
+          Smarter <span class="bg-gradient-to-r from-sky-400 to-indigo-400 bg-clip-text text-transparent">Logistics</span> for Resilient Operations.
+        </h1>
+        <p class="text-slate-400 text-base sm:text-lg max-w-xl leading-relaxed">
+          Detect delayed suppliers, simulate Red Sea detours, generate emergency purchase orders, and execute SLA escalations from one intelligent co-pilot.
         </p>
-        <div class="hero-actions">
-          <button id="btn-start-checking" class="btn-gradient">Start Checking →</button>
-          <button id="btn-hero-upload" class="btn-glass">Upload Shipment CSV</button>
+        <div class="flex flex-wrap items-center gap-4 pt-2">
+          <button id="btn-start-checking" class="px-6 py-3.5 rounded-full text-sm font-semibold bg-gradient-to-r from-sky-400 to-indigo-400 text-slate-950 shadow-xl shadow-sky-500/25 hover:scale-[1.01] transition flex items-center gap-2">
+            Run Live Supply Audit <i data-lucide="zap" class="w-4 h-4"></i>
+          </button>
+          <button id="btn-hero-upload" class="px-6 py-3.5 rounded-full text-sm font-medium glass hover:bg-white/10 transition flex items-center gap-2">
+            <i data-lucide="upload-cloud" class="w-4 h-4 text-sky-400"></i> Upload Shipment CSV
+          </button>
         </div>
       </div>
 
-      <div class="ai-core">
-        <div class="core-ring">
-          <div class="core-visor">
-            <div class="core-eye"></div>
-            <div class="core-eye"></div>
-          </div>
-          <span style="margin-top:12px; font-family:'JetBrains Mono',monospace; font-size:11px; color:#7DD3FC;">ATLAS CORE 1.0</span>
-        </div>
-      </div>
-
-      <div class="glass-cards">
-        <button id="card-suppliers" class="feature-card">
-          <div class="card-left">
-            <div class="card-icon">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
-              </svg>
+      <!-- Right Action Cards -->
+      <div class="lg:col-span-5 space-y-4">
+        <button id="card-suppliers" class="w-full text-left glass p-5 rounded-2xl hover:border-sky-400/40 hover:bg-slate-900/80 transition group flex items-center justify-between">
+          <div class="flex items-center gap-4">
+            <div class="w-11 h-11 rounded-xl bg-sky-500/15 text-sky-400 flex items-center justify-center shrink-0">
+              <i data-lucide="shield-alert" class="w-5 h-5"></i>
             </div>
             <div>
-              <div class="card-title">Spot Delayed Suppliers</div>
-              <div class="card-desc">Catch late shipments before lines stall</div>
+              <div class="font-semibold text-slate-100">Autonomous Risk & SLA Audit</div>
+              <div class="text-xs text-slate-400 mt-0.5">Score vendors & isolate financial exposure</div>
             </div>
           </div>
-          <span>→</span>
+          <i data-lucide="chevron-right" class="w-4 h-4 text-slate-500 group-hover:text-sky-400 transition"></i>
         </button>
 
-        <button id="card-routes" class="feature-card">
-          <div class="card-left">
-            <div class="card-icon" style="color:#A5B4FC; background:rgba(129,140,248,0.16);">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="12" cy="12" r="10"></circle>
-                <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
-              </svg>
+        <button id="card-routes" class="w-full text-left glass p-5 rounded-2xl hover:border-indigo-400/40 hover:bg-slate-900/80 transition group flex items-center justify-between">
+          <div class="flex items-center gap-4">
+            <div class="w-11 h-11 rounded-xl bg-indigo-500/15 text-indigo-400 flex items-center justify-center shrink-0">
+              <i data-lucide="globe" class="w-5 h-5"></i>
             </div>
             <div>
-              <div class="card-title">Find Safer Sea Routes</div>
-              <div class="card-desc">Reroute vessels around blocked corridors</div>
+              <div class="font-semibold text-slate-100">What-If Disruption Simulator</div>
+              <div class="text-xs text-slate-400 mt-0.5">Model Cape detours vs. priority air freight</div>
             </div>
           </div>
-          <span>→</span>
+          <i data-lucide="chevron-right" class="w-4 h-4 text-slate-500 group-hover:text-indigo-400 transition"></i>
         </button>
 
-        <button id="card-guardrail" class="feature-card">
-          <div class="card-left">
-            <div class="card-icon" style="color:#34D399; background:rgba(16,185,129,0.16);">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-              </svg>
+        <button id="card-guardrail" class="w-full text-left glass p-5 rounded-2xl hover:border-emerald-400/40 hover:bg-slate-900/80 transition group flex items-center justify-between">
+          <div class="flex items-center gap-4">
+            <div class="w-11 h-11 rounded-xl bg-emerald-500/15 text-emerald-400 flex items-center justify-center shrink-0">
+              <i data-lucide="file-check-2" class="w-5 h-5"></i>
             </div>
             <div>
-              <div class="card-title">Safe & Verified Data</div>
-              <div class="card-desc">Block broken spreadsheets automatically</div>
+              <div class="font-semibold text-slate-100">1-Click PO & Escalation Engine</div>
+              <div class="text-xs text-slate-400 mt-0.5">Auto-draft notices & buffer stock orders</div>
             </div>
           </div>
-          <span>→</span>
+          <i data-lucide="chevron-right" class="w-4 h-4 text-slate-500 group-hover:text-emerald-400 transition"></i>
         </button>
       </div>
     </main>
   </div>
 
-  <!-- ==================== SCREEN 2: WORKSPACE VIEW ==================== -->
-  <div id="workspace-view">
-    <div class="ws-topbar">
-      <div style="display:flex; align-items:center; gap:12px;">
-        <button id="btn-back-home" class="btn-sm">← Home</button>
-        <span style="font-weight:600;">Atlas AI Workspace</span>
-        <span id="active-file-badge" style="font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--cyan); background:rgba(56,189,248,0.12); padding:3px 8px; border-radius:6px;">
+  <!-- ==================== WORKSPACE VIEW ==================== -->
+  <div id="workspace-view" class="hidden h-screen w-screen flex-col overflow-hidden bg-[#050814]">
+    <!-- Top Header Bar (Zero Clipping) -->
+    <header class="h-14 shrink-0 px-5 border-b border-white/10 bg-slate-950/90 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3 min-w-0">
+        <button id="btn-back-home" class="px-3 py-1.5 rounded-lg text-xs font-medium glass hover:bg-white/10 flex items-center gap-1.5 shrink-0">
+          <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Home
+        </button>
+        <span class="font-semibold text-sm truncate">Atlas Command</span>
+        <span id="active-file-badge" class="hidden sm:inline-block font-mono text-xs text-sky-400 bg-sky-500/10 border border-sky-400/20 px-2.5 py-1 rounded-md truncate">
           supply_chain_manifest.csv
         </span>
       </div>
-      <div style="display:flex; gap:8px;">
-        <button id="btn-ws-upload" class="btn-sm">Upload CSV</button>
-        <button id="btn-run-full" class="btn-sm primary">Run Full Check</button>
+
+      <div class="flex items-center gap-2.5 shrink-0">
+        <button id="btn-ws-upload" class="px-3.5 py-1.5 rounded-lg text-xs font-medium glass hover:bg-white/10 flex items-center gap-1.5">
+          <i data-lucide="upload" class="w-3.5 h-3.5 text-sky-400"></i> Upload CSV
+        </button>
+        <button id="btn-run-full" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-sky-400 text-slate-950 hover:bg-sky-300 transition flex items-center gap-1.5">
+          <i data-lucide="play" class="w-3.5 h-3.5"></i> Run Full Audit
+        </button>
       </div>
-    </div>
+    </header>
 
-    <div class="ws-body">
-      <!-- Left Navigation Rail -->
-      <aside class="ws-sidebar">
-        <div>
-          <div class="rail-label">Quick Scenarios</div>
-          <button id="scen-audit" class="rail-btn">Check Sample Shipments</button>
-          <button id="scen-routes" class="rail-btn">Find Safer Sea Routes</button>
-          <button id="scen-corrupt" class="rail-btn">Test Broken File Check</button>
-
-          <div class="rail-label" style="margin-top:16px;">Ask Follow-Ups</div>
-          <button id="ask-worst" class="rail-btn">Which supplier is riskiest?</button>
-          <button id="ask-email" class="rail-btn">Draft supplier delay email</button>
+    <!-- 2-Pane Split Body -->
+    <div class="flex-1 flex min-h-0 overflow-hidden">
+      <!-- Left Co-Pilot Chat (45%) -->
+      <section class="w-[45%] border-r border-white/10 flex flex-col min-h-0 bg-slate-950/50">
+        <div class="h-11 shrink-0 px-5 border-b border-white/10 flex items-center justify-between">
+          <div class="flex items-center gap-2 text-xs font-semibold text-slate-200">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            Atlas AI Co-Pilot
+          </div>
+          <button id="btn-clear-chat" class="text-xs text-slate-400 hover:text-white px-2 py-1 rounded">Clear</button>
         </div>
 
-        <div style="padding:10px; border-top:1px solid var(--border-glass); font-size:11.5px; color:var(--emerald);">
-          ● Agent Ready
-        </div>
-      </aside>
-
-      <!-- Middle Chat Column -->
-      <section class="ws-chat">
-        <div class="chat-header">
-          <span>Atlas Assistant</span>
-          <button id="btn-clear-chat" class="btn-sm" style="padding:3px 8px; font-size:11px;">Clear</button>
-        </div>
-
-        <div id="chat-messages">
-          <div class="msg-ai">
-            Hi! I'm <strong>Atlas</strong>. Upload a shipment CSV or ask me any question about your suppliers, sea routes, or warehouse stock.
+        <div id="chat-messages" class="flex-1 overflow-y-auto p-5 space-y-4">
+          <div class="glass rounded-2xl rounded-tl-sm p-4 text-sm text-slate-200 leading-relaxed">
+            Hi! I'm <strong class="text-sky-400">Atlas</strong>. Ask me anything about your shipments—or tell me to <em>"draft an email for SHP-2004"</em>, <em>"simulate a 14 day delay"</em>, or <em>"auto-resolve all risks"</em>.
           </div>
         </div>
 
-        <div class="chat-composer">
-          <input id="chat-input" class="chat-input" type="text" placeholder="Ask Atlas anything about your shipments..." />
-          <button id="btn-send" class="btn-sm primary">Send</button>
+        <!-- Quick Prompts -->
+        <div class="px-5 pt-2.5 pb-1 flex flex-wrap gap-1.5 border-t border-white/5 bg-slate-950/80">
+          <button onclick="quickAsk('Which supplier has the highest risk?')" class="text-[11px] px-2.5 py-1 rounded-full glass text-slate-300 hover:border-sky-400/50 hover:text-white transition">Riskiest supplier?</button>
+          <button onclick="quickAsk('Draft an SLA escalation email for SHP-2004')" class="text-[11px] px-2.5 py-1 rounded-full glass text-slate-300 hover:border-sky-400/50 hover:text-white transition">Draft SHP-2004 email</button>
+          <button onclick="quickAsk('Simulate a 14 day delay with 35% air freight')" class="text-[11px] px-2.5 py-1 rounded-full glass text-slate-300 hover:border-sky-400/50 hover:text-white transition">Simulate 14d delay</button>
+          <button onclick="quickAsk('Auto-resolve all critical risks right now')" class="text-[11px] px-2.5 py-1 rounded-full glass text-slate-300 hover:border-sky-400/50 hover:text-white transition">Autopilot Resolve</button>
+        </div>
+
+        <!-- Input Bar -->
+        <div class="p-4 bg-slate-950/80 flex gap-2.5">
+          <input id="chat-input" type="text" placeholder="Ask Atlas anything or give an action command..." class="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-sky-400" />
+          <button id="btn-send" class="px-4 py-2.5 rounded-xl bg-sky-400 text-slate-950 font-semibold text-sm hover:bg-sky-300 transition flex items-center gap-1.5">
+            Send <i data-lucide="send" class="w-3.5 h-3.5"></i>
+          </button>
         </div>
       </section>
 
-      <!-- Right Live Results Canvas -->
-      <section class="ws-canvas">
-        <div class="canvas-tabs">
-          <div class="tab-group">
-            <button class="tab-btn active" data-tab="charts">Risk Charts</button>
-            <button class="tab-btn" data-tab="schedule">Updated Schedule (CSV)</button>
-            <button class="tab-btn" data-tab="report">Summary Report (PDF)</button>
+      <!-- Right Action & Analytics Canvas (55%) -->
+      <section class="flex-1 flex flex-col min-h-0 min-w-0 bg-[#050814]">
+        <!-- Sub-Navbar -->
+        <div class="h-11 shrink-0 px-5 border-b border-white/10 bg-slate-950/60 flex items-center justify-between gap-2 overflow-x-auto">
+          <div class="flex items-center gap-1">
+            <button class="tab-btn active px-3 py-1.5 rounded-lg text-xs font-medium bg-sky-500/15 text-sky-400" data-tab="actions">Actions</button>
+            <button class="tab-btn px-3 py-1.5 rounded-lg text-xs font-medium text-slate-400 hover:text-white" data-tab="simulator">Simulator</button>
+            <button class="tab-btn px-3 py-1.5 rounded-lg text-xs font-medium text-slate-400 hover:text-white" data-tab="scorecard">Scorecard</button>
+            <button class="tab-btn px-3 py-1.5 rounded-lg text-xs font-medium text-slate-400 hover:text-white" data-tab="map">Route Map</button>
+            <button class="tab-btn px-3 py-1.5 rounded-lg text-xs font-medium text-slate-400 hover:text-white" data-tab="schedule">Schedule</button>
+            <button class="tab-btn px-3 py-1.5 rounded-lg text-xs font-medium text-slate-400 hover:text-white" data-tab="charts">Charts & PDF</button>
           </div>
-          <div style="display:flex; gap:8px;">
-            <a id="dl-csv" href="/outputs/revised_logistics_schedule.csv" download class="btn-sm">Download CSV</a>
-            <a id="dl-pdf" href="/outputs/Executive_Supply_Chain_Audit.pdf" download class="btn-sm">Download PDF</a>
+          <div class="flex items-center gap-2 shrink-0">
+            <a href="/outputs/revised_logistics_schedule.csv" download class="px-2.5 py-1 rounded-md text-xs glass hover:bg-white/10">CSV</a>
+            <a href="/outputs/Executive_Supply_Chain_Audit.pdf" download class="px-2.5 py-1 rounded-md text-xs glass hover:bg-white/10">PDF</a>
           </div>
         </div>
 
-        <div class="canvas-body">
-          <!-- Tab 1: Charts -->
-          <div id="pane-charts">
-            <div id="chart-placeholder" style="color:var(--text-muted); padding:40px; text-align:center; border:1px dashed var(--border-glass); border-radius:12px;">
-              Click <strong>Run Full Check</strong> to generate your live supply chain risk charts.
+        <!-- Scrollable Content Area -->
+        <div class="flex-1 overflow-y-auto p-6 space-y-5">
+          <!-- TAB 1: ACTIONS -->
+          <div id="pane-actions" class="space-y-5">
+            <div class="glass rounded-2xl p-5 border-sky-400/25 bg-sky-500/[0.03] flex flex-wrap items-center justify-between gap-4">
+              <div>
+                <h3 class="text-sm font-semibold text-white flex items-center gap-2">
+                  <i data-lucide="zap" class="w-4 h-4 text-sky-400"></i> Autonomous Autopilot Mitigation
+                </h3>
+                <p class="text-xs text-slate-400 mt-1">Authorize Cape detours and issue all staged buffer POs in one click.</p>
+              </div>
+              <button id="btn-autopilot" onclick="runAutopilot()" class="px-4 py-2 rounded-xl text-xs font-semibold bg-sky-400 text-slate-950 hover:bg-sky-300 transition">
+                Execute All Mitigations
+              </button>
             </div>
-            <img id="chart-img" src="" alt="Risk Matrix" style="display:none; width:100%; border-radius:12px; border:1px solid var(--border-glass);" />
+
+            <div class="glass rounded-2xl p-5">
+              <div class="flex items-center justify-between mb-2">
+                <h3 class="text-sm font-semibold">1. Supplier SLA Escalations</h3>
+                <span id="esc-badge" class="text-[11px] font-mono px-2.5 py-0.5 rounded-full bg-rose-500/15 text-rose-300">Delayed Vendors</span>
+              </div>
+              <p class="text-xs text-slate-400 mb-4">Generate formal SLA delay notices with exact shipment IDs and financial exposure.</p>
+              <div id="dynamic-escalations" class="flex flex-wrap gap-2"></div>
+            </div>
+
+            <div class="glass rounded-2xl p-5">
+              <div class="flex items-center justify-between mb-2">
+                <h3 class="text-sm font-semibold">2. Emergency Warehouse Buffer POs</h3>
+                <span class="text-[11px] font-mono px-2.5 py-0.5 rounded-full bg-amber-500/15 text-amber-300">Cover &lt; 14 Days</span>
+              </div>
+              <p class="text-xs text-slate-400 mb-4">Staged replenishment orders synced directly to your active CSV.</p>
+              <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse text-xs">
+                  <thead>
+                    <tr class="border-b border-white/10 text-slate-400">
+                      <th class="py-2.5 px-3">Shipment</th>
+                      <th class="py-2.5 px-3">Supplier & Material</th>
+                      <th class="py-2.5 px-3">Cover</th>
+                      <th class="py-2.5 px-3">Buffer PO</th>
+                      <th class="py-2.5 px-3 text-right">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="dynamic-pos-body" class="divide-y divide-white/5"></tbody>
+                </table>
+              </div>
+            </div>
           </div>
 
-          <!-- Tab 2: CSV Table -->
-          <div id="pane-schedule" style="display:none;">
-            <div id="schedule-table-wrap" style="color:var(--text-muted);">
-              Run a shipment check to view the updated delivery schedule.
+          <!-- TAB 2: SIMULATOR -->
+          <div id="pane-simulator" class="hidden space-y-5">
+            <div class="glass rounded-2xl p-6">
+              <h3 class="text-base font-semibold mb-1">Interactive Disruption & Air-Freight Simulator</h3>
+              <p class="text-xs text-slate-400 mb-6">Adjust parameters below or ask Atlas in chat to model real-time financial impact.</p>
+
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                <div class="bg-slate-950/60 border border-white/10 rounded-xl p-4">
+                  <div class="flex justify-between text-xs mb-2">
+                    <span class="text-slate-400">Red Sea Delay</span>
+                    <strong id="val-delay" class="text-sky-400 font-mono">+8 days</strong>
+                  </div>
+                  <input type="range" id="sim-delay" min="0" max="20" value="8" oninput="updateSim()" class="w-full accent-sky-400" />
+                </div>
+                <div class="bg-slate-950/60 border border-white/10 rounded-xl p-4">
+                  <div class="flex justify-between text-xs mb-2">
+                    <span class="text-slate-400">Air-Freight Split</span>
+                    <strong id="val-air" class="text-sky-400 font-mono">20%</strong>
+                  </div>
+                  <input type="range" id="sim-air" min="0" max="60" value="20" oninput="updateSim()" class="w-full accent-sky-400" />
+                </div>
+                <div class="bg-slate-950/60 border border-white/10 rounded-xl p-4">
+                  <div class="flex justify-between text-xs mb-2">
+                    <span class="text-slate-400">Safety Buffer</span>
+                    <strong id="val-buf" class="text-sky-400 font-mono">+15%</strong>
+                  </div>
+                  <input type="range" id="sim-buf" min="0" max="50" value="15" oninput="updateSim()" class="w-full accent-sky-400" />
+                </div>
+              </div>
+
+              <div class="grid grid-cols-3 gap-4 mb-6">
+                <div class="bg-slate-950/60 border border-white/10 rounded-xl p-4">
+                  <div class="text-xs text-slate-400">Line-Stop Loss</div>
+                  <div id="sim-loss" class="text-lg font-bold font-mono text-rose-400 mt-1">$1.42M</div>
+                </div>
+                <div class="bg-slate-950/60 border border-white/10 rounded-xl p-4">
+                  <div class="text-xs text-slate-400">Expedited Air Cost</div>
+                  <div id="sim-cost" class="text-lg font-bold font-mono text-amber-400 mt-1">$380,000</div>
+                </div>
+                <div class="bg-slate-950/60 border border-white/10 rounded-xl p-4">
+                  <div class="text-xs text-slate-400">Net Revenue Saved</div>
+                  <div id="sim-saved" class="text-lg font-bold font-mono text-emerald-400 mt-1">$4.85M</div>
+                </div>
+              </div>
+
+              <div class="flex justify-end">
+                <button onclick="applySimToChat()" class="px-4 py-2 rounded-xl text-xs font-semibold bg-sky-400 text-slate-950 hover:bg-sky-300 transition">
+                  Send Simulated Strategy to Co-Pilot
+                </button>
+              </div>
             </div>
           </div>
 
-          <!-- Tab 3: PDF Preview -->
-          <div id="pane-report" style="display:none; height:100%;">
-            <iframe id="pdf-frame" src="" style="width:100%; height:75vh; border:1px solid var(--border-glass); border-radius:10px; background:#FFF;"></iframe>
+          <!-- TAB 3: SCORECARD -->
+          <div id="pane-scorecard" class="hidden">
+            <div class="glass rounded-2xl p-5">
+              <div class="flex items-center justify-between mb-3">
+                <h3 class="text-sm font-semibold">Vendor Reliability & Risk Scorecard</h3>
+                <span class="text-[11px] font-mono px-2.5 py-0.5 rounded-full bg-amber-500/15 text-amber-300">Live SLA Grading</span>
+              </div>
+              <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse text-xs">
+                  <thead>
+                    <tr class="border-b border-white/10 text-slate-400">
+                      <th class="py-2.5 px-3">ID</th>
+                      <th class="py-2.5 px-3">Supplier</th>
+                      <th class="py-2.5 px-3">Material</th>
+                      <th class="py-2.5 px-3">Lead</th>
+                      <th class="py-2.5 px-3">Load</th>
+                      <th class="py-2.5 px-3">Grade</th>
+                    </tr>
+                  </thead>
+                  <tbody id="scorecard-body" class="divide-y divide-white/5"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 4: ROUTE MAP -->
+          <div id="pane-map" class="hidden">
+            <div class="glass rounded-2xl p-5">
+              <div class="flex items-center justify-between mb-3">
+                <h3 class="text-sm font-semibold">Global Maritime Chokepoint & Reroute Topology</h3>
+                <span class="text-[11px] font-mono px-2.5 py-0.5 rounded-full bg-rose-500/15 text-rose-300">Suez Blocked</span>
+              </div>
+              <svg viewBox="0 0 800 380" class="w-full bg-[#040711] rounded-xl border border-white/10">
+                <g stroke="rgba(255,255,255,0.05)" stroke-width="1">
+                  <line x1="0" y1="95" x2="800" y2="95"/><line x1="0" y1="190" x2="800" y2="190"/><line x1="0" y1="285" x2="800" y2="285"/>
+                  <line x1="200" y1="0" x2="200" y2="380"/><line x1="400" y1="0" x2="400" y2="380"/><line x1="600" y1="0" x2="600" y2="380"/>
+                </g>
+                <path d="M340,60 L440,55 L465,115 L370,125 Z" fill="#0F172A" stroke="#1E3A8A"/>
+                <path d="M365,140 L445,145 L435,295 L395,310 L360,210 Z" fill="#0F172A" stroke="#1E3A8A"/>
+                <path d="M475,85 L685,75 L710,195 L535,190 Z" fill="#0F172A" stroke="#1E3A8A"/>
+                <path d="M70,80 L210,80 L195,185 L95,175 Z" fill="#0F172A" stroke="#1E3A8A"/>
+                <path d="M645,155 Q520,175 445,142 Q415,120 390,92" fill="none" stroke="#F43F5E" stroke-width="2" stroke-dasharray="6,5"/>
+                <circle cx="445" cy="142" r="7" fill="rgba(244,63,94,0.3)" stroke="#F43F5E" stroke-width="2"/>
+                <text x="456" y="138" fill="#FDA4AF" font-size="11">Red Sea Chokepoint</text>
+                <path d="M645,155 Q540,295 415,322 Q325,260 390,92" fill="none" stroke="#38BDF8" stroke-width="2.5"/>
+                <text x="428" y="332" fill="#7DD3FC" font-size="11">Cape of Good Hope Safe Detour (+8d)</text>
+                <path d="M665,135 Q430,75 165,125" fill="none" stroke="#10B981" stroke-width="2"/>
+                <text x="250" y="92" fill="#6EE7B7" font-size="11">Trans-Pacific Clear</text>
+                <circle cx="645" cy="155" r="5" fill="#38BDF8"/><text x="654" y="160" fill="#F8FAFC" font-size="11">Shenzhen / Singapore</text>
+                <circle cx="665" cy="135" r="5" fill="#38BDF8"/><text x="674" y="135" fill="#F8FAFC" font-size="11">Shanghai</text>
+                <circle cx="390" cy="92" r="5" fill="#38BDF8"/><text x="315" y="88" fill="#F8FAFC" font-size="11">Rotterdam / Hamburg</text>
+                <circle cx="165" cy="125" r="5" fill="#10B981"/><text x="95" y="122" fill="#F8FAFC" font-size="11">Los Angeles</text>
+              </svg>
+            </div>
+          </div>
+
+          <!-- TAB 5: SCHEDULE -->
+          <div id="pane-schedule" class="hidden space-y-3">
+            <input type="text" id="table-search" onkeyup="filterScheduleTable()" placeholder="Filter by shipment ID, supplier, or route..." class="w-full max-w-xs bg-white/5 border border-white/10 rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-sky-400" />
+            <div id="schedule-table-wrap" class="glass rounded-2xl p-4 overflow-x-auto text-xs text-slate-400">
+              Click <strong>Run Full Audit</strong> to view the updated schedule.
+            </div>
+          </div>
+
+          <!-- TAB 6: CHARTS & PDF -->
+          <div id="pane-charts" class="hidden space-y-5">
+            <div id="chart-placeholder" class="glass rounded-2xl p-10 text-center text-xs text-slate-400">
+              Click <strong>Run Full Audit</strong> to generate your 4-panel risk chart & executive PDF.
+            </div>
+            <img id="chart-img" src="" alt="Risk Matrix" class="hidden w-full rounded-2xl border border-white/10" />
+            <iframe id="pdf-frame" src="" class="hidden w-full h-[520px] rounded-2xl border border-white/10 bg-white"></iframe>
           </div>
         </div>
       </section>
     </div>
   </div>
 
+  <!-- Email Escalation Modal -->
+  <div id="email-modal" class="hidden fixed inset-0 bg-black/75 backdrop-blur-sm z-50 items-center justify-center p-4">
+    <div class="glass bg-slate-900 rounded-2xl max-w-lg w-full p-6 space-y-4">
+      <div class="flex items-center justify-between">
+        <h3 class="font-semibold text-base">Supplier SLA Escalation Notice</h3>
+        <button onclick="closeEmailModal()" class="text-slate-400 hover:text-white"><i data-lucide="x" class="w-4 h-4"></i></button>
+      </div>
+      <textarea id="email-body" class="w-full h-52 bg-slate-950 border border-white/10 rounded-xl p-3.5 text-xs text-slate-200 leading-relaxed focus:outline-none"></textarea>
+      <div class="flex justify-end gap-2.5">
+        <button onclick="closeEmailModal()" class="px-4 py-2 rounded-xl text-xs glass hover:bg-white/10">Close</button>
+        <button onclick="copyEmailText(this)" class="px-4 py-2 rounded-xl text-xs font-semibold bg-sky-400 text-slate-950 hover:bg-sky-300">Copy Notice</button>
+      </div>
+    </div>
+  </div>
+
   <script>
+    lucide.createIcons();
+
+    function openEmailModal(supplier, shpId, value, leadTime) {
+      document.getElementById("email-body").value =
+        `Subject: URGENT SLA Escalation & Expedited Split Request — ${shpId} (${supplier})\n\n` +
+        `Dear ${supplier} Operations Team,\n\n` +
+        `Our supply chain monitoring indicates shipment ${shpId} (Cargo Value: ${value}) is tracking at ${leadTime}, exceeding our 14-day contractual SLA.\n\n` +
+        `Due to Red Sea / Suez disruptions, please confirm within 24 hours:\n` +
+        `1. Current ex-works readiness for ${shpId}.\n` +
+        `2. Feasibility of splitting 20% onto priority air freight to prevent line stoppage.\n\n` +
+        `Regards,\nSupply Chain Operations — Atlas AI`;
+      const m = document.getElementById("email-modal");
+      m.classList.remove("hidden");
+      m.classList.add("flex");
+    }
+    function closeEmailModal() {
+      const m = document.getElementById("email-modal");
+      m.classList.add("hidden");
+      m.classList.remove("flex");
+    }
+    function copyEmailText(btn) {
+      navigator.clipboard.writeText(document.getElementById("email-body").value);
+      btn.textContent = "✓ Copied!";
+      setTimeout(() => btn.textContent = "Copy Notice", 1800);
+    }
+
+    function approvePO(btn, poNum) {
+      btn.textContent = `✓ Issued (${poNum})`;
+      btn.className = "px-2.5 py-1 rounded-lg text-[11px] font-semibold bg-emerald-500/20 text-emerald-300";
+      btn.disabled = true;
+    }
+
+    function runAutopilot() {
+      const btn = document.getElementById("btn-autopilot");
+      btn.textContent = "✓ All Mitigations Executed";
+      btn.className = "px-4 py-2 rounded-xl text-xs font-semibold bg-emerald-400 text-slate-950";
+      document.querySelectorAll("#dynamic-pos-body button").forEach(b => { if (!b.disabled) b.click(); });
+    }
+
+    function updateSim() {
+      const delay = parseInt(document.getElementById("sim-delay").value);
+      const air = parseInt(document.getElementById("sim-air").value);
+      const buf = parseInt(document.getElementById("sim-buf").value);
+      document.getElementById("val-delay").textContent = `+${delay} days`;
+      document.getElementById("val-air").textContent = `${air}%`;
+      document.getElementById("val-buf").textContent = `+${buf}%`;
+
+      const loss = Math.max(0.15, (delay * 0.24) - (air * 0.025) - (buf * 0.015)).toFixed(2);
+      const airCost = Math.round(air * 19000 + buf * 4500).toLocaleString();
+      const saved = Math.max(1.1, (6.4 - parseFloat(loss) - (air * 0.01))).toFixed(2);
+
+      document.getElementById("sim-loss").textContent = `$${loss}M`;
+      document.getElementById("sim-cost").textContent = `$${airCost}`;
+      document.getElementById("sim-saved").textContent = `$${saved}M`;
+    }
+
+    function filterScheduleTable() {
+      const q = document.getElementById("table-search").value.toLowerCase();
+      document.querySelectorAll("#schedule-table-wrap tbody tr").forEach(tr => {
+        tr.style.display = tr.textContent.toLowerCase().includes(q) ? "" : "none";
+      });
+    }
+
+    function populateLiveActions(liveActions) {
+      if (!liveActions) return;
+      const escDiv = document.getElementById("dynamic-escalations");
+      const escBadge = document.getElementById("esc-badge");
+      if (liveActions.escalations && liveActions.escalations.length > 0) {
+        escBadge.textContent = `${liveActions.escalations.length} Vendors Delayed`;
+        escDiv.innerHTML = liveActions.escalations.map((item, i) => `
+          <button onclick="openEmailModal('${item.supplier.replace(/'/g, "\\'")}', '${item.shipment_id}', '${item.value}', '${item.lead_time}')"
+            class="px-3 py-1.5 rounded-xl text-xs font-medium ${i === 0 ? 'bg-sky-400 text-slate-950 font-semibold' : 'glass hover:bg-white/10'}">
+            ${item.supplier} (${item.shipment_id})
+          </button>
+        `).join("");
+      }
+
+      const poBody = document.getElementById("dynamic-pos-body");
+      if (liveActions.purchase_orders && liveActions.purchase_orders.length > 0) {
+        poBody.innerHTML = liveActions.purchase_orders.map(po => `
+          <tr>
+            <td class="py-2.5 px-3 font-mono text-sky-400">${po.shipment_id}</td>
+            <td class="py-2.5 px-3"><div class="font-medium text-slate-200">${po.supplier}</div><div class="text-[11px] text-slate-400">${po.material}</div></td>
+            <td class="py-2.5 px-3 font-semibold text-rose-400">${po.days_cover}</td>
+            <td class="py-2.5 px-3 text-slate-300">${po.suggested_units}</td>
+            <td class="py-2.5 px-3 text-right"><button onclick="approvePO(this, '${po.po_id}')" class="px-2.5 py-1 rounded-lg text-[11px] font-semibold bg-emerald-400 text-slate-950 hover:bg-emerald-300">Approve PO</button></td>
+          </tr>
+        `).join("");
+      }
+
+      const scBody = document.getElementById("scorecard-body");
+      if (liveActions.scorecard && liveActions.scorecard.length > 0) {
+        scBody.innerHTML = liveActions.scorecard.map(s => {
+          const cls = s.grade === "A" ? "bg-emerald-500/15 text-emerald-300" : (s.grade === "B" ? "bg-amber-500/15 text-amber-300" : "bg-rose-500/15 text-rose-300");
+          return `
+            <tr>
+              <td class="py-2.5 px-3 font-mono text-sky-400">${s.shipment_id}</td>
+              <td class="py-2.5 px-3 font-medium text-slate-200">${s.supplier}</td>
+              <td class="py-2.5 px-3 text-slate-400">${s.material}</td>
+              <td class="py-2.5 px-3">${s.lead_time}</td>
+              <td class="py-2.5 px-3">${s.utilization}</td>
+              <td class="py-2.5 px-3"><span class="px-2 py-0.5 rounded-full text-[11px] font-mono font-semibold ${cls}">Grade ${s.grade} (${s.score})</span></td>
+            </tr>
+          `;
+        }).join("");
+      }
+    }
+
     document.addEventListener("DOMContentLoaded", () => {
       const heroView = document.getElementById("hero-view");
       const wsView = document.getElementById("workspace-view");
@@ -665,103 +508,115 @@
       const chatInput = document.getElementById("chat-input");
       const csvPicker = document.getElementById("csv-picker");
 
-      function showWorkspace(initialPrompt = null) {
-        heroView.style.display = "none";
-        wsView.style.display = "flex";
-        if (initialPrompt) {
-          sendMessage(initialPrompt);
+      fetch("/initial-state").then(r => r.json()).then(d => {
+        if (d.active_csv) document.getElementById("active-file-badge").textContent = d.active_csv;
+        if (d.live_actions) populateLiveActions(d.live_actions);
+      }).catch(() => {});
+
+      function switchTab(tabName) {
+        document.querySelectorAll(".tab-btn").forEach(b => {
+          const active = b.dataset.tab === tabName;
+          b.className = active
+            ? "tab-btn active px-3 py-1.5 rounded-lg text-xs font-medium bg-sky-500/15 text-sky-400"
+            : "tab-btn px-3 py-1.5 rounded-lg text-xs font-medium text-slate-400 hover:text-white";
+        });
+        ["actions", "simulator", "scorecard", "map", "schedule", "charts"].forEach(id => {
+          document.getElementById("pane-" + id).classList.toggle("hidden", id !== tabName);
+        });
+      }
+
+      function executeUiAction(action) {
+        if (!action) return;
+        if (action.type === "switch_tab") switchTab(action.tab);
+        else if (action.type === "open_email") openEmailModal(action.supplier, action.shipment_id, action.value, action.lead_time);
+        else if (action.type === "run_sim") {
+          switchTab("simulator");
+          document.getElementById("sim-delay").value = action.delay;
+          document.getElementById("sim-air").value = action.air;
+          document.getElementById("sim-buf").value = action.buffer;
+          updateSim();
+        } else if (action.type === "autopilot_resolve") {
+          switchTab("actions");
+          runAutopilot();
         }
       }
 
-      function showHero() {
-        wsView.style.display = "none";
-        heroView.style.display = "flex";
+      function showWorkspace(initialPrompt = null, defaultTab = "actions") {
+        heroView.classList.add("hidden");
+        wsView.classList.remove("hidden");
+        wsView.classList.add("flex");
+        switchTab(defaultTab);
+        if (initialPrompt) sendMessage(initialPrompt);
       }
 
-      // Hero Navigation & CTAs
-      document.getElementById("btn-get-started").addEventListener("click", () => showWorkspace("Audit supply_chain_manifest.csv"));
-      document.getElementById("btn-start-checking").addEventListener("click", () => showWorkspace("Audit supply_chain_manifest.csv"));
-      document.getElementById("nav-workspace").addEventListener("click", () => showWorkspace());
-      document.getElementById("nav-sample").addEventListener("click", () => showWorkspace("Audit supply_chain_manifest.csv"));
-      document.getElementById("nav-routes").addEventListener("click", () => showWorkspace("Find safer sea routes for supply_chain_manifest.csv"));
+      function showHero() {
+        wsView.classList.add("hidden");
+        wsView.classList.remove("flex");
+        heroView.classList.remove("hidden");
+      }
 
-      document.getElementById("card-suppliers").addEventListener("click", () => showWorkspace("Check all shipments and delayed suppliers"));
-      document.getElementById("card-routes").addEventListener("click", () => showWorkspace("Find safer sea routes and Red Sea detours"));
-      document.getElementById("card-guardrail").addEventListener("click", () => showWorkspace("Validate corrupt_test_manifest.csv"));
+      window.quickAsk = (txt) => sendMessage(txt);
+      window.applySimToChat = () => {
+        const delay = document.getElementById("val-delay").textContent;
+        const air = document.getElementById("val-air").textContent;
+        const saved = document.getElementById("sim-saved").textContent;
+        sendMessage(`We simulated a ${delay} Red Sea delay with a ${air} air-freight split, protecting ${saved}. Summarize the execution steps.`);
+      };
 
-      // Workspace Controls
+      document.getElementById("btn-get-started").addEventListener("click", () => showWorkspace("Audit supply_chain_manifest.csv", "actions"));
+      document.getElementById("btn-start-checking").addEventListener("click", () => showWorkspace("Audit supply_chain_manifest.csv", "actions"));
+      document.getElementById("nav-workspace").addEventListener("click", () => showWorkspace(null, "actions"));
+      document.getElementById("nav-simulator").addEventListener("click", () => showWorkspace(null, "simulator"));
+      document.getElementById("nav-scorecard").addEventListener("click", () => showWorkspace(null, "scorecard"));
+      document.getElementById("card-suppliers").addEventListener("click", () => showWorkspace("Audit supply_chain_manifest.csv", "actions"));
+      document.getElementById("card-routes").addEventListener("click", () => showWorkspace(null, "simulator"));
+      document.getElementById("card-guardrail").addEventListener("click", () => showWorkspace("Audit supply_chain_manifest.csv", "actions"));
       document.getElementById("btn-back-home").addEventListener("click", showHero);
       document.getElementById("btn-run-full").addEventListener("click", () => sendMessage("Audit supply_chain_manifest.csv"));
-      document.getElementById("scen-audit").addEventListener("click", () => sendMessage("Audit supply_chain_manifest.csv"));
-      document.getElementById("scen-routes").addEventListener("click", () => sendMessage("Find safer sea routes and Red Sea detours"));
-      document.getElementById("scen-corrupt").addEventListener("click", () => sendMessage("Validate corrupt_test_manifest.csv"));
-      document.getElementById("ask-worst").addEventListener("click", () => sendMessage("Which supplier has the highest delay and money at risk?"));
-      document.getElementById("ask-email").addEventListener("click", () => sendMessage("Draft a short, polite escalation email to our most delayed supplier."));
 
+      document.querySelectorAll(".tab-btn").forEach(btn => btn.addEventListener("click", () => switchTab(btn.dataset.tab)));
       document.getElementById("btn-clear-chat").addEventListener("click", () => {
-        chatBox.innerHTML = `<div class="msg-ai">Chat cleared. Ask me anything about your shipments or click <strong>Run Full Check</strong>.</div>`;
+        chatBox.innerHTML = `<div class="glass rounded-2xl p-4 text-sm text-slate-300">Chat cleared. Ask any question or trigger a simulation.</div>`;
       });
 
-      // CSV Upload
       document.getElementById("btn-hero-upload").addEventListener("click", () => csvPicker.click());
       document.getElementById("btn-ws-upload").addEventListener("click", () => csvPicker.click());
 
       csvPicker.addEventListener("change", async (e) => {
         const file = e.target.files[0];
         if (!file) return;
-        showWorkspace();
+        showWorkspace(null, "actions");
         document.getElementById("active-file-badge").textContent = file.name;
         appendUserMsg(`Uploaded ${file.name}`);
         const loadingId = appendAiLoading();
-
         const formData = new FormData();
         formData.append("file", file);
-
         try {
           const res = await fetch("/upload-csv", { method: "POST", body: formData });
-          const data = await res.json();
+          const raw = await res.text();
+          const data = JSON.parse(raw);
           renderAiResponse(loadingId, data);
         } catch (err) {
-          document.getElementById(loadingId).innerHTML = `Error uploading file: ${err.message}`;
+          document.getElementById(loadingId).innerHTML = `Could not parse server response. Restart Uvicorn and try again.`;
         }
         csvPicker.value = "";
       });
 
-      // Chat Send
       document.getElementById("btn-send").addEventListener("click", () => {
         const text = chatInput.value.trim();
-        if (text) {
-          chatInput.value = "";
-          sendMessage(text);
-        }
+        if (text) { chatInput.value = ""; sendMessage(text); }
       });
-
       chatInput.addEventListener("keydown", (e) => {
         if (e.key === "Enter" && !e.shiftKey) {
           e.preventDefault();
           const text = chatInput.value.trim();
-          if (text) {
-            chatInput.value = "";
-            sendMessage(text);
-          }
+          if (text) { chatInput.value = ""; sendMessage(text); }
         }
-      });
-
-      // Tabs
-      document.querySelectorAll(".tab-btn").forEach((btn) => {
-        btn.addEventListener("click", () => {
-          document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
-          btn.classList.add("active");
-          const tab = btn.dataset.tab;
-          document.getElementById("pane-charts").style.display = tab === "charts" ? "block" : "none";
-          document.getElementById("pane-schedule").style.display = tab === "schedule" ? "block" : "none";
-          document.getElementById("pane-report").style.display = tab === "report" ? "block" : "none";
-        });
       });
 
       function appendUserMsg(text) {
         const div = document.createElement("div");
-        div.className = "msg-user";
+        div.className = "self-end bg-sky-500/15 border border-sky-400/25 px-4 py-2.5 rounded-2xl rounded-tr-sm max-w-[82%] text-sm text-slate-100";
         div.textContent = text;
         chatBox.appendChild(div);
         chatBox.scrollTop = chatBox.scrollHeight;
@@ -771,8 +626,8 @@
         const id = "msg-" + Date.now();
         const div = document.createElement("div");
         div.id = id;
-        div.className = "msg-ai";
-        div.innerHTML = `<span style="color:var(--cyan);">Checking shipment data...</span>`;
+        div.className = "glass rounded-2xl rounded-tl-sm p-4 text-sm text-sky-400 animate-pulse";
+        div.textContent = "Analyzing supply chain data...";
         chatBox.appendChild(div);
         chatBox.scrollTop = chatBox.scrollHeight;
         return id;
@@ -787,49 +642,63 @@
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ message: text })
           });
-          const data = await res.json();
+          const raw = await res.text();
+          let data;
+          try {
+            data = JSON.parse(raw);
+          } catch {
+            document.getElementById(loadingId).className = "glass rounded-2xl p-4 text-sm text-amber-300";
+            document.getElementById(loadingId).textContent = "Server restarted or returned an unexpected response—please try sending once more.";
+            return;
+          }
           renderAiResponse(loadingId, data);
         } catch (err) {
-          document.getElementById(loadingId).innerHTML = `Connection error: ${err.message}`;
+          document.getElementById(loadingId).className = "glass rounded-2xl p-4 text-sm text-rose-300";
+          document.getElementById(loadingId).textContent = `Network error: ${err.message}`;
         }
       }
 
       async function renderAiResponse(elemId, data) {
         const el = document.getElementById(elemId);
+        el.className = "glass rounded-2xl rounded-tl-sm p-4 text-sm text-slate-200 leading-relaxed space-y-3";
         let html = "";
-
-        if (data.steps && data.steps.length > 0) {
-          html += `<details class="steps-box"><summary>✓ Completed ${data.steps.length} automated checks (click to view)</summary>`;
-          data.steps.forEach(s => {
-            html += `<div class="step-item"><strong>${s.name}:</strong> ${s.detail}</div>`;
-          });
-          html += `</details>`;
-        }
 
         if (data.metrics) {
           html += `
-            <div class="metrics-strip">
-              <div class="metric-box"><div class="metric-title">Money at Risk</div><div class="metric-val">${data.metrics.money_at_risk}</div></div>
-              <div class="metric-box"><div class="metric-title">Rerouted</div><div class="metric-val">${data.metrics.ships_rerouted}</div></div>
-              <div class="metric-box"><div class="metric-title">Low Stock</div><div class="metric-val">${data.metrics.items_running_low}</div></div>
+            <div class="grid grid-cols-3 gap-2.5">
+              <div class="bg-slate-950/60 border border-white/10 rounded-xl p-2.5">
+                <div class="text-[11px] text-slate-400">Money at Risk</div>
+                <div class="font-mono text-sm font-bold text-sky-400 mt-0.5">${data.metrics.money_at_risk}</div>
+              </div>
+              <div class="bg-slate-950/60 border border-white/10 rounded-xl p-2.5">
+                <div class="text-[11px] text-slate-400">Rerouted</div>
+                <div class="font-mono text-sm font-bold text-indigo-400 mt-0.5">${data.metrics.ships_rerouted}</div>
+              </div>
+              <div class="bg-slate-950/60 border border-white/10 rounded-xl p-2.5">
+                <div class="text-[11px] text-slate-400">Low Stock</div>
+                <div class="font-mono text-sm font-bold text-rose-400 mt-0.5">${data.metrics.items_running_low}</div>
+              </div>
             </div>
           `;
         }
 
-        html += `<div>${marked.parse(data.reply || "")}</div>`;
+        html += `<div class="prose-chat">${marked.parse(data.reply || "")}</div>`;
         el.innerHTML = html;
         chatBox.scrollTop = chatBox.scrollHeight;
 
-        // Update Right Workspace Artifacts if available
+        if (data.live_actions) populateLiveActions(data.live_actions);
+        if (data.ui_action) executeUiAction(data.ui_action);
+
         if (data.artifacts && data.artifacts.png) {
-          const ts = "?t=" + Date.now();
           const img = document.getElementById("chart-img");
-          img.src = data.artifacts.png + ts;
-          img.style.display = "block";
-          document.getElementById("chart-placeholder").style.display = "none";
+          img.src = data.artifacts.png + "?t=" + Date.now();
+          img.classList.remove("hidden");
+          document.getElementById("chart-placeholder").classList.add("hidden");
         }
         if (data.artifacts && data.artifacts.pdf) {
-          document.getElementById("pdf-frame").src = data.artifacts.pdf + "?t=" + Date.now();
+          const pdf = document.getElementById("pdf-frame");
+          pdf.src = data.artifacts.pdf + "?t=" + Date.now();
+          pdf.classList.remove("hidden");
         }
         if (data.artifacts && data.artifacts.csv) {
           loadCsvTable(data.artifacts.csv + "?t=" + Date.now());
@@ -843,16 +712,14 @@
           const lines = text.trim().split("\n");
           if (lines.length < 2) return;
           const headers = lines[0].split(",");
-          let tbl = `<table class="data-table"><thead><tr>${headers.map(h => `<th>${h}</th>`).join("")}</tr></thead><tbody>`;
+          let tbl = `<table class="w-full text-left border-collapse"><thead><tr class="border-b border-white/10 text-slate-400">${headers.map(h => `<th class="py-2 px-3">${h}</th>`).join("")}</tr></thead><tbody class="divide-y divide-white/5">`;
           for (let i = 1; i < lines.length; i++) {
             const cols = lines[i].split(",");
-            tbl += `<tr>${cols.map(c => `<td>${c}</td>`).join("")}</tr>`;
+            tbl += `<tr>${cols.map(c => `<td class="py-2 px-3 text-slate-200">${c}</td>`).join("")}</tr>`;
           }
           tbl += `</tbody></table>`;
           document.getElementById("schedule-table-wrap").innerHTML = tbl;
-        } catch (e) {
-          console.error(e);
-        }
+        } catch (e) { console.error(e); }
       }
     });
   </script>
