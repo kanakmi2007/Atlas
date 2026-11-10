@@ -1,6 +1,9 @@
-﻿import os
+﻿
+import os
 import shutil
+from pathlib import Path
 from typing import Optional
+
 from fastapi import FastAPI, UploadFile, File
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
@@ -8,11 +11,24 @@ from pydantic import BaseModel
 
 from agents import run_full_audit, ask_atlas_chat, OUTPUT_DIR
 
+BASE_DIR = Path(__file__).resolve().parent
+
 app = FastAPI(title="Atlas Supply Chain AI Agent")
 
+# Create required directories
 os.makedirs(OUTPUT_DIR, exist_ok=True)
-os.makedirs("uploads", exist_ok=True)
+os.makedirs(BASE_DIR / "uploads", exist_ok=True)
+
+# Mount static files (IMPORTANT FIX)
+app.mount(
+    "/static",
+    StaticFiles(directory=str(BASE_DIR / "static")),
+    name="static"
+)
+
 app.mount("/outputs", StaticFiles(directory=OUTPUT_DIR), name="outputs")
+
+
 
 STATE = {
     "active_csv": "supply_chain_manifest.csv",
@@ -40,6 +56,13 @@ def health_check():
 def serve_ui():
     with open("templates/dashboard.html", "r", encoding="utf-8") as f:
         return HTMLResponse(content=f.read())
+
+@app.get("/landing", response_class=HTMLResponse)
+async def landing_page():
+    landing_file = BASE_DIR / "templates" / "landing.html"
+    return HTMLResponse(
+        content=landing_file.read_text(encoding="utf-8")
+    )
 
 
 @app.post("/upload-csv")
