@@ -1,293 +1,275 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-full">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Atlas – SupplyChain360 AI | Smarter AI. Stronger Supply Chain.</title>
   <meta name="description" content="Orchestrate, automate, and secure your global operations with autonomous AI agents and predictive intelligence.">
 
-  <!-- Preconnect -->
+  <!-- Preconnect & Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
 
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-
-  <!-- Landing CSS -->
+  <!-- Custom CSS -->
   <link rel="stylesheet" href="/static/css/landing.css">
 
-  <!-- CDN Libraries (loaded in <head> so Three.js is ready before scripts) -->
-  <!-- Three.js -->
+  <!-- CDN Dependencies -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
-  <!-- GSAP + plugins -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
 </head>
 
 <body>
 
-  <!-- ────────────────────────────────────────────────────────────
-       Background starfield canvas (behind everything)
-  ──────────────────────────────────────────────────────────────── -->
+  <!-- Ambient Starfield Canvas -->
   <canvas id="particle-canvas" aria-hidden="true"></canvas>
 
-  <!-- ────────────────────────────────────────────────────────────
-       NAVBAR
-  ──────────────────────────────────────────────────────────────── -->
-  <nav class="navbar" role="navigation" aria-label="Main navigation">
+  <!-- ====================================================================== -->
+  <!-- 16:9 CYBER COMMAND DECK WRAPPER                                         -->
+  <!-- ====================================================================== -->
+  <div class="deck-wrapper">
+    <div class="deck-frame">
 
-    <!-- Logo -->
-    <a href="/landing" class="nav-logo" aria-label="Atlas home">
-      <img src="/static/assets/logo.svg" alt="Atlas hexagonal logo" width="36" height="36">
-      <div class="nav-logo-text">
-        <span class="nav-logo-name">Atlas</span>
-        <span class="nav-logo-sub">SupplyChain360 AI</span>
-      </div>
-    </a>
+      <!-- ── 1. NAVBAR (~85px height) ──────────────────────────────────── -->
+      <header class="navbar" role="banner">
+        
+        <!-- Brand Logo -->
+        <a href="/landing" class="nav-logo" aria-label="Atlas AI Supply Chain">
+          <div class="logo-icon-wrap">
+            <svg class="logo-hex" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <polygon points="18,2 33,10.5 33,25.5 18,34 3,25.5 3,10.5" stroke="url(#logo-grad)" stroke-width="2" fill="none"/>
+              <circle cx="18" cy="18" r="4" fill="#00e5ff"/>
+              <circle cx="18" cy="7" r="2" fill="#a855f7"/>
+              <circle cx="28" cy="13" r="2" fill="#00e5ff"/>
+              <circle cx="28" cy="23" r="2" fill="#a855f7"/>
+              <circle cx="18" cy="29" r="2" fill="#00e5ff"/>
+              <circle cx="8" cy="23" r="2" fill="#a855f7"/>
+              <circle cx="8" cy="13" r="2" fill="#00e5ff"/>
+              <defs>
+                <linearGradient id="logo-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#00e5ff"/>
+                  <stop offset="100%" stop-color="#a855f7"/>
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+          <div class="nav-logo-text">
+            <span class="brand-title">ATLAS</span>
+            <span class="brand-subtitle">AI SUPPLY CHAIN</span>
+          </div>
+        </a>
 
-    <!-- Nav links -->
-    <ul class="nav-links" role="list">
-      <li><a href="#platform">Platform</a></li>
-      <li><a href="#solutions">Solutions</a></li>
-      <li><a href="#agents">AI Agents</a></li>
-      <li><a href="#resources">Resources</a></li>
-      <li><a href="/docs">API Docs</a></li>
-    </ul>
+        <!-- Center Nav Links -->
+        <nav class="nav-links" role="navigation">
+          <a href="#platform" class="nav-item">Platform</a>
+          <a href="#solutions" class="nav-item">Solutions</a>
+          <a href="#agents" class="nav-item">AI Agents</a>
+          <a href="#resources" class="nav-item">Resources</a>
+          <a href="#pricing" class="nav-item">Pricing</a>
+        </nav>
 
-    <!-- Actions -->
-    <div class="nav-actions">
-      <a href="/demo-ui" class="btn-signin">Dashboard</a>
-      <a href="/demo-ui" class="btn-cta-nav">Launch Demo &rarr;</a>
-    </div>
-
-  </nav>
-
-  <!-- ────────────────────────────────────────────────────────────
-       HERO
-  ──────────────────────────────────────────────────────────────── -->
-  <main class="hero" role="main">
-
-    <div class="hero-main">
-
-      <!-- Left column: copy + CTAs -->
-      <section class="hero-left" aria-labelledby="hero-heading">
-
-        <!-- Badge pill -->
-        <div class="hero-badge" aria-label="Product category">
-          <span class="badge-dot" aria-hidden="true"></span>
-          The Next Generation
+        <!-- Right Action Controls -->
+        <div class="nav-actions">
+          <a href="/demo-ui" class="btn-signin">Sign in</a>
+          <a href="/demo-ui" class="btn-demo-pill">Request Demo</a>
         </div>
 
-        <!-- Headline -->
-        <div class="hero-headline">
-          <h1 id="hero-heading">
-            <span class="headline-white">Smarter AI.<br>Stronger</span>
-            <span class="headline-gradient"> Supply Chain.</span>
+      </header>
+
+      <!-- ── 2. HERO CONTENT SPLIT (Left 42% | Right 58%) ──────────────── -->
+      <main class="hero-split" role="main">
+
+        <!-- LEFT COLUMN: Typography & CTAs -->
+        <section class="hero-left">
+
+          <!-- Badge Pill -->
+          <div class="badge-pill">
+            <span class="badge-icon">🚀</span>
+            <span class="badge-text">THE NEXT GENERATION</span>
+          </div>
+
+          <!-- Main Headline -->
+          <h1 class="hero-title">
+            <span class="title-white">Smarter AI. Stronger</span>
+            <span class="title-gradient">Supply Chain.</span>
           </h1>
-        </div>
 
-        <!-- Subtext -->
-        <p class="hero-subtext">
-          Orchestrate, automate, and secure your global operations
-          with autonomous AI agents and predictive intelligence.
-        </p>
+          <!-- Description -->
+          <p class="hero-desc">
+            Orchestrate, automate, and secure your global operations with autonomous AI agents and predictive intelligence.
+          </p>
 
-        <!-- Buttons -->
-        <div class="hero-buttons">
-          <a href="/demo-ui" class="btn-primary">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-              <path d="M8 1L15 8L8 15M15 8H1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            Deploy Now
-          </a>
-          <a href="#demo-video" class="btn-secondary">
-            <span class="btn-play-icon" aria-hidden="true">
-              <svg width="8" height="10" viewBox="0 0 8 10" fill="currentColor">
-                <path d="M0 0L8 5L0 10V0Z"/>
+          <!-- Action Buttons -->
+          <div class="hero-ctas">
+            <a href="/demo-ui" class="btn-primary-pill">Deploy Now</a>
+            <a href="/demo-ui" class="btn-secondary-pill">Watch Video</a>
+          </div>
+
+        </section>
+
+        <!-- RIGHT COLUMN: 3D Holographic Globe, Rings, Drones & HUD -->
+        <section class="hero-right" aria-label="Interactive 3D Supply Chain Globe">
+
+          <!-- Three.js Canvas -->
+          <canvas id="globe-canvas" aria-hidden="true"></canvas>
+
+          <!-- Top-Left HUD Card: Orbital Telemetry -->
+          <div class="hud-box hud-telemetry">
+            <div class="hud-header">
+              <span class="hud-dot"></span>
+              <span class="hud-title">ORBITAL TELEMETRY</span>
+            </div>
+            <div class="hud-bars">
+              <span></span><span></span><span></span>
+            </div>
+            <div class="hud-stat-line">
+              <span class="hud-code">SAT_ORBIT</span>
+              <span class="hud-val live">24,180 KM</span>
+            </div>
+            <div class="hud-stat-line">
+              <span class="hud-code">SIG_LATENCY</span>
+              <span class="hud-val live" id="tel-latency">12 MS</span>
+            </div>
+          </div>
+
+          <!-- Top-Right HUD Card: Data Graphs -->
+          <div class="hud-box hud-graphs">
+            <div class="hud-header">
+              <span class="hud-title">DATA GRAPHS</span>
+            </div>
+            <canvas id="telemetry-chart-canvas" width="160" height="70" aria-hidden="true"></canvas>
+            <div class="hud-graph-footer">
+              <span class="hud-tag">FLOW RATE</span>
+              <span class="hud-val text-cyan" id="tel-flow">277,330</span>
+            </div>
+          </div>
+
+          <!-- Futuristic Quadcopter Drones -->
+          <div class="drone-swarm" aria-hidden="true">
+            
+            <!-- Drone 1 (Top Left) -->
+            <div class="futuristic-drone drone-alpha" id="drone-1">
+              <svg viewBox="0 0 70 50" fill="none" class="drone-svg">
+                <!-- Drone Body -->
+                <ellipse cx="35" cy="25" rx="14" ry="7" fill="#0d1433" stroke="#00e5ff" stroke-width="1.5"/>
+                <circle cx="35" cy="25" r="3" fill="#00e5ff"/>
+                <!-- Arms -->
+                <line x1="23" y1="23" x2="10" y2="14" stroke="#a855f7" stroke-width="1.8"/>
+                <line x1="47" y1="23" x2="60" y2="14" stroke="#a855f7" stroke-width="1.8"/>
+                <line x1="23" y1="27" x2="10" y2="36" stroke="#a855f7" stroke-width="1.8"/>
+                <line x1="47" y1="27" x2="60" y2="36" stroke="#a855f7" stroke-width="1.8"/>
+                <!-- Thrusters & Glow -->
+                <ellipse cx="10" cy="14" rx="7" ry="2.5" stroke="#00e5ff" stroke-width="1.2" fill="rgba(0,229,255,0.2)"/>
+                <ellipse cx="60" cy="14" rx="7" ry="2.5" stroke="#00e5ff" stroke-width="1.2" fill="rgba(0,229,255,0.2)"/>
+                <ellipse cx="10" cy="36" rx="7" ry="2.5" stroke="#a855f7" stroke-width="1.2" fill="rgba(168,85,247,0.2)"/>
+                <ellipse cx="60" cy="36" rx="7" ry="2.5" stroke="#a855f7" stroke-width="1.2" fill="rgba(168,85,247,0.2)"/>
               </svg>
-            </span>
-            Watch Video
-          </a>
-        </div>
+              <div class="drone-plasma-jet"></div>
+            </div>
 
-      </section>
+            <!-- Drone 2 (Bottom Right with Jet Flare) -->
+            <div class="futuristic-drone drone-beta" id="drone-2">
+              <svg viewBox="0 0 70 50" fill="none" class="drone-svg">
+                <ellipse cx="35" cy="25" rx="14" ry="7" fill="#0a102c" stroke="#a855f7" stroke-width="1.5"/>
+                <circle cx="35" cy="25" r="3" fill="#a855f7"/>
+                <line x1="23" y1="23" x2="10" y2="14" stroke="#00e5ff" stroke-width="1.8"/>
+                <line x1="47" y1="23" x2="60" y2="14" stroke="#00e5ff" stroke-width="1.8"/>
+                <line x1="23" y1="27" x2="10" y2="36" stroke="#00e5ff" stroke-width="1.8"/>
+                <line x1="47" y1="27" x2="60" y2="36" stroke="#00e5ff" stroke-width="1.8"/>
+                <ellipse cx="10" cy="14" rx="7" ry="2.5" stroke="#a855f7" stroke-width="1.2" fill="rgba(168,85,247,0.2)"/>
+                <ellipse cx="60" cy="14" rx="7" ry="2.5" stroke="#a855f7" stroke-width="1.2" fill="rgba(168,85,247,0.2)"/>
+                <ellipse cx="10" cy="36" rx="7" ry="2.5" stroke="#00e5ff" stroke-width="1.2" fill="rgba(0,229,255,0.2)"/>
+                <ellipse cx="60" cy="36" rx="7" ry="2.5" stroke="#00e5ff" stroke-width="1.2" fill="rgba(0,229,255,0.2)"/>
+              </svg>
+              <div class="drone-plasma-jet flare-bottom"></div>
+            </div>
 
-      <!-- Right column: Globe + HUD cards + Drones -->
-      <section class="hero-right" aria-label="Interactive 3D supply chain globe">
+          </div>
 
-        <!-- Three.js Globe Canvas -->
-        <canvas id="globe-canvas" aria-hidden="true"></canvas>
+          <!-- Bottom-Right HUD Bar Telemetry -->
+          <div class="hud-bottom-telemetry" aria-hidden="true">
+            <div class="hud-bars-vertical">
+              <span></span><span></span><span></span><span></span><span></span>
+            </div>
+            <span class="hud-tele-code">GEO_TRACK: 20°33'N 82°43'E</span>
+          </div>
 
-        <!-- Drone container (positioned absolutely within hero-right) -->
-        <div class="drone-container" aria-hidden="true">
+        </section>
 
-          <!-- Drone 1 -->
-          <div class="drone" id="drone-1">
-            <svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <!-- Body -->
-              <rect x="19" y="19" width="14" height="14" rx="3" fill="#1a1a3e" stroke="rgba(168,85,247,0.8)" stroke-width="1"/>
-              <circle cx="26" cy="26" r="3" fill="rgba(0,229,255,0.9)"/>
-              <!-- Arms -->
-              <line x1="19" y1="22" x2="8"  y2="12" stroke="rgba(200,200,255,0.5)" stroke-width="1.5"/>
-              <line x1="33" y1="22" x2="44" y2="12" stroke="rgba(200,200,255,0.5)" stroke-width="1.5"/>
-              <line x1="19" y1="30" x2="8"  y2="40" stroke="rgba(200,200,255,0.5)" stroke-width="1.5"/>
-              <line x1="33" y1="30" x2="44" y2="40" stroke="rgba(200,200,255,0.5)" stroke-width="1.5"/>
-              <!-- Rotors -->
-              <ellipse cx="8"  cy="11" rx="7" ry="2.5" fill="none" stroke="rgba(0,229,255,0.7)" stroke-width="1" transform="rotate(-10 8 11)"/>
-              <ellipse cx="44" cy="11" rx="7" ry="2.5" fill="none" stroke="rgba(0,229,255,0.7)" stroke-width="1" transform="rotate(10 44 11)"/>
-              <ellipse cx="8"  cy="41" rx="7" ry="2.5" fill="none" stroke="rgba(168,85,247,0.7)" stroke-width="1" transform="rotate(10 8 41)"/>
-              <ellipse cx="44" cy="41" rx="7" ry="2.5" fill="none" stroke="rgba(168,85,247,0.7)" stroke-width="1" transform="rotate(-10 44 41)"/>
+      </main>
+
+      <!-- ── 3. BOTTOM FLOATING KPI ANALYTICS CARDS ─────────────────────── -->
+      <footer class="hero-kpi-deck" role="region" aria-label="Key Performance Indicators">
+
+        <!-- Card 1: Tasks Automated (Cyan) -->
+        <div class="kpi-capsule card-cyan">
+          <div class="kpi-info">
+            <span class="kpi-number text-cyan" id="counter-tasks">120K+</span>
+            <span class="kpi-label">Tasks Automated</span>
+          </div>
+          <div class="kpi-badge">
+            <svg class="kpi-icon" viewBox="0 0 24 24" fill="none" stroke="#00e5ff" stroke-width="1.8">
+              <rect x="4" y="6" width="16" height="12" rx="3"/>
+              <circle cx="9" cy="12" r="1.5" fill="#00e5ff"/>
+              <circle cx="15" cy="12" r="1.5" fill="#00e5ff"/>
+              <path d="M12 2v4M9 20v2M15 20v2"/>
             </svg>
           </div>
-          <div class="drone-trail" id="trail-1"></div>
+        </div>
 
-          <!-- Drone 2 -->
-          <div class="drone" id="drone-2">
-            <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="16" y="16" width="12" height="12" rx="2.5" fill="#12103a" stroke="rgba(99,102,241,0.8)" stroke-width="1"/>
-              <circle cx="22" cy="22" r="2.5" fill="rgba(0,229,255,0.9)"/>
-              <line x1="16" y1="19" x2="6"  y2="10" stroke="rgba(200,200,255,0.5)" stroke-width="1.2"/>
-              <line x1="28" y1="19" x2="38" y2="10" stroke="rgba(200,200,255,0.5)" stroke-width="1.2"/>
-              <line x1="16" y1="25" x2="6"  y2="34" stroke="rgba(200,200,255,0.5)" stroke-width="1.2"/>
-              <line x1="28" y1="25" x2="38" y2="34" stroke="rgba(200,200,255,0.5)" stroke-width="1.2"/>
-              <ellipse cx="6"  cy="9"  rx="6" ry="2" fill="none" stroke="rgba(99,102,241,0.7)" stroke-width="1"/>
-              <ellipse cx="38" cy="9"  rx="6" ry="2" fill="none" stroke="rgba(99,102,241,0.7)" stroke-width="1"/>
-              <ellipse cx="6"  cy="35" rx="6" ry="2" fill="none" stroke="rgba(99,102,241,0.7)" stroke-width="1"/>
-              <ellipse cx="38" cy="35" rx="6" ry="2" fill="none" stroke="rgba(99,102,241,0.7)" stroke-width="1"/>
+        <!-- Card 2: AI Agents (Purple) -->
+        <div class="kpi-capsule card-purple">
+          <div class="kpi-info">
+            <span class="kpi-number text-purple" id="counter-agents">850+</span>
+            <span class="kpi-label">AI Agents</span>
+          </div>
+          <div class="kpi-badge">
+            <svg class="kpi-icon" viewBox="0 0 24 24" fill="none" stroke="#c084fc" stroke-width="1.8">
+              <circle cx="12" cy="12" r="4"/>
+              <circle cx="12" cy="3" r="2" fill="#c084fc"/>
+              <circle cx="12" cy="21" r="2" fill="#c084fc"/>
+              <circle cx="3" cy="12" r="2" fill="#c084fc"/>
+              <circle cx="21" cy="12" r="2" fill="#c084fc"/>
+              <line x1="12" y1="5" x2="12" y2="8"/>
+              <line x1="12" y1="16" x2="12" y2="19"/>
+              <line x1="5" y1="12" x2="8" y2="12"/>
+              <line x1="16" y1="12" x2="19" y2="12"/>
             </svg>
           </div>
-          <div class="drone-trail" id="trail-2"></div>
+        </div>
 
-          <!-- Drone 3 (with thruster trail) -->
-          <div class="drone" id="drone-3">
-            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="17" y="17" width="14" height="14" rx="3" fill="#0e0c2e" stroke="rgba(0,229,255,0.9)" stroke-width="1.2"/>
-              <circle cx="24" cy="24" r="3" fill="rgba(168,85,247,1)"/>
-              <!-- Thruster glow -->
-              <ellipse cx="24" cy="38" rx="4" ry="2" fill="rgba(168,85,247,0.6)"/>
-              <ellipse cx="24" cy="40" rx="2.5" ry="1.2" fill="rgba(99,102,241,0.4)"/>
-              <line x1="17" y1="20" x2="6"  y2="10" stroke="rgba(200,200,255,0.5)" stroke-width="1.3"/>
-              <line x1="31" y1="20" x2="42" y2="10" stroke="rgba(200,200,255,0.5)" stroke-width="1.3"/>
-              <line x1="17" y1="28" x2="6"  y2="38" stroke="rgba(200,200,255,0.5)" stroke-width="1.3"/>
-              <line x1="31" y1="28" x2="42" y2="38" stroke="rgba(200,200,255,0.5)" stroke-width="1.3"/>
-              <ellipse cx="6"  cy="10" rx="6.5" ry="2.2" fill="none" stroke="rgba(0,229,255,0.8)" stroke-width="1"/>
-              <ellipse cx="42" cy="10" rx="6.5" ry="2.2" fill="none" stroke="rgba(0,229,255,0.8)" stroke-width="1"/>
-              <ellipse cx="6"  cy="38" rx="6.5" ry="2.2" fill="none" stroke="rgba(168,85,247,0.8)" stroke-width="1"/>
-              <ellipse cx="42" cy="38" rx="6.5" ry="2.2" fill="none" stroke="rgba(168,85,247,0.8)" stroke-width="1"/>
+        <!-- Card 3: Delivery Health (Teal + Sparkles) -->
+        <div class="kpi-capsule card-teal">
+          <div class="kpi-info">
+            <span class="kpi-number text-teal" id="counter-health">98%</span>
+            <span class="kpi-label">Delivery Health</span>
+          </div>
+          <div class="kpi-badge">
+            <svg class="kpi-icon" viewBox="0 0 24 24" fill="none" stroke="#2dd4bf" stroke-width="1.8">
+              <path d="M12 2L4 6v6c0 5.5 3.8 10.7 8 12 4.2-1.3 8-6.5 8-12V6l-8-4z"/>
+              <polyline points="8,12 11,15 16,9"/>
             </svg>
           </div>
-          <div class="drone-trail" id="trail-3"></div>
-
-        </div><!-- /.drone-container -->
-
-        <!-- HUD Card: Orbital Telemetry -->
-        <div class="hud-card hud-telemetry" role="region" aria-label="Orbital Telemetry">
-          <div class="hud-title">&#9632; Orbital Telemetry</div>
-          <div class="hud-row">
-            <span class="hud-label">NODES ACTIVE</span>
-            <span class="hud-value live" id="tel-nodes">1,247</span>
-          </div>
-          <div class="hud-row">
-            <span class="hud-label">AVG LATENCY</span>
-            <span class="hud-value live" id="tel-latency">12ms</span>
-          </div>
-          <div class="hud-row">
-            <span class="hud-label">UPTIME</span>
-            <span class="hud-value" id="tel-uptime">99.9%</span>
-          </div>
-          <div class="hud-row">
-            <span class="hud-label">PACKETS/S</span>
-            <span class="hud-value live" id="tel-packets">3,847</span>
+          <!-- Corner Sparkle Stars -->
+          <div class="kpi-sparkles" aria-hidden="true">
+            <svg class="sparkle-star s1" viewBox="0 0 16 16" fill="#2dd4bf">
+              <path d="M8 0L9.5 6.5L16 8L9.5 9.5L8 16L6.5 9.5L0 8L6.5 6.5L8 0Z"/>
+            </svg>
+            <svg class="sparkle-star s2" viewBox="0 0 16 16" fill="#00e5ff">
+              <path d="M8 0L9.5 6.5L16 8L9.5 9.5L8 16L6.5 9.5L0 8L6.5 6.5L8 0Z"/>
+            </svg>
           </div>
         </div>
 
-        <!-- HUD Card: Data Graphs -->
-        <div class="hud-card hud-graph" role="region" aria-label="Data Graphs">
-          <div class="hud-title">&#9632; Data Graphs</div>
-          <canvas id="telemetry-chart-canvas" width="182" height="90" aria-hidden="true"></canvas>
-        </div>
+      </footer>
 
-      </section><!-- /.hero-right -->
+    </div><!-- /.deck-frame -->
+  </div><!-- /.deck-wrapper -->
 
-    </div><!-- /.hero-main -->
-
-    <!-- ──────────────────────────────────────────────────────────
-         STAT CARDS ROW
-    ──────────────────────────────────────────────────────────── -->
-    <div class="stats-row" role="list" aria-label="Key performance indicators">
-
-      <!-- Card 1: Tasks Automated -->
-      <article class="stat-card" role="listitem">
-        <div class="stat-content">
-          <span class="stat-number cyan" id="counter-tasks" aria-live="polite" aria-atomic="true">120,000+</span>
-          <span class="stat-label">Tasks Automated</span>
-        </div>
-        <div class="stat-icon-wrap" aria-hidden="true">
-          <svg viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="5" y="8" width="16" height="12" rx="3" stroke="#00e5ff" stroke-width="1.4"/>
-            <circle cx="10" cy="14" r="2" fill="#00e5ff" opacity="0.8"/>
-            <circle cx="16" cy="14" r="2" fill="#00e5ff" opacity="0.8"/>
-            <rect x="10" y="4" width="6" height="4" rx="1" stroke="#00e5ff" stroke-width="1.2"/>
-            <line x1="13" y1="8" x2="13" y2="4" stroke="#00e5ff" stroke-width="1.2"/>
-            <line x1="8"  y1="20" x2="8"  y2="23" stroke="#00e5ff" stroke-width="1.2"/>
-            <line x1="18" y1="20" x2="18" y2="23" stroke="#00e5ff" stroke-width="1.2"/>
-          </svg>
-        </div>
-      </article>
-
-      <!-- Card 2: AI Agents -->
-      <article class="stat-card" role="listitem">
-        <div class="stat-content">
-          <span class="stat-number purple" id="counter-agents" aria-live="polite" aria-atomic="true">850+</span>
-          <span class="stat-label">AI Agents Active</span>
-        </div>
-        <div class="stat-icon-wrap" aria-hidden="true">
-          <svg viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="13" cy="13" r="8" stroke="#a855f7" stroke-width="1.4"/>
-            <circle cx="13" cy="13" r="3" fill="#a855f7" opacity="0.8"/>
-            <line x1="13" y1="5"  x2="13" y2="2"  stroke="#a855f7" stroke-width="1.2"/>
-            <line x1="13" y1="21" x2="13" y2="24" stroke="#a855f7" stroke-width="1.2"/>
-            <line x1="5"  y1="13" x2="2"  y2="13" stroke="#a855f7" stroke-width="1.2"/>
-            <line x1="21" y1="13" x2="24" y2="13" stroke="#a855f7" stroke-width="1.2"/>
-            <line x1="7.9" y1="7.9" x2="5.8" y2="5.8" stroke="#a855f7" stroke-width="1.2"/>
-            <line x1="18.1" y1="18.1" x2="20.2" y2="20.2" stroke="#a855f7" stroke-width="1.2"/>
-            <line x1="18.1" y1="7.9" x2="20.2" y2="5.8" stroke="#a855f7" stroke-width="1.2"/>
-            <line x1="7.9" y1="18.1" x2="5.8" y2="20.2" stroke="#a855f7" stroke-width="1.2"/>
-          </svg>
-        </div>
-      </article>
-
-      <!-- Card 3: Delivery Health -->
-      <article class="stat-card" role="listitem" style="position:relative;">
-        <div class="stat-content">
-          <span class="stat-number teal" id="counter-health" aria-live="polite" aria-atomic="true">98%</span>
-          <span class="stat-label">Delivery Health</span>
-        </div>
-        <div class="stat-icon-wrap" aria-hidden="true">
-          <svg viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M13 3L4 7V14C4 19 8.5 23.4 13 24C17.5 23.4 22 19 22 14V7L13 3Z" stroke="#2dd4bf" stroke-width="1.4"/>
-            <polyline points="8,13 11,16 18,10" stroke="#2dd4bf" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-        <!-- Sparkle decoration -->
-        <div class="sparkle-wrap" aria-hidden="true">
-          <svg class="sparkle" viewBox="0 0 20 20" fill="none">
-            <path d="M10 1V19M1 10H19M3.5 3.5L16.5 16.5M16.5 3.5L3.5 16.5" stroke="rgba(45,212,191,0.5)" stroke-width="1.5" stroke-linecap="round"/>
-            <circle cx="10" cy="10" r="1.5" fill="#2dd4bf"/>
-          </svg>
-        </div>
-      </article>
-
-    </div><!-- /.stats-row -->
-
-  </main><!-- /.hero -->
-
-  <!-- ── App JS ─────────────────────────────────────────────── -->
+  <!-- App JavaScript -->
   <script src="/static/js/globe.js"></script>
   <script src="/static/js/landing.js"></script>
 
 </body>
 </html>
-
