@@ -69,6 +69,11 @@ app.add_middleware(
 # Mount outputs directory for static files (PNG matrix, PDF audit, CSV schedule)
 app.mount("/outputs", StaticFiles(directory="outputs"), name="outputs")
 
+# Mount static assets for the landing page UI (CSS, JS, SVG assets)
+STATIC_DIR = os.path.join(os.getcwd(), "static")
+os.makedirs(STATIC_DIR, exist_ok=True)
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
 # Initialize Master Orchestrator
 orchestrator = MasterOrchestrator(base_url=BASE_URL)
 
@@ -216,6 +221,22 @@ async def upload_csv(file: UploadFile = File(...), message: Optional[str] = Form
         "attachments": result.get("attachments", []),
         "filename": file.filename,
     })
+
+
+@app.get("/landing", response_class=HTMLResponse)
+async def landing_page():
+    """
+    Animated landing page for Atlas – SupplyChain360 AI.
+    Three.js globe, GSAP animations, glassmorphic UI.
+    """
+    template_file = os.path.join(TEMPLATES_DIR, "landing.html")
+    if os.path.exists(template_file):
+        with open(template_file, "r", encoding="utf-8") as f:
+            return HTMLResponse(content=f.read())
+    return HTMLResponse(
+        content="<h1>Landing page template not found.</h1>",
+        status_code=404,
+    )
 
 
 @app.get("/demo-ui", response_class=HTMLResponse)
