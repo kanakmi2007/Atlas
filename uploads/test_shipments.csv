@@ -1,0 +1,13 @@
+shipment_id,supplier,raw_material,factory_line,capacity_target,actual_output,origin,destination,origin_lat,origin_lon,dest_lat,dest_lon,route_zone,cargo_value_usd,lead_time_days,current_stock,daily_demand
+SHP-2001,Helios Semiconductors,Silicon Wafers,Line-A1,1000,960,Shenzhen,Rotterdam,22.5431,114.0579,51.9244,4.4777,Red Sea / Suez,2450000,19,210,30
+SHP-2002,Kestrel Robotics,Servo Actuators,Line-B2,850,810,Shanghai,Hamburg,31.2304,121.4737,53.5461,9.9661,Red Sea / Suez,1820000,17,340,35
+SHP-2003,Pacific Aero Parts,Titanium Alloy,Line-C1,1200,890,Shanghai,Los Angeles,31.2304,121.4737,33.7405,-118.2786,Trans-Pacific,940000,11,920,45
+SHP-2004,Deccan Precision Forge,Turbine Blades,Line-A2,900,880,Mumbai,Rotterdam,18.9490,72.8354,51.9244,4.4777,Red Sea / Suez,1380000,21,150,25
+SHP-2005,Straits Microelectronics,PCB Substrates,Line-D1,1100,980,Singapore,Hamburg,1.2644,103.8220,53.5461,9.9661,Malacca / Suez,2190000,16,280,32
+SHP-2006,Osaka Battery Corp,Lithium Cells,Line-E1,1500,1180,Shanghai,Los Angeles,31.2304,121.4737,33.7405,-118.2786,Trans-Pacific,1120000,12,810,40
+SHP-2007,Bavaria Optics GmbH,Optical Lenses,Line-F1,700,490,Hamburg,Rotterdam,53.5461,9.9661,51.9244,4.4777,North Sea Short,670000,5,600,20
+SHP-2008,Redline Composites,Carbon Fiber,Line-A1,1000,950,Shenzhen,Rotterdam,22.5431,114.0579,51.9244,4.4777,Red Sea / Suez,1640000,18,190,28
+SHP-2009,Indus Industrial Motors,Copper Windings,Line-G1,950,780,Mumbai,Dubai,18.9490,72.8354,25.0138,55.0616,Arabian Sea,790000,8,510,30
+SHP-2010,Orion Display Panels,OLED Glass,Line-H1,1300,1100,Singapore,Los Angeles,1.2644,103.8220,33.7405,-118.2786,Trans-Pacific,1530000,13,430,36
+SHP-2011,Apex Carbon Materials,Graphite Anodes,Line-B1,900,875,Shenzhen,Hamburg,22.5431,114.0579,53.5461,9.9661,Red Sea / Suez,2050000,20,175,26
+SHP-2012,Vanguard Sensors Ltd,LiDAR Modules,Line-C2,1050,910,Shanghai,Rotterdam,31.2304,121.4737,51.9244,4.4777,Red Sea / Suez,1290000,15,390,34

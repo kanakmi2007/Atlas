@@ -6,6 +6,8 @@ and FastAPI endpoints.
 
 import os
 import sys
+# Set offline mode for local test verification to prevent sandbox network timeouts
+os.environ["GEMINI_OFFLINE"] = "1"
 import unittest
 import pandas as pd
 from fastapi.testclient import TestClient
@@ -140,6 +142,7 @@ class TestSupplyChain360(unittest.TestCase):
 
     def test_09_fastapi_endpoints(self):
         """Tests FastAPI service discovery and webhook execution."""
+        print("\n--- TEST 09 START ---", flush=True)
         # Test Root GET /
         resp_root = self.client.get("/")
         self.assertEqual(resp_root.status_code, 200)
@@ -161,11 +164,57 @@ class TestSupplyChain360(unittest.TestCase):
         self.assertEqual(resp_webhook.status_code, 200)
         wh_data = resp_webhook.json()
         self.assertEqual(wh_data["status"], "success")
+        self.assertEqual(wh_data["intent"], "audit")
         self.assertGreater(wh_data["total_at_risk_usd"], 0)
         self.assertEqual(len(wh_data["attachments"]), 3)
         self.assertIn("@Procurement", wh_data["reply"])
         self.assertIn("@Logistics", wh_data["reply"])
         self.assertIn("@Operations", wh_data["reply"])
+
+    def test_10_chat_intent_routing_and_memory(self):
+        """Tests conversational AI assistant routing, multi-turn session memory, and zero file re-generation."""
+        sid = "unit_test_session_42"
+
+        # 1. Greeting should return instant greeting without regenerating files
+        resp_greet = self.client.post("/webhook", json={"message": "hello", "session_id": sid})
+        self.assertEqual(resp_greet.status_code, 200)
+        greet_data = resp_greet.json()
+        self.assertEqual(greet_data["intent"], "greeting")
+        self.assertEqual(len(greet_data["attachments"]), 0, "Greetings must NOT generate files")
+        self.assertIn("Atlas", greet_data["reply"])
+
+        # 2. Targeted question: "which supplier is worst?"
+        resp_q1 = self.client.post("/webhook", json={"message": "which supplier is worst?", "session_id": sid})
+        self.assertEqual(resp_q1.status_code, 200)
+        q1_data = resp_q1.json()
+        self.assertEqual(q1_data["intent"], "conversation")
+        self.assertEqual(len(q1_data["attachments"]), 0, "Conversational queries must NOT generate files")
+        self.assertIn("Taiwan Semi Foundry", q1_data["reply"])
+        self.assertIn("32 days", q1_data["reply"])
+
+        # 3. Follow-up turn referencing previous context: "tell me more about the second one"
+        resp_q2 = self.client.post("/webhook", json={"message": "tell me more about the second one", "session_id": sid})
+        self.assertEqual(resp_q2.status_code, 200)
+        q2_data = resp_q2.json()
+        self.assertEqual(q2_data["intent"], "conversation")
+        self.assertIn("Apex Micro", q2_data["reply"])
+        self.assertIn("28 days", q2_data["reply"])
+
+        # 4. Action turn: "draft an email to that supplier"
+        resp_q3 = self.client.post("/webhook", json={"message": "draft an email to that supplier", "session_id": sid})
+        self.assertEqual(resp_q3.status_code, 200)
+        q3_data = resp_q3.json()
+        self.assertEqual(q3_data["intent"], "conversation")
+        self.assertIn("Subject:", q3_data["reply"])
+        self.assertIn("Apex Micro", q3_data["reply"])
+
+        # 5. Domain query: "explain the Red Sea detour"
+        resp_q4 = self.client.post("/webhook", json={"message": "explain the Red Sea detour", "session_id": sid})
+        self.assertEqual(resp_q4.status_code, 200)
+        q4_data = resp_q4.json()
+        self.assertEqual(q4_data["intent"], "conversation")
+        self.assertIn("Cape of Good Hope", q4_data["reply"])
+        self.assertIn("38", q4_data["reply"])
 
 
 if __name__ == "__main__":

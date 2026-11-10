@@ -29,6 +29,7 @@ class WebhookRequest(BaseModel):
     file_url: Optional[str] = Field(None, description="Direct URL to a CSV or data file")
     sender: Optional[str] = Field(None, description="User or agent identifier in Nonilion")
     room_id: Optional[str] = Field(None, description="Virtual office room ID")
+    session_id: Optional[str] = Field(None, description="Chat session ID for conversational memory")
 
     def get_query(self) -> str:
         """Extract the effective query string from any provided text field."""
@@ -71,6 +72,7 @@ class WebhookResponse(BaseModel):
     message: str = Field(..., description="Alias for reply")
     text: str = Field(..., description="Alias for reply")
     total_at_risk_usd: Optional[float] = Field(None, description="Aggregated dollar value at risk")
+    intent: Optional[str] = Field("audit", description="Classified intent: 'audit', 'conversation', or 'greeting'")
     diagnostics: Optional[List[NodeDiagnostic]] = Field(default_factory=list, description="Diagnostic cards")
     attachments: List[WebhookAttachment] = Field(default_factory=list, description="Generated artifacts")
     room_id: Optional[str] = Field(None, description="Echoed Nonilion room ID")
