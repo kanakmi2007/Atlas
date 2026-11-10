@@ -1,0 +1,6 @@
+shipment_id,supplier,raw_material,lead_time_days,factory_line,capacity_target,actual_output,origin_lon,dest_lat,dest_lon,route_zone,current_stock,daily_demand
+CORRUPT-100,Corrupt Supply Partner,Unknown Fragment,15,Line-Fail,5000,4000,121.47,51.92,4.47,Red Sea / Suez Canal,200,50
+CORRUPT-101,Corrupt Supply Partner,Unknown Fragment,15,Line-Fail,5000,4000,121.47,51.92,4.47,Red Sea / Suez Canal,200,50
+CORRUPT-102,Corrupt Supply Partner,Unknown Fragment,15,Line-Fail,5000,4000,121.47,51.92,4.47,Red Sea / Suez Canal,200,50
+CORRUPT-103,Corrupt Supply Partner,Unknown Fragment,15,Line-Fail,5000,4000,121.47,51.92,4.47,Red Sea / Suez Canal,200,50
+CORRUPT-104,Corrupt Supply Partner,Unknown Fragment,15,Line-Fail,5000,4000,121.47,51.92,4.47,Red Sea / Suez Canal,200,50

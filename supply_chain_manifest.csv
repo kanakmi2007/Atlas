@@ -1,0 +1,26 @@
+shipment_id,supplier,raw_material,lead_time_days,factory_line,capacity_target,actual_output,origin_lat,origin_lon,dest_lat,dest_lon,route_zone,cargo_value_usd,current_stock,daily_demand
+SHP-1001,Apex Microelectronics,3nm Wafer Substrates,28,Line-Alpha-CN,10000,9650,31.23,121.47,51.92,4.47,Red Sea / Suez Canal,920000.0,350,100
+SHP-1002,Global Lithium Corp,Battery-Grade Lithium,22,Line-Beta-IN,8000,7600,18.95,72.95,53.55,9.99,Strait of Hormuz,780000.0,240,60
+SHP-1003,Shenzhen Precision Fab,Automotive Microcontrollers,12,Line-Gamma-DE,5000,4720,22.54,114.05,51.92,4.47,Red Sea / Suez Canal,850000.0,180,45
+SHP-1004,Taiwan Semi Foundry,AI Accelerator ASICs,32,Line-Alpha-CN,10000,9650,1.29,103.85,53.55,9.99,Red Sea / Suez Canal,950000.0,120,30
+SHP-1005,Bavaria Spec Alloys,Titanium Aerospace Ingots,19,Line-Beta-IN,8000,7600,18.95,72.95,51.92,4.47,Strait of Hormuz,640000.0,250,50
+SHP-1006,Nippon High-Tech Chem,Optical Transceiver Diodes,10,Line-Gamma-DE,5000,4720,31.23,121.47,51.92,4.47,Red Sea / Suez Canal,420000.0,900,45
+SHP-1007,Apex Microelectronics,Power MOSFETs,14,Line-Delta-US,6000,4800,22.54,114.05,33.74,-118.27,Trans-Pacific Corridor,185000.0,1400,70
+SHP-1008,Pacific Silicon Works,Ceramic Resonators,8,Line-Delta-US,6000,4800,31.23,121.47,33.74,-118.27,Trans-Pacific Corridor,110000.0,2500,80
+SHP-1009,Hanseatic Polymer AG,Thermal Polyimide Film,7,Line-Delta-US,6000,4800,51.92,4.47,40.71,-74.0,Trans-Atlantic Express,95000.0,3800,50
+SHP-1010,Bharat Electronics Hub,Multi-Layer PCB Boards,9,Line-Epsilon-SG,7500,5800,18.95,72.95,1.29,103.85,Malacca / Indian Ocean,140000.0,1600,80
+SHP-1011,Shenzhen Precision Fab,OLED Display Drivers,11,Line-Delta-US,6000,4800,22.54,114.05,33.74,-118.27,Trans-Pacific Corridor,175000.0,2100,75
+SHP-1012,Taiwan Semi Foundry,Flash Memory Chips,13,Line-Delta-US,6000,4800,1.29,103.85,33.74,-118.27,Trans-Pacific Corridor,220000.0,1800,90
+SHP-1013,Nordic Rare Earths,Neodymium Magnet Blocks,6,Line-Gamma-DE,5000,4720,51.92,4.47,53.55,9.99,North Sea Coastal,135000.0,4200,60
+SHP-1014,Hanseatic Polymer AG,Epoxy Encapsulant Resin,8,Line-Delta-US,6000,4800,53.55,9.99,40.71,-74.0,Trans-Atlantic Express,88000.0,2900,100
+SHP-1015,Bharat Electronics Hub,Copper Clad Laminates,10,Line-Beta-IN,8000,7600,1.29,103.85,18.95,72.95,Malacca / Indian Ocean,92000.0,1500,75
+SHP-1016,Pacific Silicon Works,High-Purity Quartz,12,Line-Alpha-CN,10000,9650,1.29,103.85,31.23,121.47,Trans-Pacific Corridor,160000.0,1950,65
+SHP-1017,Bavaria Spec Alloys,Cobalt-Chrome Wire,9,Line-Delta-US,6000,4800,51.92,4.47,40.71,-74.0,Trans-Atlantic Express,145000.0,1200,50
+SHP-1018,Nippon High-Tech Chem,Photoresist Polymers,11,Line-Epsilon-SG,7500,5800,31.23,121.47,1.29,103.85,Malacca / Indian Ocean,190000.0,1350,45
+SHP-1019,Apex Microelectronics,Precision Inductors,13,Line-Delta-US,6000,4800,22.54,114.05,33.74,-118.27,Trans-Pacific Corridor,125000.0,2600,100
+SHP-1020,Shenzhen Precision Fab,SMD Connectors,7,Line-Alpha-CN,10000,9650,22.54,114.05,31.23,121.47,Trans-Pacific Corridor,75000.0,3100,90
+SHP-1021,Nordic Rare Earths,Dysprosium Oxide,10,Line-Gamma-DE,5000,4720,51.92,4.47,53.55,9.99,North Sea Coastal,165000.0,1700,50
+SHP-1022,Bharat Electronics Hub,Ferrite Core Assemblies,9,Line-Beta-IN,8000,7600,1.29,103.85,18.95,72.95,Malacca / Indian Ocean,115000.0,2200,80
+SHP-1023,Taiwan Semi Foundry,Gallium Nitride Wafers,14,Line-Epsilon-SG,7500,5800,31.23,121.47,1.29,103.85,Trans-Pacific Corridor,210000.0,1100,40
+SHP-1024,Hanseatic Polymer AG,Silicon Underfill Gel,8,Line-Delta-US,6000,4800,51.92,4.47,40.71,-74.0,Trans-Atlantic Express,85000.0,2750,55
+SHP-1025,Global Lithium Corp,Electrolyte Solution,11,Line-Epsilon-SG,7500,5800,18.95,72.95,1.29,103.85,Malacca / Indian Ocean,155000.0,1600,60
