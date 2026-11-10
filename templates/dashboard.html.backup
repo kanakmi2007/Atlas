@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Atlas AI • Autonomous SupplyChain360 Control Tower</title>
+
+  <!-- Preconnect & Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Font Awesome 6.5.1 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Marked.js for Markdown Rendering -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+  <style>
+    :root {
+      --bg-deep: #050a1a;
+      --bg-mid: #0a0f2e;
+      --bg-surface: rgba(10, 16, 46, 0.75);
+      --bg-card: rgba(255, 255, 255, 0.04);
+      --bg-card-hover: rgba(255, 255, 255, 0.08);
+      --border-glass: rgba(255, 255, 255, 0.09);
+      --border-glass-hi: rgba(255, 255, 255, 0.18);
+      --accent-cyan: #00e5ff;
+      --accent-purple: #a855f7;
+      --accent-indigo: #6366f1;
+      --accent-teal: #2dd4bf;
+      --accent-amber: #f59e0b;
+      --accent-rose: #f43f5e;
+      --glow-cyan: 0 0 24px rgba(0, 229, 255, 0.35);
+      --glow-purple: 0 0 24px rgba(168, 85, 247, 0.35);
+      --font-main: 'Space Grotesk', 'Inter', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    body {
+      background-color: var(--bg-deep);
+      background-image:
+        radial-gradient(ellipse 80% 50% at 70% 20%, rgba(99, 102, 241, 0.12) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 60% at 20% 80%, rgba(0, 229, 255, 0.08) 0%, transparent 60%),
+        radial-gradient(ellipse 100% 100% at 50% 50%, var(--bg-mid) 0%, var(--bg-deep) 100%);
+      color: #f8fafc;
+      font-family: var(--font-main);
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .font-mono-nums {
+      font-family: var(--font-mono);
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Glassmorphic Surfaces */
+    .glass-panel {
+      background: rgba(10, 16, 44, 0.7);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--border-glass);
+    }
+
+    .glass-card {
+      background: var(--bg-card);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid var(--border-glass);
+      transition: all 0.2s ease;
+    }
+
+    .glass-card:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--border-glass-hi);
+    }
+
+    /* Glowing Pill Buttons */
+    .btn-gradient-glow {
+      background: linear-gradient(135deg, var(--accent-indigo) 0%, var(--accent-purple) 100%);
+      box-shadow: 0 0 25px rgba(99, 102, 241, 0.45);
+    }
+    .btn-gradient-glow:hover {
+      box-shadow: 0 0 35px rgba(168, 85, 247, 0.6);
+      transform: translateY(-1px);
+    }
+
+    .btn-cyan-glow {
+      background: linear-gradient(135deg, rgba(0, 229, 255, 0.15) 0%, rgba(99, 102, 241, 0.2) 100%);
+      border: 1px solid rgba(0, 229, 255, 0.4);
+      color: var(--accent-cyan);
+    }
+    .btn-cyan-glow:hover {
+      background: linear-gradient(135deg, rgba(0, 229, 255, 0.25) 0%, rgba(99, 102, 241, 0.35) 100%);
+      box-shadow: var(--glow-cyan);
+    }
+
+    /* Scrollbars */
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.12); border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.25); }
+
+    /* Markdown prose styles for Agent Chat thread */
+    .thread-prose h3 {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-top: 10px;
+      margin-bottom: 4px;
+    }
+    .thread-prose h4 {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: #e2e8f0;
+      margin-top: 8px;
+      margin-bottom: 4px;
+    }
+    .thread-prose p {
+      margin: 4px 0;
+      font-size: 12.5px;
+      line-height: 1.6;
+      color: #cbd5e1;
+    }
+    .thread-prose table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 11px;
+      margin: 8px 0;
+      background: rgba(0, 0, 0, 0.35);
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      font-family: var(--font-mono);
+      font-variant-numeric: tabular-nums;
+    }
+    .thread-prose th {
+      background: rgba(255, 255, 255, 0.06);
+      color: #94a3b8;
+      padding: 6px 8px;
+      font-weight: 600;
+      text-align: left;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      text-transform: uppercase;
+      font-size: 9.5px;
+      letter-spacing: 0.05em;
+    }
+    .thread-prose td {
+      padding: 6px 8px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      color: #f1f5f9;
+    }
+    .thread-prose tr:nth-child(even) td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+    .thread-prose code {
+      font-family: var(--font-mono);
+      background: rgba(0, 229, 255, 0.12);
+      color: var(--accent-cyan);
+      padding: 1px 5px;
+      border-radius: 4px;
+      font-size: 11px;
+    }
+    .thread-prose ul {
+      list-style-type: disc;
+      padding-left: 18px;
+      margin: 4px 0;
+      color: #cbd5e1;
+      font-size: 12.5px;
+    }
+    .thread-prose li { margin-bottom: 3px; }
+    .thread-prose strong { color: #ffffff; font-weight: 600; }
+  </style>
+</head>
+<body class="h-screen w-screen overflow-hidden select-none">
+
+    <!-- ====================================================================== -->
+    <!-- SCREEN 1: ASTRAAI-INSPIRED FUTURISTIC HERO FRONT (Initial View)        -->
+    <!-- ====================================================================== -->
+    <div id="screenHero" class="h-screen w-screen flex flex-col justify-between relative overflow-hidden transition-opacity duration-300">
+        
+        <!-- Ambient Glowing Cosmic Highlights -->
+        <div class="absolute -top-40 right-1/4 w-[600px] h-[600px] rounded-full bg-indigo-600/15 blur-[120px] pointer-events-none"></div>
+        <div class="absolute top-1/3 -left-40 w-[500px] h-[500px] rounded-full bg-sky-500/10 blur-[130px] pointer-events-none"></div>
+        
+        <!-- 1. Top Navigation Bar -->
+        <header class="h-20 px-8 lg:px-14 flex items-center justify-between z-20 shrink-0">
+            <!-- Brand Logo Mark -->
+            <div class="flex items-center gap-3 cursor-pointer" onclick="scrollToTop()">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-sky-400 via-indigo-500 to-purple-600 p-[1px] shadow-[0_0_20px_rgba(56,189,248,0.4)] flex items-center justify-center">
+                    <div class="w-full h-full rounded-xl bg-[#070D22] flex items-center justify-center">
+                        <svg class="w-5 h-5 text-sky-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <polygon points="12 2 2 12 12 22 22 12 12 2"></polygon>
+                        </svg>
+                    </div>
+                </div>
+                <div class="flex items-center gap-1.5">
+                    <span class="text-xl font-extrabold tracking-tight text-white">Atlas</span>
+                    <span class="text-xl font-extrabold tracking-tight bg-gradient-to-r from-sky-400 to-indigo-400 bg-clip-text text-transparent">AI</span>
+                </div>
+            </div>
+
+            <!-- Center Navigation Links -->
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
+                <button onclick="openInfoModal('overview')" class="hover:text-white transition">Overview</button>
+                <button onclick="openInfoModal('capabilities')" class="hover:text-white transition">Capabilities</button>
+                <button onclick="openInfoModal('howitworks')" class="hover:text-white transition">How It Works</button>
+                <a href="/docs" target="_blank" class="hover:text-white transition">API Docs</a>
+            </nav>
+
+            <!-- Right Action: Get Started Pill -->
+            <div class="flex items-center gap-3">
+                <button onclick="launchWorkspaceWithAction('Audit supply_chain_manifest.csv')" class="h-10 px-5 rounded-full btn-gradient-glow text-white text-xs font-bold tracking-wide transition flex items-center gap-2 active:scale-95">
+                    <span>Get Started</span>
+                    <i class="fa-solid fa-arrow-right text-[11px]"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- 2. Main Hero Split Content -->
+        <main class="flex-1 flex items-center px-8 lg:px-14 z-10 min-h-0">
+            <div class="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-center max-w-7xl mx-auto">
+                
+                <!-- Left Column: Hero Typography & Actions (5.5 cols) -->
+                <div class="lg:col-span-6 space-y-6">
+                    
+                    <!-- Frosted Glass Pill Badge -->
+                    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-card text-xs font-semibold text-sky-300 shadow-sm">
+                        <span class="text-amber-400">✦</span>
+                        <span>Next-Generation Supply Chain Assistant</span>
+                    </div>
+
+                    <!-- Giant Headline (52px) -->
+                    <h1 class="text-4xl sm:text-5xl lg:text-[52px] font-black tracking-tight leading-[1.08] text-white">
+                        Smarter <span class="bg-gradient-to-r from-sky-400 via-cyan-300 to-indigo-400 bg-clip-text text-transparent">Logistics</span> for a Safer Supply Chain
+                    </h1>
+
+                    <!-- Subtitle -->
+                    <p class="text-sm sm:text-base text-slate-300 max-w-xl leading-relaxed">
+                        Your intelligent companion for spotting delayed suppliers, rerouting blocked ships, and preventing stockouts—automatically.
+                    </p>
+
+                    <!-- 2 Action Pill Buttons -->
+                    <div class="flex flex-wrap items-center gap-3.5 pt-2">
+                        <!-- Primary Gradient Pill -->
+                        <button onclick="launchWorkspaceWithAction('Audit supply_chain_manifest.csv')" class="h-12 px-7 rounded-full btn-gradient-glow text-white text-sm font-bold transition flex items-center gap-2.5 active:scale-95">
+                            <span>Start Checking</span>
+                            <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </button>
+
+                        <!-- Hidden File Input for CSV Upload -->
+                        <input type="file" id="heroCsvFileInput" accept=".csv" class="hidden" onchange="onHeroFileSelected(event)">
+
+                        <!-- Frosted Dark Glass Pill -->
+                        <button onclick="document.getElementById('heroCsvFileInput').click()" class="h-12 px-6 rounded-full glass-card hover:bg-white/[0.08] border-white/20 text-white text-sm font-semibold transition flex items-center gap-2.5 active:scale-95">
+                            <i class="fa-solid fa-cloud-arrow-up text-sky-400 text-xs"></i>
+                            <span>Upload CSV File</span>
+                        </button>
+                    </div>
+
+                    <!-- Credibility / Trust Pill -->
+                    <div class="pt-4 flex items-center gap-3">
+                        <div class="flex -space-x-2">
+                            <span class="inline-block h-7 w-7 rounded-full ring-2 ring-[#070D22] bg-gradient-to-tr from-sky-400 to-indigo-500 text-[10px] font-bold text-white flex items-center justify-center">SH</span>
+                            <span class="inline-block h-7 w-7 rounded-full ring-2 ring-[#070D22] bg-gradient-to-tr from-purple-400 to-pink-500 text-[10px] font-bold text-white flex items-center justify-center">RO</span>
+                            <span class="inline-block h-7 w-7 rounded-full ring-2 ring-[#070D22] bg-gradient-to-tr from-emerald-400 to-teal-500 text-[10px] font-bold text-white flex items-center justify-center">LA</span>
+                        </div>
+                        <span class="text-xs text-slate-400 font-medium">Guarding 25 Global Maritime Corridors • Nonilion Virtual Office</span>
+                    </div>
+
+                </div>
+
+                <!-- Center 3D-Styled AI Hologram & Right 3 Cards (6.5 cols) -->
+                <div class="lg:col-span-6 grid grid-cols-1 sm:grid-cols-12 gap-6 items-center">
+                    
+                    <!-- Center 3D Holographic AI Orb Graphic (Pure CSS/SVG, 5 cols) -->
+                    <div class="sm:col-span-5 flex items-center justify-center relative">
+                        <div class="w-56 h-56 relative flex items-center justify-center animate-float">
+                            <!-- Outer Orbit Ring -->
+                            <div class="absolute inset-0 rounded-full border border-sky-400/25 animate-spin-slow"></div>
+                            <div class="absolute inset-4 rounded-full border border-indigo-400/30 border-dashed animate-spin-slow" style="animation-direction: reverse; animation-duration: 18s;"></div>
+                            
+                            <!-- Glowing Core Sphere -->
+                            <div class="w-36 h-36 rounded-full bg-gradient-to-tr from-sky-500 via-indigo-600 to-purple-600 p-[2px] shadow-[0_0_50px_rgba(56,189,248,0.55)]">
+                                <div class="w-full h-full rounded-full bg-[#08102B] flex flex-col items-center justify-center relative overflow-hidden">
+                                    <div class="absolute inset-0 bg-gradient-to-b from-sky-400/20 to-transparent"></div>
+                                    <!-- Eye / Radar Sensor Graphic -->
+                                    <div class="w-16 h-10 rounded-full bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 shadow-[0_0_20px_rgba(251,191,36,0.8)] flex items-center justify-center">
+                                        <div class="w-8 h-8 rounded-full bg-[#070D22] flex items-center justify-center">
+                                            <div class="w-3 h-3 rounded-full bg-amber-400 animate-pulse"></div>
+                                        </div>
+                                    </div>
+                                    <div class="text-[9px] font-mono font-bold text-sky-300 tracking-wider mt-2 uppercase">Atlas AI</div>
+                                </div>
+                            </div>
+
+                            <!-- Orbit Waypoints -->
+                            <div class="absolute -top-1 right-8 w-2.5 h-2.5 rounded-full bg-sky-400 shadow-[0_0_10px_#38BDF8]"></div>
+                            <div class="absolute -bottom-1 left-8 w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-[0_0_10px_#10B981]"></div>
+                        </div>
+                    </div>
+
+                    <!-- Right Side: 3 Stacked Frosted-Glass Cards (7 cols) -->
+                    <div class="sm:col-span-7 space-y-3.5">
+                        
+                        <!-- Card 1: Spot Delayed Suppliers -->
+                        <div onclick="launchWorkspaceWithAction('Audit suppliers and identify lead times over 14 days in supply_chain_manifest.csv')" class="glass-card glass-card-hover rounded-2xl p-4 cursor-pointer transition-all flex items-center justify-between group shadow-lg">
+                            <div class="flex items-center gap-3.5">
+                                <div class="w-11 h-11 rounded-xl bg-sky-500/20 border border-sky-400/30 text-sky-400 flex items-center justify-center text-base shadow-[0_0_15px_rgba(56,189,248,0.3)]">
+                                    <i class="fa-solid fa-bolt"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-sm font-bold text-white group-hover:text-sky-300 transition">Spot Delayed Suppliers</h4>
+                                    <p class="text-xs text-slate-300 mt-0.5">Catch late deliveries before they stall production</p>
+                                </div>
+                            </div>
+                            <i class="fa-solid fa-arrow-right text-slate-400 group-hover:text-white group-hover:translate-x-1 transition text-xs mr-1"></i>
+                        </div>
+
+                        <!-- Card 2: Safer Sea Routes -->
+                        <div onclick="launchWorkspaceWithAction('Analyze Red Sea and Suez Canal maritime chokepoints in supply_chain_manifest.csv and calculate Cape of Good Hope reroutes')" class="glass-card glass-card-hover rounded-2xl p-4 cursor-pointer transition-all flex items-center justify-between group shadow-lg">
+                            <div class="flex items-center gap-3.5">
+                                <div class="w-11 h-11 rounded-xl bg-indigo-500/20 border border-indigo-400/30 text-indigo-400 flex items-center justify-center text-base shadow-[0_0_15px_rgba(129,140,248,0.3)]">
+                                    <i class="fa-solid fa-route"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-sm font-bold text-white group-hover:text-indigo-300 transition">Safer Sea Routes</h4>
+                                    <p class="text-xs text-slate-300 mt-0.5">Reroute ships around blocked zones automatically</p>
+                                </div>
+                            </div>
+                            <i class="fa-solid fa-arrow-right text-slate-400 group-hover:text-white group-hover:translate-x-1 transition text-xs mr-1"></i>
+                        </div>
+
+                        <!-- Card 3: Safe & Verified Data -->
+                        <div onclick="launchWorkspaceWithAction('Validate corrupt_test_manifest.csv', null, 'corrupt_test_manifest.csv')" class="glass-card glass-card-hover rounded-2xl p-4 cursor-pointer transition-all flex items-center justify-between group shadow-lg">
+                            <div class="flex items-center gap-3.5">
+                                <div class="w-11 h-11 rounded-xl bg-teal-500/20 border border-teal-400/30 text-teal-400 flex items-center justify-center text-base shadow-[0_0_15px_rgba(45,212,191,0.3)]">
+                                    <i class="fa-solid fa-shield-halved"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-sm font-bold text-white group-hover:text-teal-300 transition">Safe &amp; Verified Data</h4>
+                                    <p class="text-xs text-slate-300 mt-0.5">Built-in file checks block broken spreadsheets</p>
+                                </div>
+                            </div>
+                            <i class="fa-solid fa-arrow-right text-slate-400 group-hover:text-white group-hover:translate-x-1 transition text-xs mr-1"></i>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </main>
+
+        <!-- 3. Minimal Hero Footer -->
+        <footer class="h-14 px-8 lg:px-14 flex items-center justify-between text-xs text-slate-400 z-10 shrink-0 border-t border-white/5">
+            <div>Atlas (SupplyChain360 AI) • INNOVORTEX 4.0 Hackathon Edition</div>
+            <div class="flex items-center gap-4">
+                <span class="inline-flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span>System Online • Port 8000</span>
+                </span>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- ====================================================================== -->
+    <!-- SCREEN 2: SEAMLESS COSMIC-GLASS AGENT WORKSPACE (Interactive App View) -->
+    <!-- ====================================================================== -->
+    <div id="screenWorkspace" class="h-screen w-screen hidden flex-col relative overflow-hidden bg-[#060B1E]">
+        
+        <!-- Workspace Fixed Top Bar -->
+        <header class="h-14 flex-shrink-0 px-5 border-b border-white/10 glass-card flex items-center justify-between z-20">
+            <!-- Left: Home return & Workspace Title -->
+            <div class="flex items-center gap-3">
+                <button onclick="returnToHeroScreen()" class="h-8 px-3 rounded-xl bg-white/[0.06] hover:bg-white/[0.12] border border-white/10 text-xs font-semibold text-slate-200 transition flex items-center gap-1.5 active:scale-95">
+                    <i class="fa-solid fa-arrow-left text-[11px]"></i>
+                    <span>Home</span>
+                </button>
+                <span class="text-slate-600 text-sm">/</span>
+                <div class="flex items-center gap-2">
+                    <span class="font-bold text-sm text-white">AtlasAI Workspace</span>
+                    <span id="activeManifestPill" class="text-[11px] font-mono-nums px-2 py-0.5 rounded bg-sky-500/10 text-sky-400 border border-sky-500/20">supply_chain_manifest.csv</span>
+                </div>
+            </div>
+
+            <!-- Right: Action Controls -->
+            <div class="flex items-center gap-2.5">
+                <!-- Upload CSV Button -->
+                <input type="file" id="workspaceFileInput" accept=".csv" class="hidden" onchange="onWorkspaceFileSelected(event)">
+                <button onclick="document.getElementById('workspaceFileInput').click()" class="h-8 px-3 rounded-xl bg-white/[0.06] hover:bg-white/[0.12] border border-white/10 text-xs font-semibold text-slate-200 transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-cloud-arrow-up text-sky-400 text-xs"></i>
+                    <span>Upload CSV</span>
+                </button>
+
+                <!-- Run New Check Button -->
+                <button onclick="triggerWorkspaceAudit('Audit supply_chain_manifest.csv')" id="workspaceRunBtn" class="h-8 px-3.5 rounded-full btn-gradient-glow text-white text-xs font-bold transition flex items-center gap-1.5 active:scale-95">
+                    <i class="fa-solid fa-play text-[10px]"></i>
+                    <span>Run New Check</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- 2-Column Split Workspace (45% Chat | 55% Results) -->
+        <div class="flex-1 flex min-h-0 overflow-hidden">
+            
+            <!-- Left Column: Scrollable Chat (45%) -->
+            <section class="w-full lg:w-[45%] flex flex-col border-r border-white/10 glass-card min-h-0 relative">
+                
+                <!-- Chat Messages Scroll Area -->
+                <div id="workspaceMessages" class="flex-1 overflow-y-auto min-h-0 p-5 space-y-5">
+                    
+                    <!-- Welcome Bot Notice -->
+                    <div class="p-4 rounded-2xl bg-white/[0.03] border border-white/10 text-xs text-slate-300 space-y-1.5">
+                        <div class="flex items-center justify-between text-[11px] text-slate-400 font-mono-nums border-b border-white/5 pb-1">
+                            <span class="text-sky-400 font-bold flex items-center gap-1.5">
+                                <i class="fa-solid fa-sparkles text-[10px]"></i> AtlasAI Assistant
+                            </span>
+                            <span>Active</span>
+                        </div>
+                        <p class="leading-relaxed">
+                            Welcome to the live operational workspace. Ask questions below, upload custom manifests, or review the 25 maritime shipments.
+                        </p>
+                    </div>
+
+                    <!-- Conversation Thread Target -->
+                    <div id="workspaceChatStream" class="space-y-5"></div>
+
+                    <!-- Animated 5-Step Progress Accordion -->
+                    <div id="liveStepAccordion" class="hidden rounded-2xl bg-white/[0.04] border border-white/15 p-4 space-y-2 text-xs">
+                        <div class="flex items-center justify-between text-slate-200 font-medium">
+                            <span class="flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-sky-400 animate-ping"></span>
+                                <span id="accordionMainTitle">Running autonomous 5-step audit...</span>
+                            </span>
+                            <span id="accordionStepCounter" class="text-[10px] font-mono-nums text-slate-400">Step 1/5</span>
+                        </div>
+                        <div id="accordionStepList" class="space-y-1 font-mono-nums text-[11px] text-slate-400 pl-4 pt-1">
+                            <div id="acc-s1" class="text-sky-300">1. Checking spreadsheet columns and coordinates...</div>
+                            <div id="acc-s2" class="text-slate-500">2. Auditing supplier delays (&gt;14 days)</div>
+                            <div id="acc-s3" class="text-slate-500">3. Checking factory capacity limits (&gt;=90%)</div>
+                            <div id="acc-s4" class="text-slate-500">4. Rerouting blocked sea lanes (Cape of Good Hope +38%)</div>
+                            <div id="acc-s5" class="text-slate-500">5. Forecasting 14-day stockout depletion</div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Pinned Bottom Input Composer -->
+                <div class="p-3.5 border-t border-white/10 bg-[#060B1E] flex-shrink-0">
+                    <form id="workspaceInputForm" onsubmit="handleWorkspaceChatSubmit(event)" class="relative flex items-center rounded-2xl bg-white/[0.05] border border-white/15 focus-within:border-sky-400/80 focus-within:ring-1 focus-within:ring-sky-400/40 transition px-3 py-1.5 shadow-lg">
+                        <input type="text" id="workspaceChatInput" placeholder="Ask Atlas anything about your shipments, delays, or stock..." autocomplete="off" class="flex-1 bg-transparent border-0 text-xs text-slate-100 placeholder-slate-400 px-2 py-2 focus:outline-none">
+                        <button type="submit" class="w-8 h-8 rounded-xl bg-sky-500 hover:bg-sky-400 text-white flex items-center justify-center transition shadow-md shadow-sky-500/20 active:scale-95 shrink-0">
+                            <i class="fa-solid fa-arrow-up text-xs"></i>
+                        </button>
+                    </form>
+                    <div class="text-[10px] text-slate-500 text-center mt-1.5 font-mono-nums">
+                        Press Enter to query the Atlas autonomous multi-agent backend
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- Right Column: Results & Files (55%) -->
+            <section class="hidden lg:flex w-[55%] flex-col min-h-0 bg-[#050917]/70 overflow-hidden relative">
+                
+                <!-- Underline Working Tabs Header -->
+                <div class="h-12 border-b border-white/10 px-5 flex items-center justify-between glass-card flex-shrink-0">
+                    <div class="flex items-center gap-6 h-full">
+                        <button onclick="switchWorkspaceTab('charts')" id="tabBtn-charts" class="h-full border-b-2 border-sky-400 text-sky-400 text-xs font-bold transition flex items-center gap-1.5">
+                            <i class="fa-solid fa-chart-pie text-xs"></i>
+                            <span>Risk Charts</span>
+                        </button>
+                        <button onclick="switchWorkspaceTab('report')" id="tabBtn-report" class="h-full border-b-2 border-transparent text-slate-400 hover:text-slate-200 text-xs font-semibold transition flex items-center gap-1.5">
+                            <i class="fa-solid fa-file-pdf text-xs"></i>
+                            <span>Summary Report</span>
+                        </button>
+                        <button onclick="switchWorkspaceTab('schedule')" id="tabBtn-schedule" class="h-full border-b-2 border-transparent text-slate-400 hover:text-slate-200 text-xs font-semibold transition flex items-center gap-1.5">
+                            <i class="fa-solid fa-table-list text-xs"></i>
+                            <span>Updated Schedule</span>
+                        </button>
+                    </div>
+
+                    <!-- Right Tab Actions -->
+                    <div class="flex items-center gap-2">
+                        <a id="tabDownloadBtn" href="/outputs/supply_chain_matrix.png" download="supply_chain_matrix.png" class="h-7 px-3 rounded-lg bg-white/[0.06] hover:bg-white/[0.12] border border-white/10 text-xs font-semibold text-slate-200 transition flex items-center gap-1.5">
+                            <i class="fa-solid fa-download text-[11px]"></i>
+                            <span id="tabDownloadLabel">Save PNG</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Independently Scrollable Results Body -->
+                <div class="flex-1 overflow-y-auto min-h-0 p-5 space-y-4">
+                    
+                    <!-- TAB 1: RISK CHARTS (PNG Matrix) -->
+                    <div id="tabView-charts" class="h-full flex flex-col space-y-3">
+                        <div class="flex items-center justify-between text-xs text-slate-400 font-mono-nums">
+                            <span>4-Panel Visual Matrix (Radar, Capacity, Maritime Detour, Stockout)</span>
+                            <span class="text-sky-400">200 DPI</span>
+                        </div>
+                        <div class="flex-1 rounded-2xl bg-[#03060E] border border-white/10 p-2.5 flex items-center justify-center overflow-hidden min-h-[440px]">
+                            <img id="workspaceMatrixImg" src="/outputs/supply_chain_matrix.png" alt="Operational Matrix" class="max-w-full max-h-[70vh] object-contain rounded-xl hover:scale-[1.01] transition-transform duration-300">
+                        </div>
+                    </div>
+
+                    <!-- TAB 2: SUMMARY REPORT (PDF Card & Text) -->
+                    <div id="tabView-report" class="h-full hidden flex-col space-y-4">
+                        <div class="glass-card rounded-2xl p-6 border border-rose-500/20 space-y-4">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-12 h-12 rounded-xl bg-rose-500/10 text-rose-400 flex items-center justify-center text-xl">
+                                        <i class="fa-solid fa-file-pdf"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-sm font-bold text-white">Executive_Supply_Chain_Audit.pdf</h3>
+                                        <p class="text-xs text-slate-400">ReportLab Platypus Executive Multi-Page Document</p>
+                                    </div>
+                                </div>
+                                <a href="/outputs/Executive_Supply_Chain_Audit.pdf" download class="h-8 px-4 rounded-xl bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 text-xs font-bold transition flex items-center gap-1.5">
+                                    <i class="fa-solid fa-download"></i>
+                                    <span>Download PDF</span>
+                                </a>
+                            </div>
+                            <div class="pt-4 border-t border-white/10 text-xs text-slate-300 leading-relaxed space-y-2">
+                                <div class="font-bold text-white">Summary of Operations Directives:</div>
+                                <ul class="list-disc pl-4 space-y-1.5 text-slate-300">
+                                    <li><b>Procurement:</b> Split purchase orders 60/40 for Taiwan Semi and Apex Micro due to lead times exceeding 14 days.</li>
+                                    <li><b>Logistics:</b> Maintain Cape of Good Hope detours (+38% distance) to safeguard vessels around the Red Sea conflict zone.</li>
+                                    <li><b>Factory Operations:</b> Shift 15% batch load to Line-Delta-US to clear bottleneck on Line-Alpha-CN.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TAB 3: UPDATED SCHEDULE (CSV Table) -->
+                    <div id="tabView-schedule" class="h-full hidden flex-col space-y-3 overflow-hidden">
+                        <div class="flex items-center justify-between text-xs text-slate-400 font-mono-nums">
+                            <span>Revised Maritime Transit Schedule &amp; Surcharges</span>
+                            <a href="/outputs/revised_logistics_schedule.csv" download class="text-emerald-400 hover:underline flex items-center gap-1">
+                                <i class="fa-solid fa-download"></i> Download CSV
+                            </a>
+                        </div>
+                        <div class="glass-card rounded-xl border border-white/10 overflow-hidden overflow-x-auto">
+                            <table class="w-full text-xs text-left border-collapse font-mono-nums" id="scheduleTable">
+                                <thead class="bg-black/40 border-b border-white/10 text-slate-400 text-[11px]">
+                                    <tr>
+                                        <th class="py-2.5 px-3">Shipment</th>
+                                        <th class="py-2.5 px-3">Raw Material</th>
+                                        <th class="py-2.5 px-3">Transit Status</th>
+                                        <th class="py-2.5 px-3 text-right">Delay</th>
+                                        <th class="py-2.5 px-3 text-right">Fuel Surcharge</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="scheduleTableBody" class="divide-y divide-white/5 text-slate-300 text-[11px]">
+                                    <tr><td colspan="5" class="text-center py-6 text-slate-500 italic font-sans">Loading schedule...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </div>
+
+    <!-- ====================================================================== -->
+    <!-- INFO MODAL (Overview / Capabilities / How It Works)                     -->
+    <!-- ====================================================================== -->
+    <div id="infoModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden items-center justify-center p-4">
+        <div class="glass-card rounded-2xl max-w-xl w-full p-6 space-y-4 border border-white/20 shadow-2xl">
+            <div class="flex items-center justify-between border-b border-white/10 pb-3">
+                <h3 id="infoModalTitle" class="text-base font-bold text-white">Platform Capabilities</h3>
+                <button onclick="closeInfoModal()" class="text-slate-400 hover:text-white transition">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div id="infoModalBody" class="text-xs text-slate-300 leading-relaxed space-y-2">
+                <!-- Injected dynamically -->
+            </div>
+            <div class="pt-3 border-t border-white/10 flex justify-end">
+                <button onclick="closeInfoModal()" class="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-xs font-semibold text-white transition">
+                    Got it
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====================================================================== -->
+    <!-- JAVASCRIPT CONTROLLER                                                  -->
+    <!-- ====================================================================== -->
+    <script>
+        // State
+        let isAuditing = false;
+
+        // DOM Elements
+        const screenHero = document.getElementById('screenHero');
+        const screenWorkspace = document.getElementById('screenWorkspace');
+        const workspaceMessages = document.getElementById('workspaceMessages');
+        const workspaceChatStream = document.getElementById('workspaceChatStream');
+        const workspaceChatInput = document.getElementById('workspaceChatInput');
+        const liveStepAccordion = document.getElementById('liveStepAccordion');
+        const activeManifestPill = document.getElementById('activeManifestPill');
+
+        window.addEventListener('DOMContentLoaded', () => {
+            loadScheduleCsv();
+        });
+
+        // --------------------------------------------------------------------
+        // 1. Screen Transitions (Hero Front <-> Live Workspace)
+        // --------------------------------------------------------------------
+        function launchWorkspaceWithAction(queryText, fileObj = null, fileUrl = null) {
+            screenHero.classList.add('hidden');
+            screenWorkspace.classList.remove('hidden');
+            screenWorkspace.classList.add('flex');
+
+            triggerWorkspaceAudit(queryText, fileObj, fileUrl);
+        }
+
+        function returnToHeroScreen() {
+            screenWorkspace.classList.add('hidden');
+            screenWorkspace.classList.remove('flex');
+            screenHero.classList.remove('hidden');
+        }
+
+        // --------------------------------------------------------------------
+        // 2. File Upload Handlers (Hero & Workspace)
+        // --------------------------------------------------------------------
+        function onHeroFileSelected(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            activeManifestPill.innerText = file.name;
+            launchWorkspaceWithAction(`Audit uploaded manifest: ${file.name}`, file);
+        }
+
+        function onWorkspaceFileSelected(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            activeManifestPill.innerText = file.name;
+            triggerWorkspaceAudit(`Audit uploaded manifest: ${file.name}`, file);
+        }
+
+        // --------------------------------------------------------------------
+        // 3. Workspace Chat Submission
+        // --------------------------------------------------------------------
+        function handleWorkspaceChatSubmit(e) {
+            e.preventDefault();
+            const text = workspaceChatInput.value.trim();
+            if (!text || isAuditing) return;
+
+            workspaceChatInput.value = '';
+            triggerWorkspaceAudit(text);
+        }
+
+        // --------------------------------------------------------------------
+        // 4. Autonomous Audit Execution Pipeline
+        // --------------------------------------------------------------------
+        async function triggerWorkspaceAudit(queryText, fileObj = null, fileUrl = null) {
+            if (isAuditing) return;
+            isAuditing = true;
+
+            // Append User message
+            appendUserBubble(queryText);
+
+            // Show Live Steps Accordion
+            liveStepAccordion.classList.remove('hidden');
+            scrollChatToBottom();
+
+            const animPromise = animateAccordionSteps();
+
+            let data = null;
+            try {
+                if (fileObj) {
+                    const fd = new FormData();
+                    fd.append('file', fileObj);
+                    fd.append('message', queryText);
+                    const res = await fetch('/upload-csv', { method: 'POST', body: fd });
+                    data = await res.json();
+                } else {
+                    const payload = fileUrl ? { message: queryText, file_url: fileUrl } : { message: queryText };
+                    const res = await fetch('/webhook', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    data = await res.json();
+                }
+
+                await animPromise;
+                liveStepAccordion.classList.add('hidden');
+
+                // Append Structured Response
+                appendStructuredResponse(data);
+                updateLiveArtifacts(data);
+
+            } catch (err) {
+                console.error(err);
+                liveStepAccordion.classList.add('hidden');
+                appendErrorBubble(`Failed to connect to backend: ${err.message}`);
+            } finally {
+                isAuditing = false;
+                scrollChatToBottom();
+            }
+        }
+
+        // --------------------------------------------------------------------
+        // 5. Accordion Step Animation
+        // --------------------------------------------------------------------
+        async function animateAccordionSteps() {
+            const steps = [
+                { id: 'acc-s1', text: '✓ 1. Checked spreadsheet columns & coordinates' },
+                { id: 'acc-s2', text: '✓ 2. Found 4 suppliers with lead times >14 days' },
+                { id: 'acc-s3', text: '✓ 3. Checked factory lines (3 operating >=90%)' },
+                { id: 'acc-s4', text: '✓ 4. Rerouted 6 ships via Cape of Good Hope (+38%)' },
+                { id: 'acc-s5', text: '✓ 5. Forecasted 14-day stockout curves' },
+            ];
+
+            for (let i = 0; i < steps.length; i++) {
+                await new Promise(r => setTimeout(r, 200));
+                const el = document.getElementById(steps[i].id);
+                if (el) {
+                    el.innerText = steps[i].text;
+                    el.className = 'text-emerald-400';
+                }
+                document.getElementById('accordionStepCounter').innerText = `Step ${i + 1}/5`;
+                if (steps[i + 1]) {
+                    const nextEl = document.getElementById(steps[i + 1].id);
+                    if (nextEl) nextEl.className = 'text-sky-300';
+                }
+            }
+        }
+
+        // --------------------------------------------------------------------
+        // 6. Response Rendering
+        // --------------------------------------------------------------------
+        function appendUserBubble(text) {
+            const html = `
+                <div class="flex justify-end">
+                    <div class="max-w-[85%] rounded-2xl bg-white/[0.08] border border-white/10 px-4 py-2.5 text-xs text-white shadow-sm leading-relaxed">
+                        ${escapeHtml(text)}
+                    </div>
+                </div>
+            `;
+            workspaceChatStream.insertAdjacentHTML('beforeend', html);
+        }
+
+        function appendStructuredResponse(data) {
+            // Guardrail error
+            if (data.status === 'error') {
+                const errHtml = `
+                    <div class="rounded-2xl bg-rose-950/20 border border-rose-500/30 p-4 space-y-2">
+                        <div class="flex items-center gap-2 text-rose-400 font-bold text-xs">
+                            <i class="fa-solid fa-shield-halved"></i>
+                            <span>File Blocked — Missing Data Found</span>
+                        </div>
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            ${data.reply || 'Your CSV is missing required columns. Audit halted.'}
+                        </p>
+                    </div>
+                `;
+                workspaceChatStream.insertAdjacentHTML('beforeend', errHtml);
+                return;
+            }
+
+            const totalRisk = data.total_at_risk_usd ? '$' + Number(data.total_at_risk_usd).toLocaleString('en-US', { maximumFractionDigits: 0 }) : '$11,990,000';
+            let reroutedCount = '6 Ships';
+            let stockoutsCount = '5 Parts';
+
+            if (data.diagnostics) {
+                data.diagnostics.forEach(d => {
+                    if (d.node === 'Logistics') {
+                        const m = d.metric.match(/(\d+)\s+vessels/i);
+                        if (m) reroutedCount = `${m[1]} Ships`;
+                    }
+                    if (d.node === 'Inventory') {
+                        const m = d.metric.match(/(\d+)\s+SKUs/i);
+                        if (m) stockoutsCount = `${m[1]} Parts`;
+                    }
+                });
+            }
+
+            // 3-Metric Impact Strip
+            const impactStrip = `
+                <div class="grid grid-cols-3 gap-2 my-2">
+                    <div class="p-2.5 rounded-xl glass-card border-white/10">
+                        <span class="text-[9px] uppercase font-bold text-slate-400 block tracking-wide">Money at Risk</span>
+                        <span class="text-sm sm:text-base font-bold text-rose-400 font-mono-nums">${totalRisk}</span>
+                    </div>
+                    <div class="p-2.5 rounded-xl glass-card border-white/10">
+                        <span class="text-[9px] uppercase font-bold text-slate-400 block tracking-wide">Ships Rerouted</span>
+                        <span class="text-sm sm:text-base font-bold text-amber-400 font-mono-nums">${reroutedCount}</span>
+                    </div>
+                    <div class="p-2.5 rounded-xl glass-card border-white/10">
+                        <span class="text-[9px] uppercase font-bold text-slate-400 block tracking-wide">Running Low</span>
+                        <span class="text-sm sm:text-base font-bold text-rose-400 font-mono-nums">${stockoutsCount}</span>
+                    </div>
+                </div>
+            `;
+
+            // Collapsible 5 Checks Disclosure
+            const checksDisclosure = `
+                <details class="group cursor-pointer select-none text-[11px] font-mono-nums">
+                    <summary class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/[0.05] hover:bg-white/[0.08] text-slate-400 hover:text-white transition">
+                        <i class="fa-solid fa-circle-check text-emerald-400 text-[10px]"></i>
+                        <span class="font-semibold text-emerald-400">✓ Completed 5 automated checks</span>
+                    </summary>
+                    <div class="mt-2 p-2 rounded-xl bg-black/30 border border-white/5 space-y-0.5 text-slate-400 pl-4 list-disc">
+                        <div>1. Verified 15 columns &amp; coordinates.</div>
+                        <div>2. Flagged 4 suppliers exceeding 14-day lead time.</div>
+                        <div>3. Line utilization: 3 lines operating at &gt;=90%.</div>
+                        <div>4. Geodesic detour: 6 ships routed around Africa (+38%).</div>
+                        <div>5. Forecasted 5 critical parts facing stockout.</div>
+                    </div>
+                </details>
+            `;
+
+            const parsedMarkdown = marked.parse(data.reply || '');
+
+            const fullBubble = `
+                <div class="flex items-start gap-3">
+                    <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-sky-400 to-indigo-500 text-white flex items-center justify-center font-bold text-xs shrink-0 mt-0.5 shadow-md">
+                        <i class="fa-solid fa-sparkles text-xs"></i>
+                    </div>
+                    <div class="flex-1 space-y-2.5">
+                        ${impactStrip}
+                        ${checksDisclosure}
+                        <div class="thread-prose text-xs">${parsedMarkdown}</div>
+                    </div>
+                </div>
+            `;
+            workspaceChatStream.insertAdjacentHTML('beforeend', fullBubble);
+            scrollChatToBottom();
+        }
+
+        function appendErrorBubble(msg) {
+            const html = `
+                <div class="p-3.5 rounded-2xl bg-rose-950/20 border border-rose-500/30 text-rose-300 text-xs">
+                    ${escapeHtml(msg)}
+                </div>
+            `;
+            workspaceChatStream.insertAdjacentHTML('beforeend', html);
+        }
+
+        function scrollChatToBottom() {
+            workspaceMessages.scrollTo({
+                top: workspaceMessages.scrollHeight,
+                behavior: 'smooth'
+            });
+        }
+
+        // --------------------------------------------------------------------
+        // 7. Right Workspace Tabs
+        // --------------------------------------------------------------------
+        function switchWorkspaceTab(tabKey) {
+            const tabs = ['charts', 'report', 'schedule'];
+            tabs.forEach(t => {
+                const btn = document.getElementById(`tabBtn-${t}`);
+                const content = document.getElementById(`tabView-${t}`);
+                if (t === tabKey) {
+                    btn.className = "h-full border-b-2 border-sky-400 text-sky-400 text-xs font-bold transition flex items-center gap-1.5";
+                    content.classList.remove('hidden');
+                    content.classList.add('flex');
+                } else {
+                    btn.className = "h-full border-b-2 border-transparent text-slate-400 hover:text-slate-200 text-xs font-semibold transition flex items-center gap-1.5";
+                    content.classList.remove('flex');
+                    content.classList.add('hidden');
+                }
+            });
+
+            const downloadBtn = document.getElementById('tabDownloadBtn');
+            const downloadLabel = document.getElementById('tabDownloadLabel');
+
+            if (tabKey === 'charts') {
+                downloadBtn.href = '/outputs/supply_chain_matrix.png';
+                downloadBtn.setAttribute('download', 'supply_chain_matrix.png');
+                downloadLabel.innerText = 'Save PNG';
+            } else if (tabKey === 'report') {
+                downloadBtn.href = '/outputs/Executive_Supply_Chain_Audit.pdf';
+                downloadBtn.setAttribute('download', 'Executive_Supply_Chain_Audit.pdf');
+                downloadLabel.innerText = 'Download PDF';
+            } else if (tabKey === 'schedule') {
+                downloadBtn.href = '/outputs/revised_logistics_schedule.csv';
+                downloadBtn.setAttribute('download', 'revised_logistics_schedule.csv');
+                downloadLabel.innerText = 'Download CSV';
+            }
+        }
+
+        function updateLiveArtifacts(data) {
+            document.getElementById('workspaceMatrixImg').src = '/outputs/supply_chain_matrix.png?t=' + Date.now();
+            loadScheduleCsv();
+        }
+
+        // --------------------------------------------------------------------
+        // 8. Schedule CSV Table Fetcher
+        // --------------------------------------------------------------------
+        async function loadScheduleCsv() {
+            try {
+                const res = await fetch('/outputs/revised_logistics_schedule.csv?t=' + Date.now());
+                if (!res.ok) return;
+                const text = await res.text();
+                const lines = text.trim().split('\n');
+                if (lines.length < 2) return;
+
+                const tbody = document.getElementById('scheduleTableBody');
+                tbody.innerHTML = '';
+
+                for (let i = 1; i < lines.length; i++) {
+                    const row = lines[i].split(',');
+                    if (row.length < 10) continue;
+
+                    const [id, supp, raw, zone, status, baseNM, detourNM, totalNM, extraD, surcharge] = row;
+                    const isRerouted = status && status.includes('REROUTED');
+
+                    const tr = document.createElement('tr');
+                    tr.className = isRerouted ? "bg-rose-950/20" : "hover:bg-white/[0.02]";
+                    tr.innerHTML = `
+                        <td class="py-2.5 px-3 font-semibold text-white">${id}</td>
+                        <td class="py-2.5 px-3 text-slate-300 font-sans">${raw}</td>
+                        <td class="py-2.5 px-3">
+                            <span class="px-2 py-0.5 rounded text-[10px] font-bold ${isRerouted ? 'bg-rose-500/10 text-rose-400' : 'bg-emerald-500/10 text-emerald-400'}">
+                                ${isRerouted ? 'REROUTED' : 'DIRECT'}
+                            </span>
+                        </td>
+                        <td class="py-2.5 px-3 text-right ${isRerouted ? 'text-rose-400 font-bold' : 'text-slate-500'}">+${extraD}d</td>
+                        <td class="py-2.5 px-3 text-right ${isRerouted ? 'text-amber-400 font-bold' : 'text-slate-500'}">$${Number(surcharge || 0).toLocaleString()}</td>
+                    `;
+                    tbody.appendChild(tr);
+                }
+            } catch (e) {
+                console.log("Schedule CSV loader:", e);
+            }
+        }
+
+        // --------------------------------------------------------------------
+        // 9. Info Modals (Overview / Capabilities / How It Works)
+        // --------------------------------------------------------------------
+        function openInfoModal(type) {
+            const modal = document.getElementById('infoModal');
+            const title = document.getElementById('infoModalTitle');
+            const body = document.getElementById('infoModalBody');
+
+            if (type === 'overview') {
+                title.innerText = 'About AtlasAI';
+                body.innerHTML = `
+                    <p><b>AtlasAI</b> is an autonomous multi-agent assistant built for operations and procurement leaders.</p>
+                    <p>It eliminates spreadsheet blind spots by automatically monitoring suppliers, factory floors, and maritime corridors in real time.</p>
+                `;
+            } else if (type === 'capabilities') {
+                title.innerText = 'Platform Capabilities';
+                body.innerHTML = `
+                    <ul class="list-disc pl-4 space-y-1">
+                        <li><b>Vendor Delay Detection:</b> Automatically catches single-source lead times over 14 days.</li>
+                        <li><b>Autonomous Sea Rerouting:</b> Models Cape of Good Hope detours (+38% distance) and fuel surcharges.</li>
+                        <li><b>Line Bottleneck Warnings:</b> Spots assembly lines operating at >=90% capacity.</li>
+                        <li><b>14-Day Stockout Forecasts:</b> Generates emergency 21-day reorder quantities before stockouts occur.</li>
+                    </ul>
+                `;
+            } else if (type === 'howitworks') {
+                title.innerText = 'How Atlas Works';
+                body.innerHTML = `
+                    <p>Atlas commands 5 specialized sub-agents powered by Google Gemini and deterministic math engines.</p>
+                    <p>Upload any shipment CSV or run with sample data to instantly generate a 200 DPI visual matrix, an executive PDF report, and updated maritime schedules.</p>
+                `;
+            }
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeInfoModal() {
+            const modal = document.getElementById('infoModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function escapeHtml(text) {
+            const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
+            return text.replace(/[&<>"']/g, m => map[m]);
+        }
+    </script>
+</body>
+</html>

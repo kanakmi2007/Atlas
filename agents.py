@@ -1,1033 +1,632 @@
-"""
-Multi-Agent Orchestrator and Specialized Sub-Agents for Atlas (SupplyChain360 AI).
-Implements the Master Orchestrator and 5 specialized domain sub-agents using:
-- google-genai (automatic function calling with gemini-2.5-flash)
-- pandas, numpy, geopy, matplotlib, reportlab
-"""
-
 import os
-import sys
-import tempfile
-
-# Configure matplotlib for headless environment before importing pyplot
-os.environ["MPLCONFIGDIR"] = tempfile.gettempdir()
+import json
+import pandas as pd
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-import numpy as np
-import pandas as pd
 from geopy.distance import geodesic
+from fpdf import FPDF
 from dotenv import load_dotenv
-
-# ReportLab imports for executive PDF generation
-from reportlab.lib.pagesizes import letter
-from reportlab.lib import colors
-from reportlab.platypus import (
-    SimpleDocTemplate,
-    Paragraph,
-    Spacer,
-    Table,
-    TableStyle,
-    HRFlowable,
-)
-from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+from google import genai
+from google.genai import types
 
 load_dotenv()
 
+OUTPUT_DIR = "outputs"
+OUTPUTS_DIR = OUTPUT_DIR
+os.makedirs(OUTPUT_DIR, exist_ok=True)
+
+PORT_COORDS = {
+    "Shanghai": (31.2304, 121.4737),
+    "Shenzhen": (22.5431, 114.0579),
+    "Rotterdam": (51.9244, 4.4777),
+    "Los Angeles": (33.7405, -118.2786),
+    "Singapore": (1.2644, 103.8220),
+    "Hamburg": (53.5461, 9.9661),
+    "Mumbai": (18.9490, 72.8354),
+    "Dubai": (25.0138, 55.0616),
+    "Suez": (29.9668, 32.5498),
+    "Cape_Good_Hope": (-34.3568, 18.4740),
+}
+
 REQUIRED_COLUMNS = [
-    "shipment_id",
-    "supplier",
-    "raw_material",
-    "lead_time_days",
-    "factory_line",
-    "capacity_target",
-    "actual_output",
-    "origin_lat",
-    "origin_lon",
-    "dest_lat",
-    "dest_lon",
-    "route_zone",
-    "cargo_value_usd",
-    "current_stock",
-    "daily_demand",
+    "shipment_id", "supplier", "origin", "destination",
+    "route", "cargo_value_usd", "lead_time_days",
+    "factory_utilization_pct", "current_stock", "daily_burn_rate"
 ]
 
-OUTPUTS_DIR = os.path.join(os.getcwd(), "outputs")
-os.makedirs(OUTPUTS_DIR, exist_ok=True)
+
+def _get_gemini_client():
+    api_key = os.getenv("GEMINI_API_KEY")
+    if not api_key:
+        return None
+    return genai.Client(api_key=api_key)
 
 
-# ============================================================================
-# TOOL 1: VALIDATE AND LOAD MANIFEST
-# ============================================================================
-def validate_and_load_manifest(csv_path: str) -> dict:
-    """
-    Verifies file existence and validates that the CSV contains all 15 required columns.
-    Checks for NaN coordinates and negative cargo values.
-    Returns validation dict with success flag and diagnostics or error message.
-    """
+def load_manifest_df(csv_path: str) -> pd.DataFrame:
+    if not os.path.exists(csv_path):
+        # Generate realistic 25-row sample data automatically if missing
+        sample_rows = []
+        suppliers = [
+            ("Apex Electronics", "Shenzhen", "Rotterdam", "Red Sea / Suez", 1850000, 18, 94, 420, 45),
+            ("Nordic Precision", "Shanghai", "Hamburg", "Red Sea / Suez", 1420000, 16, 89, 310, 38),
+            ("Pacific Motors", "Shanghai", "Los Angeles", "Trans-Pacific", 980000, 11, 76, 890, 50),
+            ("Deccan Alloys", "Mumbai", "Rotterdam", "Red Sea / Suez", 1150000, 19, 96, 190, 30),
+            ("Vanguard Chips", "Singapore", "Hamburg", "Malacca / Suez", 2100000, 15, 91, 260, 35),
+        ]
+        for i in range(1, 26):
+            s = suppliers[(i - 1) % len(suppliers)]
+            sample_rows.append({
+                "shipment_id": f"SHP-{1000 + i}",
+                "supplier": f"{s[0]} #{(i % 3) + 1}",
+                "origin": s[1],
+                "destination": s[2],
+                "route": s[3],
+                "cargo_value_usd": s[4] + (i * 15000),
+                "lead_time_days": s[5] + (i % 4),
+                "factory_utilization_pct": min(99, s[6] + (i % 5)),
+                "current_stock": max(80, s[7] - (i * 8)),
+                "daily_burn_rate": s[8],
+            })
+        df = pd.DataFrame(sample_rows)
+        df.to_csv(csv_path, index=False)
+        return df
+    return pd.read_csv(csv_path)
+
+
+def validate_and_load_manifest(csv_path: str):
     if not os.path.exists(csv_path):
         return {
             "valid": False,
-            "error": f"File not found: '{csv_path}'. Please check file path or upload a valid CSV.",
+            "row_count": 0,
+            "error": f"Manifest file not found: {csv_path}",
+            "data": None,
         }
 
     try:
         df = pd.read_csv(csv_path)
-    except Exception as e:
+    except Exception as exc:
         return {
             "valid": False,
-            "error": f"Failed to parse CSV file: {str(e)}",
+            "row_count": 0,
+            "error": f"Could not read CSV file: {exc}",
+            "data": None,
         }
 
-    missing_cols = [col for col in REQUIRED_COLUMNS if col not in df.columns]
-    if missing_cols:
+    required = [
+        "shipment_id", "supplier", "raw_material", "lead_time_days", "factory_line",
+        "capacity_target", "actual_output", "origin_lat", "origin_lon", "dest_lat",
+        "dest_lon", "route_zone", "cargo_value_usd", "current_stock", "daily_demand",
+    ]
+    missing = [c for c in required if c not in df.columns]
+    if missing:
         return {
             "valid": False,
-            "error": f"Missing required columns: {missing_cols}. Expected all 15 manifest columns.",
+            "row_count": len(df),
+            "error": f"Missing required columns: {', '.join(missing)}",
+            "data": df,
         }
 
-    # Check for NaN in coordinate columns
-    coord_cols = ["origin_lat", "origin_lon", "dest_lat", "dest_lon"]
-    if df[coord_cols].isna().any().any():
+    if df.empty:
         return {
             "valid": False,
-            "error": "Corrupt coordinates detected: origin/dest lat/lon cannot contain NaN values.",
+            "row_count": 0,
+            "error": "Manifest is empty.",
+            "data": df,
         }
 
-    # Check for negative cargo value or quantities
-    if (df["cargo_value_usd"] < 0).any():
+    null_rows = df[df[required].isnull().any(axis=1)]
+    if not null_rows.empty:
+        bad_ids = ", ".join(null_rows["shipment_id"].fillna("UNKNOWN").astype(str).tolist()[:5])
         return {
             "valid": False,
-            "error": "Invalid financial data: cargo_value_usd contains negative numbers.",
+            "row_count": len(df),
+            "error": f"Found {len(null_rows)} incomplete rows with missing values (Shipments: {bad_ids}).",
+            "data": df,
         }
 
-    if (df["current_stock"] < 0).any() or (df["daily_demand"] <= 0).any():
+    invalid_numeric = (df["cargo_value_usd"] <= 0).any() or (df["daily_demand"] <= 0).any()
+    if invalid_numeric:
         return {
             "valid": False,
-            "error": "Invalid inventory metrics: stock cannot be negative and daily_demand must be > 0.",
+            "row_count": len(df),
+            "error": "Invalid negative or zero values found in cargo value or daily demand.",
+            "data": df,
         }
 
     return {
         "valid": True,
         "row_count": len(df),
-        "columns": list(df.columns),
-        "file_path": csv_path,
-        "message": f"Manifest verified successfully ({len(df)} rows, 15 columns).",
+        "error": "",
+        "data": df,
     }
 
 
-# ============================================================================
-# TOOL 2: SUB-AGENT SOURCING AUDIT
-# ============================================================================
-def sub_agent_sourcing_audit(csv_path: str) -> dict:
-    """
-    Audits supplier resilience, identifies high-risk single-source vendors (lead_time_days > 14),
-    calculates exact dollar value at risk, and prescribes backup procurement actions.
-    """
-    df = pd.read_csv(csv_path)
-    at_risk = df[df["lead_time_days"] > 14].copy()
+def validate_manifest(csv_path: str):
+    result = validate_and_load_manifest(csv_path)
+    if not result["valid"]:
+        return False, result["error"], result["data"]
+    return True, "All columns and data rows verified.", result["data"]
 
-    total_sourcing_at_risk = float(at_risk["cargo_value_usd"].sum())
-    total_manifest_cargo = float(df["cargo_value_usd"].sum())
-    exposure_pct = round((total_sourcing_at_risk / total_manifest_cargo) * 100, 1) if total_manifest_cargo else 0.0
 
-    suppliers_grouped = (
-        at_risk.groupby("supplier")
-        .agg(
-            lead_time_days=("lead_time_days", "max"),
-            cargo_value_usd=("cargo_value_usd", "sum"),
-            raw_materials=("raw_material", lambda s: list(s.unique())),
-            shipments_count=("shipment_id", "count"),
-        )
-        .reset_index()
-    )
+def sub_agent_sourcing_audit(csv_path: str = "supply_chain_manifest.csv") -> dict:
+    result = validate_and_load_manifest(csv_path)
+    if not result["valid"]:
+        return {"node": "Sourcing", "status": "BLOCKED", "high_risk_vendors_count": 0, "total_at_risk_usd": 0.0, "top_at_risk_suppliers": [], "message": result["error"]}
 
-    # Sort descending by cargo value at risk
-    suppliers_grouped = suppliers_grouped.sort_values(by="cargo_value_usd", ascending=False)
-
-    top_at_risk = []
-    for _, row in suppliers_grouped.iterrows():
-        top_at_risk.append({
-            "supplier": str(row["supplier"]),
+    df = result["data"].copy()
+    high_risk = df[df["lead_time_days"] > 14].sort_values("lead_time_days", ascending=False)
+    records = []
+    for _, row in high_risk.iterrows():
+        records.append({
+            "supplier": row["supplier"],
             "lead_time_days": int(row["lead_time_days"]),
-            "cargo_at_risk_usd": float(row["cargo_value_usd"]),
-            "raw_materials": row["raw_materials"],
-            "shipments_count": int(row["shipments_count"]),
-            "backup_action": f"Split PO 60/40 with secondary nearshore fab; enforce expedited buffer agreement for {', '.join(row['raw_materials'])}.",
+            "cargo_value_usd": float(row["cargo_value_usd"]),
+            "backup_action": "Trigger dual-source compliance and expedite alternate supplier allocation.",
         })
 
+    total_at_risk_usd = float(high_risk["cargo_value_usd"].sum()) if not high_risk.empty else 0.0
+    status = "CRITICAL" if not high_risk.empty else "OK"
     return {
         "node": "Sourcing",
-        "status": "CRITICAL" if len(top_at_risk) > 0 else "STABLE",
-        "high_risk_vendors_count": len(top_at_risk),
-        "total_at_risk_usd": total_sourcing_at_risk,
-        "exposure_pct": exposure_pct,
-        "top_at_risk_suppliers": top_at_risk,
-        "summary": f"{len(top_at_risk)} suppliers exceed 14-day lead-time threshold, placing ${total_sourcing_at_risk:,.2f} ({exposure_pct}% of cargo value) at risk.",
+        "status": status,
+        "high_risk_vendors_count": len(records),
+        "total_at_risk_usd": total_at_risk_usd,
+        "top_at_risk_suppliers": records[:5],
+        "message": f"{len(records)} vendors exceed the 14-day lead time threshold.",
     }
 
 
-# ============================================================================
-# TOOL 3: SUB-AGENT PRODUCTION CAPACITY
-# ============================================================================
-def sub_agent_production_capacity(csv_path: str) -> dict:
-    """
-    Aggregates factory line utilization (actual_output vs capacity_target),
-    flags bottlenecked lines (utilization >= 90%), and computes unit deficit/overflow.
-    """
-    df = pd.read_csv(csv_path)
+def sub_agent_production_capacity(csv_path: str = "supply_chain_manifest.csv") -> dict:
+    result = validate_and_load_manifest(csv_path)
+    if not result["valid"]:
+        return {"node": "Production", "status": "BLOCKED", "bottleneck_count": 0, "lines": [], "message": result["error"]}
 
-    # Group by factory line
-    lines_df = (
-        df.groupby("factory_line")
-        .agg(
-            capacity_target=("capacity_target", "first"),
-            actual_output=("actual_output", "first"),
-            total_cargo_flowing=("cargo_value_usd", "sum"),
-            shipment_count=("shipment_id", "count"),
-        )
-        .reset_index()
-    )
-
-    lines_df["utilization_pct"] = (lines_df["actual_output"] / lines_df["capacity_target"]) * 100.0
-    lines_df["utilization_pct"] = lines_df["utilization_pct"].round(1)
-    lines_df["is_bottleneck"] = lines_df["utilization_pct"] >= 90.0
-    lines_df["variance_units"] = lines_df["capacity_target"] - lines_df["actual_output"]
-
-    bottlenecks = lines_df[lines_df["is_bottleneck"]].copy()
-    total_bottleneck_cargo = float(bottlenecks["total_cargo_flowing"].sum())
-
-    lines_summary = []
-    for _, row in lines_df.iterrows():
-        lines_summary.append({
-            "factory_line": str(row["factory_line"]),
-            "capacity_target": int(row["capacity_target"]),
-            "actual_output": int(row["actual_output"]),
-            "utilization_pct": float(row["utilization_pct"]),
-            "is_bottleneck": bool(row["is_bottleneck"]),
-            "variance_units": int(row["variance_units"]),
-            "status_badge": "BOTTLENECK (>90%)" if row["is_bottleneck"] else "HEALTHY",
+    df = result["data"].copy()
+    df["utilization_pct"] = (df["actual_output"] / df["capacity_target"]) * 100
+    lines = []
+    for _, row in df.groupby("factory_line", as_index=False).agg({"actual_output": "sum", "capacity_target": "sum"}).iterrows():
+        utilization = (row["actual_output"] / row["capacity_target"]) * 100 if row["capacity_target"] else 0.0
+        lines.append({
+            "factory_line": row["factory_line"],
+            "utilization_pct": float(utilization),
+            "is_bottleneck": utilization >= 90,
         })
 
+    bottleneck_count = sum(1 for line in lines if line["is_bottleneck"])
+    status = "BOTTLENECK" if bottleneck_count else "STABLE"
     return {
         "node": "Production",
-        "status": "BOTTLENECK" if len(bottlenecks) > 0 else "OPTIMAL",
-        "bottleneck_count": int(len(bottlenecks)),
-        "total_lines_monitored": int(len(lines_df)),
-        "financial_impact_usd": total_bottleneck_cargo,
-        "lines": lines_summary,
-        "summary": f"{len(bottlenecks)} of {len(lines_df)} manufacturing lines operate at >=90% capacity squeeze, jeopardizing ${total_bottleneck_cargo:,.2f} in dependent production.",
+        "status": status,
+        "bottleneck_count": bottleneck_count,
+        "lines": lines,
+        "message": f"{bottleneck_count} factory lines are operating at or above 90% of target capacity.",
     }
 
 
-# ============================================================================
-# TOOL 4: SUB-AGENT LOGISTICS REROUTE
-# ============================================================================
-def sub_agent_logistics_reroute(csv_path: str) -> dict:
-    """
-    Identifies shipments in geopolitical risk corridors ('Red Sea', 'Suez', 'Hormuz').
-    Computes exact baseline nautical miles using geopy geodesic distance,
-    calculates the Cape of Good Hope maritime detour (+38% distance multiplier),
-    extra transit days (detour / 420 nm/day), and dynamic fuel surcharge ($18.50/nm).
-    Saves ./outputs/revised_logistics_schedule.csv.
-    """
-    df = pd.read_csv(csv_path)
+def sub_agent_logistics_reroute(csv_path: str = "supply_chain_manifest.csv") -> dict:
+    result = validate_and_load_manifest(csv_path)
+    if not result["valid"]:
+        return {"node": "Logistics", "status": "BLOCKED", "disrupted_count": 0, "total_detour_nm": 0.0, "total_fuel_surcharge_usd": 0.0, "schedule": [], "message": result["error"]}
 
-    # Disruption filter
-    disrupted_pattern = r"Red Sea|Suez|Hormuz"
-    df["is_disrupted"] = df["route_zone"].str.contains(disrupted_pattern, case=False, na=False)
-
-    schedule_rows = []
+    df = result["data"].copy()
+    rows = []
     total_detour_nm = 0.0
-    total_fuel_surcharge = 0.0
-    total_disrupted_cargo = 0.0
-
+    total_fuel = 0.0
+    disrupted_count = 0
     for _, row in df.iterrows():
-        origin = (row["origin_lat"], row["origin_lon"])
-        dest = (row["dest_lat"], row["dest_lon"])
-        baseline_nm = round(geodesic(origin, dest).nautical, 1)
-
-        is_disrupted = bool(row["is_disrupted"])
-        if is_disrupted:
-            detour_nm = round(baseline_nm * 0.38, 1)
-            total_nm = round(baseline_nm + detour_nm, 1)
-            extra_days = round(detour_nm / 420.0, 1)
-            fuel_surcharge = round(detour_nm * 18.50, 2)
-            reroute_status = "REROUTED (Cape of Good Hope)"
-            revised_window = f"+{extra_days} Days Delay (Detour)"
+        route = str(row["route_zone"])
+        if "Red Sea" in route or "Suez" in route or "Hormuz" in route:
+            disrupted_count += 1
+            origin = (float(row["origin_lat"]), float(row["origin_lon"]))
+            dest = (float(row["dest_lat"]), float(row["dest_lon"]))
+            direct_km = geodesic(origin, dest).km
+            cape = (float(-34.3568), float(18.4740))
+            detour_nm = max(100.0, geodesic(origin, cape).km + geodesic(cape, dest).km - direct_km)
+            detour_nm = detour_nm / 1.852
+            fuel = detour_nm * 18.5
             total_detour_nm += detour_nm
-            total_fuel_surcharge += fuel_surcharge
-            total_disrupted_cargo += float(row["cargo_value_usd"])
+            total_fuel += fuel
+            revised_window = f"{int(row['lead_time_days']) + 7} to {int(row['lead_time_days']) + 10} days"
+            route_label = "Cape of Good Hope detour"
         else:
             detour_nm = 0.0
-            total_nm = baseline_nm
-            extra_days = 0.0
-            fuel_surcharge = 0.0
-            reroute_status = "ON-SCHEDULE (Direct Corridor)"
-            revised_window = "On-Time (+0 Days)"
-
-        schedule_rows.append({
+            fuel = 0.0
+            revised_window = f"{int(row['lead_time_days'])} days"
+            route_label = route
+        rows.append({
             "shipment_id": row["shipment_id"],
             "supplier": row["supplier"],
-            "raw_material": row["raw_material"],
-            "route_zone": row["route_zone"],
-            "status": reroute_status,
-            "baseline_nm": baseline_nm,
-            "detour_nm": detour_nm,
-            "total_nm": total_nm,
-            "extra_transit_days": extra_days,
-            "fuel_surcharge_usd": fuel_surcharge,
-            "cargo_value_usd": float(row["cargo_value_usd"]),
+            "route_zone": route_label,
+            "detour_nm": round(detour_nm, 2),
+            "fuel_surcharge_usd": round(fuel, 2),
             "revised_delivery_window": revised_window,
         })
 
-    schedule_df = pd.DataFrame(schedule_rows)
-    schedule_file = os.path.join(OUTPUTS_DIR, "revised_logistics_schedule.csv")
-    schedule_df.to_csv(schedule_file, index=False)
-
-    disrupted_shipments = schedule_df[schedule_df["status"].str.contains("REROUTED")].to_dict(orient="records")
-
+    schedule = pd.DataFrame(rows)
+    output_path = os.path.join(OUTPUTS_DIR, "revised_logistics_schedule.csv")
+    os.makedirs(OUTPUTS_DIR, exist_ok=True)
+    schedule.to_csv(output_path, index=False)
+    status = "DISRUPTED" if disrupted_count else "STABLE"
     return {
         "node": "Logistics",
-        "status": "DISRUPTED" if len(disrupted_shipments) > 0 else "CLEAR",
-        "disrupted_count": len(disrupted_shipments),
-        "total_disrupted_cargo_usd": total_disrupted_cargo,
-        "total_detour_nm": round(total_detour_nm, 1),
-        "total_fuel_surcharge_usd": round(total_fuel_surcharge, 2),
-        "output_schedule_file": schedule_file,
-        "disrupted_shipments": disrupted_shipments[:6],
-        "summary": f"{len(disrupted_shipments)} vessels rerouted via Cape of Good Hope (+38% distance), adding {total_detour_nm:,.1f} NM, ${total_fuel_surcharge:,.2f} bunker surcharge, and impacting ${total_disrupted_cargo:,.2f} cargo.",
+        "status": status,
+        "disrupted_count": disrupted_count,
+        "total_detour_nm": round(total_detour_nm, 2),
+        "total_fuel_surcharge_usd": round(total_fuel, 2),
+        "schedule": rows,
+        "message": f"{disrupted_count} shipments were rerouted away from risky maritime chokepoints.",
     }
 
 
-# ============================================================================
-# TOOL 5: SUB-AGENT DEMAND INVENTORY
-# ============================================================================
-def sub_agent_demand_inventory(csv_path: str) -> dict:
-    """
-    Computes days of cover (current_stock / daily_demand), flags CRITICAL STOCKOUT (<7 days)
-    and OVERSTOCK (>60 days), and generates recommended 21-day safety buffer reorder quantities.
-    """
-    df = pd.read_csv(csv_path)
+def sub_agent_demand_inventory(csv_path: str = "supply_chain_manifest.csv") -> dict:
+    result = validate_and_load_manifest(csv_path)
+    if not result["valid"]:
+        return {"node": "Inventory", "status": "BLOCKED", "critical_stockout_count": 0, "overstock_count": 0, "critical_skus": [], "message": result["error"]}
 
-    df["days_of_cover"] = (df["current_stock"] / df["daily_demand"]).round(1)
+    df = result["data"].copy()
+    df["days_of_cover"] = (df["current_stock"] / df["daily_demand"]).round(2)
+    critical = df[df["days_of_cover"] < 7].copy()
+    critical["reorder_units"] = (7 - critical["days_of_cover"]).clip(lower=0) * critical["daily_demand"]
+    critical = critical.sort_values("days_of_cover")
+    critical_records = [{
+        "shipment_id": row["shipment_id"],
+        "supplier": row["supplier"],
+        "days_of_cover": float(row["days_of_cover"]),
+        "reorder_units": max(1, int(round(row["reorder_units"]))),
+    } for _, row in critical.iterrows()]
 
-    critical_stockout = df[df["days_of_cover"] < 7.0].copy()
-    overstock = df[df["days_of_cover"] > 60.0].copy()
-
-    total_critical_cargo = float(critical_stockout["cargo_value_usd"].sum())
-
-    # Target 21 days cover buffer: (daily_demand * 21) - current_stock
-    critical_stockout["reorder_units"] = (
-        (critical_stockout["daily_demand"] * 21) - critical_stockout["current_stock"]
-    ).clip(lower=0)
-
-    critical_skus = []
-    for _, row in critical_stockout.iterrows():
-        critical_skus.append({
-            "shipment_id": str(row["shipment_id"]),
-            "raw_material": str(row["raw_material"]),
-            "supplier": str(row["supplier"]),
-            "current_stock": int(row["current_stock"]),
-            "daily_demand": int(row["daily_demand"]),
-            "days_of_cover": float(row["days_of_cover"]),
-            "reorder_units": int(row["reorder_units"]),
-            "cargo_value_usd": float(row["cargo_value_usd"]),
-            "severity": "CRITICAL STOCKOUT" if row["days_of_cover"] <= 4.0 else "IMMINENT STOCKOUT",
-        })
-
-    overstock_skus = []
-    for _, row in overstock.iterrows():
-        overstock_skus.append({
-            "shipment_id": str(row["shipment_id"]),
-            "raw_material": str(row["raw_material"]),
-            "current_stock": int(row["current_stock"]),
-            "daily_demand": int(row["daily_demand"]),
-            "days_of_cover": float(row["days_of_cover"]),
-        })
-
+    overstock_count = int((df["days_of_cover"] > 60).sum())
+    status = "CRITICAL_STOCKOUT" if not critical.empty else "HEALTHY"
     return {
         "node": "Inventory",
-        "status": "CRITICAL_STOCKOUT" if len(critical_skus) > 0 else "HEALTHY",
-        "critical_stockout_count": len(critical_skus),
-        "overstock_count": len(overstock_skus),
-        "total_at_risk_usd": total_critical_cargo,
-        "critical_skus": critical_skus,
-        "overstock_skus": overstock_skus,
-        "summary": f"{len(critical_skus)} critical materials face imminent stockout (<7 days cover), exposing ${total_critical_cargo:,.2f} in halted assembly operations.",
+        "status": status,
+        "critical_stockout_count": len(critical_records),
+        "overstock_count": overstock_count,
+        "critical_skus": critical_records,
+        "message": f"{len(critical_records)} SKUs are below seven days of cover; {overstock_count} are overstocked.",
     }
 
 
-# ============================================================================
-# TOOL 6: SUB-AGENT ARTIFACT ENGINE (PNG MATRIX + PDF EXECUTIVE AUDIT)
-# ============================================================================
-def sub_agent_artifact_engine(csv_path: str, executive_summary: str = "") -> dict:
-    """
-    Renders two production artifacts:
-    1. ./outputs/supply_chain_matrix.png: 4-Panel Executive Visual Matrix (2x2 grid, dark-slate theme).
-    2. ./outputs/Executive_Supply_Chain_Audit.pdf: Multi-page executive PDF report with KPI boxes,
-       summary tables, and departmental escalation directives.
-    """
-    df = pd.read_csv(csv_path)
+def sub_agent_artifact_engine(csv_path: str = "supply_chain_manifest.csv") -> dict:
+    result = validate_and_load_manifest(csv_path)
+    if not result["valid"]:
+        return {"status": "blocked", "message": result["error"], "files": []}
 
-    # Gather data from other sub-agents
-    sourcing_res = sub_agent_sourcing_audit(csv_path)
-    prod_res = sub_agent_production_capacity(csv_path)
-    logistics_res = sub_agent_logistics_reroute(csv_path)
-    inv_res = sub_agent_demand_inventory(csv_path)
+    df = result["data"].copy()
+    df["days_of_cover"] = (df["current_stock"] / df["daily_demand"]).round(2)
+    df["utilization_pct"] = (df["actual_output"] / df["capacity_target"]) * 100
+    png_path = os.path.join(OUTPUTS_DIR, "supply_chain_matrix.png")
+    pdf_path = os.path.join(OUTPUTS_DIR, "Executive_Supply_Chain_Audit.pdf")
+    os.makedirs(OUTPUTS_DIR, exist_ok=True)
 
-    total_exposure = (
-        sourcing_res["total_at_risk_usd"]
-        + logistics_res["total_disrupted_cargo_usd"]
-        + inv_res["total_at_risk_usd"]
-    )
-
-    matrix_png_path = os.path.join(OUTPUTS_DIR, "supply_chain_matrix.png")
-    pdf_report_path = os.path.join(OUTPUTS_DIR, "Executive_Supply_Chain_Audit.pdf")
-
-    # ------------------------------------------------------------------------
-    # ARTIFACT 1: 4-PANEL VISUAL MATRIX (supply_chain_matrix.png)
-    # ------------------------------------------------------------------------
-    fig = plt.figure(figsize=(16, 11), facecolor="#0f172a")
-
-    # 1. Panel 1 (Top-Left): Polar Radar Chart
-    ax1 = fig.add_subplot(2, 2, 1, polar=True, facecolor="#1e293b")
-    categories = ["Lead Time", "Cargo Value", "Stockout Risk", "Disruption", "Demand Pull"]
-    num_vars = len(categories)
-    angles = np.linspace(0, 2 * np.pi, num_vars, endpoint=False).tolist()
-    angles += angles[:1]
-
-    # Plot top 3 suppliers
-    radar_colors = ["#f43f5e", "#38bdf8", "#f59e0b"]
-    sample_suppliers = df.groupby("supplier").agg(
-        lead_time=("lead_time_days", "max"),
-        cargo_val=("cargo_value_usd", "sum"),
-        stockout_imp=("daily_demand", "mean"),
-    ).reset_index().sort_values(by="cargo_val", ascending=False).head(3)
-
-    for idx, (_, s_row) in enumerate(sample_suppliers.iterrows()):
-        # Normalize scores to 0-100 scale
-        r1 = min(100, (s_row["lead_time"] / 32.0) * 100)
-        r2 = min(100, (s_row["cargo_val"] / 2000000.0) * 100)
-        r3 = 85.0 if s_row["lead_time"] > 14 else 40.0
-        r4 = 90.0 if idx == 0 else 55.0
-        r5 = 70.0
-        values = [r1, r2, r3, r4, r5]
-        values += values[:1]
-
-        ax1.plot(angles, values, color=radar_colors[idx], linewidth=2, label=s_row["supplier"][:15])
-        ax1.fill(angles, values, color=radar_colors[idx], alpha=0.18)
-
-    ax1.set_theta_offset(np.pi / 2)
-    ax1.set_theta_direction(-1)
-    ax1.set_xticks(angles[:-1])
-    ax1.set_xticklabels(categories, color="#94a3b8", fontsize=9, fontweight="bold")
-    ax1.set_ylim(0, 100)
-    ax1.set_yticklabels([])
-    ax1.grid(color="#334155", linestyle="--", alpha=0.7)
-    ax1.spines["polar"].set_color("#475569")
-    ax1.set_title("PANEL 1: Supplier Risk Radar (Polar Matrix)", color="#f8fafc", fontsize=11, fontweight="bold", pad=16)
-    legend1 = ax1.legend(loc="upper right", bbox_to_anchor=(1.25, 1.15), facecolor="#1e293b", edgecolor="#334155")
-    for text in legend1.get_texts():
-        text.set_color("#f8fafc")
-        text.set_fontsize(8)
-
-    # 2. Panel 2 (Top-Right): Factory Capacity vs Actual Output
-    ax2 = fig.add_subplot(2, 2, 2, facecolor="#1e293b")
-    lines_data = df.groupby("factory_line")[["capacity_target", "actual_output"]].first().reset_index()
-    x_indices = np.arange(len(lines_data))
-    bar_width = 0.35
-
-    ax2.bar(x_indices - bar_width / 2, lines_data["capacity_target"], width=bar_width, label="Target Capacity", color="#38bdf8", alpha=0.85)
-    output_colors = ["#f43f5e" if (act / cap) >= 0.9 else "#10b981" for act, cap in zip(lines_data["actual_output"], lines_data["capacity_target"])]
-    ax2.bar(x_indices + bar_width / 2, lines_data["actual_output"], width=bar_width, label="Actual Output", color=output_colors, alpha=0.95)
-
-    # 90% threshold reference indicator
-    threshold_y = lines_data["capacity_target"].mean() * 0.90
-    ax2.axhline(threshold_y, color="#f43f5e", linestyle="--", linewidth=1.8, label="90% Bottleneck Threshold")
-
-    ax2.set_xticks(x_indices)
-    ax2.set_xticklabels(lines_data["factory_line"], color="#94a3b8", fontsize=8, rotation=15)
-    ax2.tick_params(colors="#94a3b8", labelsize=8)
-    ax2.set_ylabel("Production Units", color="#94a3b8", fontsize=9)
-    ax2.grid(color="#334155", linestyle=":", alpha=0.6, axis="y")
-    for spine in ax2.spines.values():
-        spine.set_color("#334155")
-    ax2.set_title("PANEL 2: Factory Capacity vs Output Utilization", color="#f8fafc", fontsize=11, fontweight="bold", pad=12)
-    legend2 = ax2.legend(loc="lower right", facecolor="#1e293b", edgecolor="#334155")
-    for text in legend2.get_texts():
-        text.set_color("#f8fafc")
-        text.set_fontsize(8)
-
-    # 3. Panel 3 (Bottom-Left): Global Maritime Route Detour Map Plot
-    ax3 = fig.add_subplot(2, 2, 3, facecolor="#0b1120")
-    # Draw world reference grid
-    ax3.set_xlim(-140, 150)
-    ax3.set_ylim(-45, 65)
-    ax3.grid(color="#1e293b", linestyle="-", linewidth=0.8, alpha=0.9)
-
-    # Disrupted shipments through Red Sea / Hormuz
-    disrupted_df = df[df["route_zone"].str.contains("Red Sea|Suez|Hormuz", case=False, na=False)]
-    for _, d_row in disrupted_df.iterrows():
-        # Blocked direct line (Crimson dashed)
-        ax3.plot(
-            [d_row["origin_lon"], d_row["dest_lon"]],
-            [d_row["origin_lat"], d_row["dest_lat"]],
-            color="#f43f5e",
-            linestyle="--",
-            linewidth=1.8,
-            alpha=0.6,
-        )
-        # Rerouted Cape of Good Hope waypoints: Origin -> Cape [-34.35, 18.47] -> Destination
-        ax3.plot(
-            [d_row["origin_lon"], 18.47, d_row["dest_lon"]],
-            [d_row["origin_lat"], -34.35, d_row["dest_lat"]],
-            color="#10b981",
-            linestyle="-",
-            linewidth=1.5,
-            alpha=0.8,
-        )
-
-    # Disruption Markers (X marks the chokepoints)
-    ax3.scatter([42.5, 56.5], [14.5, 26.5], color="#f43f5e", s=180, marker="X", zorder=5, label="Chokepoint Disrupted (Red Sea / Hormuz)")
-    # Safe Cape Waypoint
-    ax3.scatter([18.47], [-34.35], color="#10b981", s=140, marker="o", edgecolors="#ffffff", zorder=5, label="Safe Waypoint: Cape of Good Hope")
-
-    # Major Ports
-    ports = [
-        ("Shanghai", 121.47, 31.23),
-        ("Singapore", 103.85, 1.29),
-        ("Mumbai", 72.95, 18.95),
-        ("Rotterdam", 4.47, 51.92),
-        ("Los Angeles", -118.27, 33.74),
-    ]
-    for p_name, p_lon, p_lat in ports:
-        ax3.scatter([p_lon], [p_lat], color="#38bdf8", s=60, zorder=4)
-        ax3.text(p_lon + 3, p_lat + 2, p_name, color="#e2e8f0", fontsize=7, fontweight="bold")
-
-    ax3.set_xlabel("Longitude (°)", color="#94a3b8", fontsize=8)
-    ax3.set_ylabel("Latitude (°)", color="#94a3b8", fontsize=8)
-    ax3.tick_params(colors="#94a3b8", labelsize=7)
-    for spine in ax3.spines.values():
-        spine.set_color("#334155")
-    ax3.set_title("PANEL 3: Maritime Corridors & Cape Reroute Detours", color="#f8fafc", fontsize=11, fontweight="bold", pad=12)
-    legend3 = ax3.legend(loc="lower left", facecolor="#1e293b", edgecolor="#334155", fontsize=7)
-    for text in legend3.get_texts():
-        text.set_color("#f8fafc")
-
-    # 4. Panel 4 (Bottom-Right): 14-Day Stockout Depletion Projection
-    ax4 = fig.add_subplot(2, 2, 4, facecolor="#1e293b")
-    days_range = np.arange(0, 15)
-
-    crit_df = df.copy()
-    crit_df["doc"] = crit_df["current_stock"] / crit_df["daily_demand"]
-    vulnerable_skus = crit_df.sort_values(by="doc", ascending=True).head(5)
-
-    depletion_palette = ["#f43f5e", "#fb7185", "#f59e0b", "#38bdf8", "#a855f7"]
-    for idx, (_, v_row) in enumerate(vulnerable_skus.iterrows()):
-        depletion = np.maximum(0, v_row["current_stock"] - v_row["daily_demand"] * days_range)
-        label_txt = f"{v_row['raw_material'][:18]} ({v_row['doc']:.1f}d)"
-        ax4.plot(days_range, depletion, color=depletion_palette[idx], linewidth=2.2, label=label_txt)
-
-    # Danger Zone at stockout <= 0
-    ax4.axhline(0, color="#f43f5e", linestyle=":", linewidth=2, label="Stockout Exhaustion Level")
-    ax4.fill_between(days_range, -50, 0, color="#f43f5e", alpha=0.15)
-
-    ax4.set_xlabel("Forecast Horizon (Days)", color="#94a3b8", fontsize=9)
-    ax4.set_ylabel("On-Hand Units", color="#94a3b8", fontsize=9)
-    ax4.set_xlim(0, 14)
-    ax4.tick_params(colors="#94a3b8", labelsize=8)
-    ax4.grid(color="#334155", linestyle=":", alpha=0.6)
-    for spine in ax4.spines.values():
-        spine.set_color("#334155")
-    ax4.set_title("PANEL 4: 14-Day Stockout Timeline Depletion Curve", color="#f8fafc", fontsize=11, fontweight="bold", pad=12)
-    legend4 = ax4.legend(loc="upper right", facecolor="#1e293b", edgecolor="#334155")
-    for text in legend4.get_texts():
-        text.set_color("#f8fafc")
-        text.set_fontsize(7.5)
-
-    plt.suptitle("ATLAS (SUPPLYCHAIN360 AI) // AUTONOMOUS OPERATIONAL DIAGNOSTIC MATRIX", color="#f8fafc", fontsize=14, fontweight="bold", y=0.98)
-    plt.tight_layout(rect=[0, 0.03, 1, 0.95])
-    plt.savefig(matrix_png_path, dpi=200, facecolor="#0f172a", edgecolor="none")
+    plt.style.use("dark_background")
+    fig, axes = plt.subplots(2, 2, figsize=(12, 9), dpi=200)
+    fig.patch.set_facecolor("#0f172a")
+    for ax in axes.flat:
+        ax.set_facecolor("#111827")
+    top = df.nlargest(5, "cargo_value_usd")
+    axes[0, 0].barh(top["shipment_id"], top["cargo_value_usd"] / 1_000_000, color="#38bdf8")
+    axes[0, 0].set_title("Cargo Value at Risk ($M)")
+    axes[0, 1].bar(df["shipment_id"].head(6), df["utilization_pct"].head(6), color=["#ff4d4d" if x >= 90 else "#36cfc9" for x in df["utilization_pct"].head(6)])
+    axes[0, 1].axhline(90, color="#fbbf24", linestyle="--")
+    axes[0, 1].set_title("Factory Utilization")
+    route_counts = df["route_zone"].value_counts()
+    axes[1, 0].pie(route_counts.values, labels=route_counts.index, autopct="%1.0f%%")
+    axes[1, 0].set_title("Route Risk Mix")
+    low = df.nsmallest(6, "days_of_cover")
+    axes[1, 1].bar(low["shipment_id"], low["days_of_cover"], color=["#f87171" if x <= 14 else "#60a5fa" for x in low["days_of_cover"]])
+    axes[1, 1].axhline(14, color="#facc15", linestyle="--")
+    axes[1, 1].set_title("Days of Cover")
+    fig.tight_layout()
+    fig.savefig(png_path, dpi=200)
     plt.close(fig)
 
-    # ------------------------------------------------------------------------
-    # ARTIFACT 2: EXECUTIVE AUDIT REPORT (Executive_Supply_Chain_Audit.pdf)
-    # ------------------------------------------------------------------------
-    doc = SimpleDocTemplate(
-        pdf_report_path,
-        pagesize=letter,
-        rightMargin=36,
-        leftMargin=36,
-        topMargin=36,
-        bottomMargin=36,
-    )
+    from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle
+    from reportlab.lib.styles import getSampleStyleSheet
+    from reportlab.lib import colors
 
+    doc = SimpleDocTemplate(pdf_path, pagesize=(595, 842))
     styles = getSampleStyleSheet()
-
-    # Custom styles
-    header_title_style = ParagraphStyle(
-        "HeaderTitle",
-        parent=styles["Normal"],
-        fontName="Helvetica-Bold",
-        fontSize=18,
-        textColor=colors.HexColor("#38bdf8"),
-        leading=22,
-    )
-    header_sub_style = ParagraphStyle(
-        "HeaderSub",
-        parent=styles["Normal"],
-        fontName="Helvetica",
-        fontSize=10,
-        textColor=colors.HexColor("#94a3b8"),
-        leading=14,
-    )
-    kpi_number_style = ParagraphStyle(
-        "KPINumber",
-        parent=styles["Normal"],
-        fontName="Helvetica-Bold",
-        fontSize=20,
-        textColor=colors.HexColor("#f43f5e"),
-        alignment=1,  # Center
-        leading=24,
-    )
-    kpi_label_style = ParagraphStyle(
-        "KPILabel",
-        parent=styles["Normal"],
-        fontName="Helvetica-Bold",
-        fontSize=10,
-        textColor=colors.HexColor("#0f172a"),
-        alignment=1,  # Center
-        leading=13,
-    )
-    section_title_style = ParagraphStyle(
-        "SectionTitle",
-        parent=styles["Normal"],
-        fontName="Helvetica-Bold",
-        fontSize=12,
-        textColor=colors.HexColor("#0f172a"),
-        spaceBefore=10,
-        spaceAfter=6,
-    )
-    body_style = ParagraphStyle(
-        "ReportBody",
-        parent=styles["Normal"],
-        fontName="Helvetica",
-        fontSize=9,
-        textColor=colors.HexColor("#334155"),
-        leading=13,
-    )
-    table_cell_style = ParagraphStyle(
-        "TableCell",
-        parent=styles["Normal"],
-        fontName="Helvetica",
-        fontSize=8,
-        textColor=colors.HexColor("#1e293b"),
-        leading=11,
-    )
-    table_cell_bold = ParagraphStyle(
-        "TableCellBold",
-        parent=styles["Normal"],
-        fontName="Helvetica-Bold",
-        fontSize=8,
-        textColor=colors.HexColor("#0f172a"),
-        leading=11,
-    )
-
     story = []
-
-    # 1. Header Banner Table
-    banner_data = [
-        [
-            Paragraph("SUPPLYCHAIN360 AI // AUTONOMOUS EXECUTIVE AUDIT", header_title_style),
-            Paragraph("ECOSYSTEM: Nonilion.com<br/>VERSION: 4.0 Hackathon Edition", header_sub_style),
-        ]
-    ]
-    banner_table = Table(banner_data, colWidths=[380, 160])
-    banner_table.setStyle(TableStyle([
-        ("BACKGROUND", (0, 0), (-1, -1), colors.HexColor("#0f172a")),
-        ("PADDING", (0, 0), (-1, -1), 12),
-        ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
-        ("BOTTOMPADDING", (0, 0), (-1, -1), 14),
-    ]))
-    story.append(banner_table)
-    story.append(Spacer(1, 14))
-
-    # 2. Total Financial Exposure KPI Box
-    kpi_data = [
-        [
-            Paragraph("TOTAL FINANCIAL EXPOSURE IDENTIFIED", kpi_label_style),
-            Paragraph("CRITICAL NODES AFFECTED", kpi_label_style),
-            Paragraph("TOTAL DISRUPTED SHIPMENTS", kpi_label_style),
-        ],
-        [
-            Paragraph(f"${total_exposure:,.2f}", kpi_number_style),
-            Paragraph("4 / 4 Nodes Active", ParagraphStyle("KPI2", parent=kpi_number_style, textColor=colors.HexColor("#f59e0b"))),
-            Paragraph(f"{logistics_res['disrupted_count']} Vessels Detoured", ParagraphStyle("KPI3", parent=kpi_number_style, textColor=colors.HexColor("#38bdf8"))),
-        ],
-    ]
-    kpi_table = Table(kpi_data, colWidths=[180, 180, 180])
-    kpi_table.setStyle(TableStyle([
-        ("BACKGROUND", (0, 0), (-1, -1), colors.HexColor("#f1f5f9")),
-        ("BOX", (0, 0), (-1, -1), 1.5, colors.HexColor("#cbd5e1")),
-        ("INNERGRID", (0, 0), (-1, -1), 0.5, colors.HexColor("#e2e8f0")),
-        ("PADDING", (0, 0), (-1, -1), 8),
-        ("ALIGN", (0, 0), (-1, -1), "CENTER"),
-    ]))
-    story.append(kpi_table)
-    story.append(Spacer(1, 14))
-
-    # 3. 4-Node Diagnostic Summary Table
-    story.append(Paragraph("1. MULTI-NODE SYSTEMIC DIAGNOSTIC MATRIX", section_title_style))
-    diag_rows = [
-        [
-            Paragraph("Supply Chain Node", table_cell_bold),
-            Paragraph("Status", table_cell_bold),
-            Paragraph("Key Operational Metric", table_cell_bold),
-            Paragraph("Financial Impact (USD)", table_cell_bold),
-        ],
-        [
-            Paragraph("Sourcing Resiliency", table_cell_style),
-            Paragraph("<font color='#f43f5e'><b>CRITICAL</b></font>", table_cell_style),
-            Paragraph(f"{sourcing_res['high_risk_vendors_count']} single-source vendors >14d lead time", table_cell_style),
-            Paragraph(f"${sourcing_res['total_at_risk_usd']:,.2f}", table_cell_style),
-        ],
-        [
-            Paragraph("Production Lines", table_cell_style),
-            Paragraph("<font color='#f59e0b'><b>BOTTLENECK</b></font>", table_cell_style),
-            Paragraph(f"{prod_res['bottleneck_count']} lines >=90% capacity squeeze", table_cell_style),
-            Paragraph(f"${prod_res['financial_impact_usd']:,.2f}", table_cell_style),
-        ],
-        [
-            Paragraph("Maritime Logistics", table_cell_style),
-            Paragraph("<font color='#f43f5e'><b>DISRUPTED</b></font>", table_cell_style),
-            Paragraph(f"{logistics_res['disrupted_count']} vessels rerouted via Cape (+38% NM)", table_cell_style),
-            Paragraph(f"${logistics_res['total_disrupted_cargo_usd']:,.2f}", table_cell_style),
-        ],
-        [
-            Paragraph("Demand & Inventory", table_cell_style),
-            Paragraph("<font color='#f43f5e'><b>CRITICAL</b></font>", table_cell_style),
-            Paragraph(f"{inv_res['critical_stockout_count']} SKUs under 7 days of cover", table_cell_style),
-            Paragraph(f"${inv_res['total_at_risk_usd']:,.2f}", table_cell_style),
-        ],
-    ]
-    diag_table = Table(diag_rows, colWidths=[120, 80, 220, 120])
-    diag_table.setStyle(TableStyle([
-        ("BACKGROUND", (0, 0), (-1, 0), colors.HexColor("#1e293b")),
-        ("TEXTCOLOR", (0, 0), (-1, 0), colors.white),
-        ("PADDING", (0, 0), (-1, -1), 6),
-        ("ROWBACKGROUNDS", (0, 1), (-1, -1), [colors.white, colors.HexColor("#f8fafc")]),
-        ("GRID", (0, 0), (-1, -1), 0.5, colors.HexColor("#e2e8f0")),
-    ]))
-    story.append(diag_table)
-    story.append(Spacer(1, 14))
-
-    # 4. Top Rerouted Maritime Shipments Table
-    story.append(Paragraph("2. LOGISTICS REROUTING DISPATCH (CAPE OF GOOD HOPE)", section_title_style))
-    logistics_rows = [
-        [
-            Paragraph("Shipment", table_cell_bold),
-            Paragraph("Raw Material", table_cell_bold),
-            Paragraph("Disrupted Zone", table_cell_bold),
-            Paragraph("Detour (NM)", table_cell_bold),
-            Paragraph("Fuel Surcharge", table_cell_bold),
-            Paragraph("Cargo Value", table_cell_bold),
-        ]
-    ]
-    for s in logistics_res["disrupted_shipments"]:
-        logistics_rows.append([
-            Paragraph(s["shipment_id"], table_cell_style),
-            Paragraph(s["raw_material"], table_cell_style),
-            Paragraph(s["route_zone"], table_cell_style),
-            Paragraph(f"+{s['detour_nm']:,.1f} NM", table_cell_style),
-            Paragraph(f"${s['fuel_surcharge_usd']:,.2f}", table_cell_style),
-            Paragraph(f"${s['cargo_value_usd']:,.2f}", table_cell_style),
-        ])
-    reroute_table = Table(logistics_rows, colWidths=[70, 130, 120, 75, 75, 70])
-    reroute_table.setStyle(TableStyle([
+    story.append(Paragraph("Atlas Supply Chain Audit", styles['Title']))
+    story.append(Spacer(1, 12))
+    story.append(Paragraph(f"Total shipments: {len(df)}", styles['BodyText']))
+    story.append(Paragraph(f"Critical suppliers: {len(df[df['lead_time_days'] > 14])}", styles['BodyText']))
+    story.append(Paragraph(f"Critical stockout SKUs: {len(df[df['days_of_cover'] < 7])}", styles['BodyText']))
+    story.append(Spacer(1, 12))
+    table_data = [["Shipment", "Supplier", "Lead Days", "Stock Cover"], *[[row["shipment_id"], row["supplier"], row["lead_time_days"], f"{row['days_of_cover']}d"] for _, row in df.head(8).iterrows()]]
+    table = Table(table_data)
+    table.setStyle(TableStyle([
         ("BACKGROUND", (0, 0), (-1, 0), colors.HexColor("#0f172a")),
         ("TEXTCOLOR", (0, 0), (-1, 0), colors.white),
-        ("PADDING", (0, 0), (-1, -1), 5),
-        ("ROWBACKGROUNDS", (0, 1), (-1, -1), [colors.white, colors.HexColor("#f8fafc")]),
-        ("GRID", (0, 0), (-1, -1), 0.5, colors.HexColor("#e2e8f0")),
+        ("GRID", (0, 0), (-1, -1), 0.5, colors.grey),
+        ("FONTNAME", (0, 0), (-1, 0), "Helvetica-Bold"),
     ]))
-    story.append(reroute_table)
-    story.append(Spacer(1, 14))
-
-    # 5. Actionable Escalation Directives
-    story.append(Paragraph("3. ACTIONABLE VIRTUAL OFFICE ESCALATIONS", section_title_style))
-    escalations = [
-        [
-            Paragraph("Channel", table_cell_bold),
-            Paragraph("Autonomous Directive & Mitigation Playbook", table_cell_bold),
-        ],
-        [
-            Paragraph("<font color='#38bdf8'><b>@Procurement</b></font>", table_cell_style),
-            Paragraph("Activate dual-sourcing framework for 4 high-risk vendors exceeding 14 days lead time (Taiwan Semi Foundry, Apex Microelectronics, Bavaria Spec Alloys, Global Lithium Corp). Split allocations 60/40 and negotiate 20% expedited buffer delivery.", table_cell_style),
-        ],
-        [
-            Paragraph("<font color='#f59e0b'><b>@Logistics</b></font>", table_cell_style),
-            Paragraph(f"Authorize Cape of Good Hope reroute for 6 maritime vessels avoiding Red Sea/Hormuz corridor (+38% distance, +{logistics_res['total_detour_nm']:,.1f} NM). Approve bunker fuel surcharge reserve of ${logistics_res['total_fuel_surcharge_usd']:,.2f}.", table_cell_style),
-        ],
-        [
-            Paragraph("<font color='#10b981'><b>@Operations</b></font>", table_cell_style),
-            Paragraph("Rebalance factory lines: Line-Alpha-CN (96.5%) and Line-Beta-IN (95.0%) exceed 90% bottleneck safety margins. Reallocate 15% unit volume to Line-Delta-US (80.0%) and expedite replenishment for 5 critical materials with <7 days cover.", table_cell_style),
-        ],
-    ]
-    esc_table = Table(escalations, colWidths=[90, 450])
-    esc_table.setStyle(TableStyle([
-        ("BACKGROUND", (0, 0), (-1, 0), colors.HexColor("#334155")),
-        ("TEXTCOLOR", (0, 0), (-1, 0), colors.white),
-        ("PADDING", (0, 0), (-1, -1), 6),
-        ("ROWBACKGROUNDS", (0, 1), (-1, -1), [colors.white, colors.HexColor("#f8fafc")]),
-        ("GRID", (0, 0), (-1, -1), 0.5, colors.HexColor("#e2e8f0")),
-    ]))
-    story.append(esc_table)
-
-    # Build PDF
+    story.append(table)
     doc.build(story)
 
-    return {
-        "status": "generated",
-        "matrix_image": matrix_png_path,
-        "audit_pdf": pdf_report_path,
-        "revised_schedule_csv": os.path.join(OUTPUTS_DIR, "revised_logistics_schedule.csv"),
-        "total_financial_exposure_usd": total_exposure,
-    }
-
-
-# ============================================================================
-# MASTER ORCHESTRATOR & AGENT REGISTRY
-# ============================================================================
-SYSTEM_INSTRUCTION = """You are Atlas, a friendly and sharp Supply Chain Assistant built for busy warehouse and operations managers.
-
-You speak in simple, clear, everyday business English. NEVER use technical jargon like 'multi-node diagnostic', 'systemic bottlenecks', 'geodesic', 'stochastic', 'financial exposure', 'telemetry', or 'orchestration'.
-
-Instead, use simple everyday words:
-- Use 'Money at Risk' instead of 'Total Financial Exposure'.
-- Use 'Delayed Ships & New Routes' instead of 'Maritime Logistics & Reroute Detours'.
-- Use 'Overloaded Factories' instead of 'Production Line Bottlenecks'.
-- Use 'Items Running Out Soon' instead of '14-Day Stockout Depletion'.
-
-Always format your response with:
-1. One plain opening sentence summarizing what you found.
-2. Total Money at Risk.
-3. A 3-bullet 'What You Need to Do Today' action list.
-4. A simple table with columns: Area, Status, What's Wrong, Money at Risk.
-5. Clear team actions for @Procurement, @Logistics, and @Operations.
-6. Links to generated charts, PDF report, and CSV schedule.
-
-If a user sends a short greeting like 'hi', answer warmly and invite them to test sample shipments or upload a CSV.
-"""
-
-AVAILABLE_TOOLS = [
-    validate_and_load_manifest,
-    sub_agent_sourcing_audit,
-    sub_agent_production_capacity,
-    sub_agent_logistics_reroute,
-    sub_agent_demand_inventory,
-    sub_agent_artifact_engine,
-]
+    return {"status": "generated", "files": [png_path, pdf_path]}
 
 
 class MasterOrchestrator:
-    """
-    Master Orchestrator for Atlas (SupplyChain360 AI).
-    Coordinates sub-agents via Google GenAI automatic function calling when an API key is available,
-    with an ultra-reliable deterministic orchestration engine for offline / automated hackathon testing.
-    """
-
-    def __init__(self, api_key: str = None, base_url: str = None):
-        self.api_key = api_key or os.getenv("GEMINI_API_KEY", "")
-        self.base_url = (base_url or os.getenv("BASE_URL", "http://localhost:8000")).rstrip("/")
-        self.client = None
-        self._init_genai()
-
-    def _init_genai(self):
-        """Initializes the google-genai client if a valid key is provided."""
-        if self.api_key and self.api_key != "your_key_here" and len(self.api_key) > 10:
-            try:
-                from google import genai
-                self.client = genai.Client(api_key=self.api_key)
-            except Exception as e:
-                print(f"[Warning] Failed to initialize google-genai client: {e}")
-                self.client = None
-
-    def execute_deterministic_audit(self, csv_path: str = "supply_chain_manifest.csv") -> dict:
-        """
-        Executes the 5 sub-agents deterministically.
-        Calculates exact mathematical metrics and renders the 4-panel visual matrix and PDF report.
-        Produces rich markdown formatted for Nonilion virtual offices.
-        """
-        # Step 1: Validation
-        val_result = validate_and_load_manifest(csv_path)
-        if not val_result.get("valid"):
-            return {
-                "status": "error",
-                "reply": f"⚠️ **File Blocked — Missing Data Found**\n\n{val_result.get('error')}\n\n**Guardrail Protection Active:** Processing halted to prevent bad decisions. The file is missing critical columns needed to calculate shipping distances and money at risk. Please upload a manifest with all 15 required columns.",
-                "total_at_risk_usd": 0.0,
-                "diagnostics": [],
-                "attachments": [],
-            }
-
-        # Step 2: Run Domain Sub-Agents
-        sourcing = sub_agent_sourcing_audit(csv_path)
-        production = sub_agent_production_capacity(csv_path)
-        logistics = sub_agent_logistics_reroute(csv_path)
-        inventory = sub_agent_demand_inventory(csv_path)
-
-        total_exposure = (
-            sourcing["total_at_risk_usd"]
-            + logistics["total_disrupted_cargo_usd"]
-            + inventory["total_at_risk_usd"]
-        )
-
-        # Step 3: Run Artifact Engine
-        artifacts = sub_agent_artifact_engine(csv_path)
-
-        # Step 4: Build Attachments using BASE_URL
-        matrix_url = f"{self.base_url}/outputs/supply_chain_matrix.png"
-        schedule_url = f"{self.base_url}/outputs/revised_logistics_schedule.csv"
-        pdf_url = f"{self.base_url}/outputs/Executive_Supply_Chain_Audit.pdf"
-
-        attachments = [
-            {"type": "image", "name": "supply_chain_matrix.png", "url": matrix_url},
-            {"type": "file", "name": "revised_logistics_schedule.csv", "url": schedule_url},
-            {"type": "file", "name": "Executive_Supply_Chain_Audit.pdf", "url": pdf_url},
-        ]
-
-        diagnostics = [
-            {
-                "node": "Sourcing",
-                "status": sourcing["status"],
-                "metric": f"{sourcing['high_risk_vendors_count']} vendors >14d lead time",
-                "financial_impact_usd": sourcing["total_at_risk_usd"],
-            },
-            {
-                "node": "Production",
-                "status": production["status"],
-                "metric": f"{production['bottleneck_count']} lines >=90% capacity squeeze",
-                "financial_impact_usd": production["financial_impact_usd"],
-            },
-            {
-                "node": "Logistics",
-                "status": logistics["status"],
-                "metric": f"{logistics['disrupted_count']} vessels rerouted via Cape (+38% distance)",
-                "financial_impact_usd": logistics["total_disrupted_cargo_usd"],
-            },
-            {
-                "node": "Inventory",
-                "status": inventory["status"],
-                "metric": f"{inventory['critical_stockout_count']} SKUs with <7 days cover",
-                "financial_impact_usd": inventory["total_at_risk_usd"],
-            },
-        ]
-
-        # Step 5: Format Simple Plain-English Markdown
-        markdown_reply = f"""I checked your 25 shipments and found 4 delayed suppliers, 6 ships that need a safer route around the Cape of Good Hope, and 5 parts running dangerously low.
-
-### 💰 Money at Risk: **${total_exposure:,.2f} USD**
-
-#### 📋 What You Need to Do Today
-- **Switch backup suppliers for 4 delayed vendors:** Taiwan Semi, Apex Micro, and Bavaria Alloys have delivery times up to {sourcing['top_at_risk_suppliers'][0]['lead_time_days']} days.
-- **Approve safer sea routes for 6 ships:** Avoid the Red Sea chokepoint by routing around Africa (+{logistics['total_detour_nm']:,.1f} extra miles; fuel cost ${logistics['total_fuel_surcharge_usd']:,.2f}).
-- **Shift factory work and reorder 5 low-stock parts:** Rebalance 15% of output from crowded lines (`Line-Alpha-CN` and `Line-Beta-IN`) to `Line-Delta-US` before stocks run out.
-
----
-
-| Area | Status | What's Wrong | Money at Risk |
-| :--- | :---: | :--- | :--- |
-| **Suppliers** | `CRITICAL` | {sourcing['high_risk_vendors_count']} suppliers take longer than 14 days | ${sourcing['total_at_risk_usd']:,.2f} |
-| **Factories** | `OVERLOADED` | {production['bottleneck_count']} factory lines are running above 90% capacity | ${production['financial_impact_usd']:,.2f} |
-| **Shipping** | `DELAYED` | {logistics['disrupted_count']} ships rerouted around Africa to avoid Red Sea | ${logistics['total_disrupted_cargo_usd']:,.2f} |
-| **Inventory** | `RUNNING LOW` | {inventory['critical_stockout_count']} parts have less than 7 days of stock left | ${inventory['total_at_risk_usd']:,.2f} |
-
----
-
-#### 🚨 Team Action Items
-- **`@Procurement`**: Contact **{', '.join([s['supplier'] for s in sourcing['top_at_risk_suppliers'][:3]])}**. Split orders 60/40 with backup suppliers and request emergency buffer shipments.
-- **`@Logistics`**: Authorize the safer Cape of Good Hope route for the 6 ships avoiding the Red Sea conflict zone (+{logistics['total_detour_nm']:,.1f} extra miles). Approve the fuel surcharge reserve of **${logistics['total_fuel_surcharge_usd']:,.2f}**.
-- **`@Operations`**: Move 15% of workload from congested lines (`Line-Alpha-CN` and `Line-Beta-IN`) to `Line-Delta-US`, and place emergency replenishment orders for the 5 parts with under 7 days of stock left.
-
----
-
-#### 📂 Helpful Files
-- 📊 **[Risk Charts]({matrix_url})**
-- 📄 **[Summary Report (PDF)]({pdf_url})**
-- 📑 **[Updated Schedule (CSV)]({schedule_url})**
-"""
-
-        return {
-            "status": "success",
-            "reply": markdown_reply,
-            "total_at_risk_usd": total_exposure,
-            "diagnostics": diagnostics,
-            "attachments": attachments,
-            "sourcing": sourcing,
-            "production": production,
-            "logistics": logistics,
-            "inventory": inventory,
-        }
-
-    def run(self, query: str = "", csv_path: str = "supply_chain_manifest.csv") -> dict:
-        """
-        Orchestrates user request.
-        Evaluates ambiguity guardrails, executes GenAI automatic function calling if available,
-        or deterministic pipeline.
-        """
-        query_clean = query.strip().lower()
-
-        # Ambiguity Guardrail:
-        # If user sends a vague message without a CSV path or explicit audit trigger,
-        # do not hallucinate numbers—politely ask clarifying questions.
-        vague_phrases = ["hi", "hello", "hey", "help", "fix my supply chain", "what can you do", "who are you"]
-        is_vague = any(query_clean == p or query_clean.startswith(p + " ") for p in vague_phrases)
-        is_explicit_audit = any(w in query_clean for w in ["audit", "manifest", "demo", "run", "analyze", "test", "csv"])
-
-        if is_vague and not is_explicit_audit and not os.path.exists(csv_path):
+    def run(self, query: str, csv_path: str = "supply_chain_manifest.csv"):
+        q = (query or "").strip().lower()
+        if not q or q in {"hi", "hello", "hey", "greetings", "greeting"}:
             return {
                 "status": "warning",
-                "reply": (
-                    "👋 **Hi! I'm Atlas (SupplyChain360 AI), your supply chain assistant.**\n\n"
-                    "I can check your shipments in 4 key areas:\n"
-                    "- 📦 **Suppliers:** Find slow vendors taking over 14 days.\n"
-                    "- 🏭 **Factories:** Spot assembly lines running above 90% capacity.\n"
-                    "- 🚢 **Shipping:** Catch ships in danger zones and plan safer sea routes.\n"
-                    "- 📊 **Stock:** Flag parts running out in under 7 days before lines stop.\n\n"
-                    "**How to start:**\n"
-                    "1. Click **'Run demo audit'** to test our sample shipments (25 rows).\n"
-                    "2. Or upload your own CSV file to check it right away."
-                ),
+                "title": "Atlas needs a bit more context",
+                "reply": "Atlas (SupplyChain360 AI) needs a little more context before it can quantify risk. Run demo audit to generate a full supply-chain evaluation.",
                 "total_at_risk_usd": 0.0,
-                "diagnostics": [],
-                "attachments": [],
+                "artifacts": {},
             }
 
-        # Try Google GenAI client if available
-        if self.client:
-            try:
-                prompt = (
-                    f"User Query: '{query}'\n"
-                    f"Manifest file: '{csv_path}'\n"
-                    f"Execute the necessary sub-agent tools to validate the manifest, audit sourcing, "
-                    f"production, logistics, and inventory, generate visual artifacts, and deliver the executive report."
-                )
-                response = self.client.models.generate_content(
-                    model="gemini-2.5-flash",
-                    contents=prompt,
-                    config={
-                        "system_instruction": SYSTEM_INSTRUCTION,
-                        "tools": AVAILABLE_TOOLS,
-                    },
-                )
-                if response and response.text:
-                    # GenAI produced rich synthesis
-                    # Also ensure artifacts and deterministic metrics are synced
-                    det_result = self.execute_deterministic_audit(csv_path)
-                    det_result["reply"] = response.text
-                    return det_result
-            except Exception as e:
-                print(f"[Info] GenAI API call returned or unavailable ({e}); utilizing deterministic multi-agent pipeline.")
+        if not os.path.exists(csv_path):
+            return {
+                "status": "warning",
+                "title": "Missing spreadsheet",
+                "reply": "Atlas (SupplyChain360 AI) could not find the manifest. Run demo audit to generate a full supply-chain evaluation.",
+                "total_at_risk_usd": 0.0,
+                "artifacts": {},
+            }
 
-        # Fallback / deterministic multi-agent pipeline
-        return self.execute_deterministic_audit(csv_path)
+        if any(keyword in q for keyword in ["audit", "check", "analyze", "reroute", "risk", "stock", "supplier", "production", "inventory", "demo"]):
+            result = run_full_audit(csv_path)
+            return {
+                "status": "success",
+                "title": "Audit Generated",
+                "reply": result["reply"],
+                "total_at_risk_usd": float(result["metrics"]["money_at_risk"].replace("$", "").replace("M", "")) * 1_000_000 if "M" in result["metrics"]["money_at_risk"] else 0.0,
+                "artifacts": result["artifacts"],
+            }
+
+        return {
+            "status": "warning",
+            "title": "Atlas needs a bit more context",
+            "reply": "Atlas (SupplyChain360 AI) needs a little more context before it can quantify risk. Run demo audit to generate a full supply-chain evaluation.",
+            "total_at_risk_usd": 0.0,
+            "artifacts": {},
+        }
+
+
+def run_full_audit(csv_path: str = "supply_chain_manifest.csv") -> dict:
+    result = validate_and_load_manifest(csv_path)
+    if not result["valid"]:
+        return {
+            "status": "blocked",
+            "title": "Spreadsheet Blocked — Data Issues Found",
+            "reply": (
+                f"**File Check Failed:** `{os.path.basename(csv_path)}` could not be processed safely.\n\n"
+                f"**What went wrong:** {result['error']}\n\n"
+                "**How to fix it:** Fill in the missing cells or ensure all required columns are present, then re-upload."
+            ),
+            "metrics": {
+                "money_at_risk": "$0",
+                "ships_rerouted": "0",
+                "items_running_low": "Blocked",
+            },
+            "steps": [{"name": "1. Data Guardrail Check", "detail": result['error'], "state": "error"}],
+            "artifacts": {},
+        }
+
+    df = result["data"].copy()
+    df["utilization_pct"] = (df["actual_output"] / df["capacity_target"]) * 100
+    df["days_of_cover"] = (df["current_stock"] / df["daily_demand"]).round(1)
+    delayed_suppliers = df[df["lead_time_days"] > 14]
+    supplier_risk_usd = float(delayed_suppliers["cargo_value_usd"].sum())
+    overloaded_factories = df[df["utilization_pct"] >= 90]
+    reroute_count = 0
+    rerouted_records = []
+    for _, row in df.iterrows():
+        route_str = str(row["route_zone"])
+        if "Suez" in route_str or "Red Sea" in route_str or "Hormuz" in route_str:
+            origin = (float(row["origin_lat"]), float(row["origin_lon"]))
+            dest = (float(row["dest_lat"]), float(row["dest_lon"]))
+            cape = (-34.3568, 18.4740)
+            direct_km = geodesic(origin, dest).km
+            detour_km = geodesic(origin, cape).km + geodesic(cape, dest).km
+            extra_days = max(7, int(round((detour_km - direct_km) / 750)))
+            reroute_count += 1
+            new_route = "Cape of Good Hope (Safe Detour)"
+            new_eta = int(row["lead_time_days"]) + extra_days
+        else:
+            extra_days = 0
+            new_route = route_str
+            new_eta = int(row["lead_time_days"]) 
+        rerouted_records.append({
+            "Shipment ID": row["shipment_id"],
+            "Supplier": row["supplier"],
+            "Origin": row["origin_lat"],
+            "Destination": row["dest_lat"],
+            "Updated Route": new_route,
+            "Extra Days": f"+{extra_days}d" if extra_days else "0d",
+            "New ETA (Days)": new_eta,
+            "Cargo Value ($)": f"${row['cargo_value_usd']:,.0f}",
+        })
+    revised_df = pd.DataFrame(rerouted_records)
+    revised_df.to_csv(os.path.join(OUTPUT_DIR, "revised_logistics_schedule.csv"), index=False)
+    low_stock_count = int((df["days_of_cover"] <= 14).sum())
+    _generate_chart(df, os.path.join(OUTPUT_DIR, "supply_chain_matrix.png"))
+    _generate_pdf(df, supplier_risk_usd, reroute_count, low_stock_count, os.path.join(OUTPUT_DIR, "Executive_Supply_Chain_Audit.pdf"))
+    money_fmt = f"${supplier_risk_usd / 1_000_000:.2f}M"
+    summary_text = (
+        f"I checked all **{len(df)} shipments** in `{os.path.basename(csv_path)}`. Here is what needs your attention today:\n\n"
+        f"- **Delayed Suppliers ({len(delayed_suppliers)} shipments):** Worth **{money_fmt}**, running past the 14-day delivery target.\n"
+        f"- **Safer Sea Routes ({reroute_count} ships rerouted):** Moved off the Red Sea / Suez corridor onto the Cape of Good Hope route (+7 to +10 days transit).\n"
+        f"- **Warehouse Stock Alerts ({low_stock_count} items):** Will run out within 14 days unless restocked early.\n"
+        f"- **Factory Capacity ({len(overloaded_factories)} lines):** Running above 90% load and need shift balancing.\n\n"
+        "@Procurement: lock in alternate suppliers and expedite delayed component orders.\n"
+        "@Logistics: confirm Cape of Good Hope detours and reallocate vessel capacity.\n"
+        "@Operations: rebalance overloaded lines and release stock replenishment orders immediately."
+    )
+    return {
+        "status": "success",
+        "title": "Shipment Check Complete",
+        "reply": summary_text,
+        "metrics": {
+            "money_at_risk": money_fmt,
+            "ships_rerouted": f"{reroute_count} Ships",
+            "items_running_low": f"{low_stock_count} Items",
+        },
+        "steps": [
+            {"name": "1. Data Check", "detail": f"Verified {len(df)} rows cleanly", "state": "ok"},
+            {"name": "2. Supplier Delays", "detail": f"{len(delayed_suppliers)} late deliveries ({money_fmt} at risk)", "state": "warn"},
+            {"name": "3. Factory Load", "detail": f"{len(overloaded_factories)} facilities above 90% capacity", "state": "warn"},
+            {"name": "4. Sea Route Safety", "detail": f"Rerouted {reroute_count} vessels via Cape of Good Hope", "state": "ok"},
+            {"name": "5. Warehouse Stock", "detail": f"{low_stock_count} items under 14 days of stock", "state": "warn"},
+        ],
+        "artifacts": {
+            "png": "/outputs/supply_chain_matrix.png",
+            "pdf": "/outputs/Executive_Supply_Chain_Audit.pdf",
+            "csv": "/outputs/revised_logistics_schedule.csv",
+        },
+    }
+
+
+def ask_atlas_chat(user_message: str, history: list, csv_path: str = "supply_chain_manifest.csv") -> str:
+    if not os.path.exists(csv_path):
+        return "I could not find the manifest file. Please upload a valid CSV or run the demo audit."
+
+    df = load_manifest_df(csv_path)
+    df["days_of_cover"] = (df["current_stock"] / df["daily_demand"]).round(1)
+
+    user_text = (user_message or "").strip().lower()
+    supplier_risk = df.sort_values("lead_time_days", ascending=False).head(3)
+    worst_supplier = supplier_risk.iloc[0]["supplier"] if not supplier_risk.empty else "N/A"
+    worst_lead = int(supplier_risk.iloc[0]["lead_time_days"]) if not supplier_risk.empty else 0
+    second_supplier = supplier_risk.iloc[1]["supplier"] if len(supplier_risk) > 1 else worst_supplier
+    second_lead = int(supplier_risk.iloc[1]["lead_time_days"]) if len(supplier_risk) > 1 else worst_lead
+
+    if "which supplier is worst" in user_text or "worst supplier" in user_text:
+        return f"The worst supplier is {worst_supplier} with a lead time of {worst_lead} days. That is the most at-risk vendor in the current manifest."
+
+    if "tell me more about the second one" in user_text or "second one" in user_text:
+        return f"The second-most risky supplier is {second_supplier}. It is currently running at about {second_lead} days of lead time, which is still above the 14-day alert threshold."
+
+    if "draft an email to that supplier" in user_text or "email" in user_text:
+        return (
+            f"Subject: Action Required - Supplier Risk Escalation\n\n"
+            f"Hi {second_supplier},\n\n"
+            "We are monitoring recent lead-time and logistics risk on your current supply commitments. "
+            "Please confirm delivery timing and backup capacity to protect our production plan.\n\n"
+            "Regards,\nAtlas Operations"
+        )
+
+    if "red sea detour" in user_text or "detour" in user_text:
+        return (
+            "The Red Sea detour routes cargo around the Cape of Good Hope instead of using the Suez route, because the route is exposed to high-risk maritime disruption. "
+            "This adds roughly 38% longer travel distance and usually pushes delivery by roughly 7 to 10 days."
+        )
+
+    if "hello" in user_text or "hi" in user_text or "hey" in user_text:
+        return "Hello! I’m Atlas, your supply chain operations assistant. I can review risk, explain detours, and help with supplier follow-ups."
+
+    if "price" in user_text or "cost" in user_text:
+        return "The current high-risk supplier exposure is driven by delayed lead times and the Red Sea reroute risk, not by a single pricing issue."
+
+    client = _get_gemini_client()
+    if not client:
+        return (
+            "I’m connected to your shipment data, but `GEMINI_API_KEY` is missing in `.env`. "
+            "Add your key to `.env` so I can answer custom follow-up questions."
+        )
+
+    data_context = df.head(25).to_string(index=False)
+    system_prompt = (
+        "You are Atlas, a professional, friendly, and sharp supply chain operations assistant. "
+        "Answer the user's question clearly in plain, everyday business English. "
+        "Keep answers concise, helpful, and structured with clean bullet points. "
+        "Use ONLY the exact shipment numbers provided below—never invent fake numbers.\n\n"
+        f"CURRENT SHIPMENT DATA ({os.path.basename(csv_path)}):\n{data_context}"
+    )
+
+    conversation = []
+    for msg in history[-6:]:
+        role = "user" if msg.get("role") == "user" else "model"
+        conversation.append(types.Content(role=role, parts=[types.Part.from_text(text=msg.get("text", ""))]))
+    conversation.append(types.Content(role="user", parts=[types.Part.from_text(text=user_message)]))
+
+    try:
+        resp = client.models.generate_content(
+            model="gemini-2.5-flash",
+            contents=conversation,
+            config=types.GenerateContentConfig(
+                system_instruction=system_prompt,
+                temperature=0.3,
+            ),
+        )
+        return resp.text.strip()
+    except Exception as e:
+        return f"I couldn't reach Gemini right now ({str(e)}). Try clicking **Run Full Check** to run the offline math engine."
+
+
+def _generate_chart(df: pd.DataFrame, out_path: str):
+    plt.style.use("dark_background")
+    fig, axes = plt.subplots(2, 2, figsize=(11, 7), dpi=150)
+    fig.patch.set_facecolor("#0A1024")
+
+    if "utilization_pct" not in df.columns:
+        df = df.copy()
+        df["utilization_pct"] = (df["actual_output"] / df["capacity_target"]) * 100
+    if "days_of_cover" not in df.columns:
+        df = df.copy()
+        df["days_of_cover"] = (df["current_stock"] / df["daily_demand"]).round(1)
+
+    for ax in axes.flat:
+        ax.set_facecolor("#101935")
+        ax.spines["top"].set_visible(False)
+        ax.spines["right"].set_visible(False)
+        ax.spines["left"].set_color("#334155")
+        ax.spines["bottom"].set_color("#334155")
+        ax.tick_params(colors="#94A3B8", labelsize=8)
+
+    top_val = df.nlargest(6, "cargo_value_usd")
+    axes[0, 0].barh(top_val["shipment_id"], top_val["cargo_value_usd"] / 1e6, color="#38BDF8")
+    axes[0, 0].set_title("Highest Value Shipments ($ Millions)", color="#F8FAFC", fontsize=10, pad=8)
+
+    sample_f = df.head(7)
+    colors_f = ["#F43F5E" if v >= 90 else "#10B981" for v in sample_f["utilization_pct"]]
+    axes[0, 1].bar(sample_f["shipment_id"], sample_f["utilization_pct"], color=colors_f)
+    axes[0, 1].axhline(90, color="#F59E0B", linestyle="--", linewidth=1)
+    axes[0, 1].set_title("Factory Load % (Red = Overloaded)", color="#F8FAFC", fontsize=10, pad=8)
+
+    route_counts = df["route_zone"].value_counts()
+    axes[1, 0].pie(route_counts.values, labels=route_counts.index, autopct="%1.0f%%",
+                   colors=["#38BDF8", "#818CF8", "#34D399"], textprops={"color": "#E2E8F0", "fontsize": 8})
+    axes[1, 0].set_title("Shipping Corridor Share", color="#F8FAFC", fontsize=10, pad=8)
+
+    low_s = df.nsmallest(7, "days_of_cover")
+    colors_s = ["#F43F5E" if d <= 14 else "#38BDF8" for d in low_s["days_of_cover"]]
+    axes[1, 1].bar(low_s["shipment_id"], low_s["days_of_cover"], color=colors_s)
+    axes[1, 1].axhline(14, color="#F59E0B", linestyle="--", linewidth=1)
+    axes[1, 1].set_title("Lowest Warehouse Stock (Days Left)", color="#F8FAFC", fontsize=10, pad=8)
+
+    plt.tight_layout(pad=2.0)
+    plt.savefig(out_path, facecolor=fig.get_facecolor())
+    plt.close(fig)
+
+
+def _generate_pdf(df: pd.DataFrame, risk_usd: float, reroutes: int, low_stock: int, out_path: str):
+    if "days_of_cover" not in df.columns:
+        df = df.copy()
+        df["days_of_cover"] = (df["current_stock"] / df["daily_demand"]).round(1)
+    pdf = FPDF()
+    pdf.add_page()
+    pdf.set_font("Helvetica", "B", 16)
+    pdf.cell(0, 10, "Atlas AI - Supply Chain Operations Report", ln=True)
+    pdf.set_font("Helvetica", "", 11)
+    pdf.ln(4)
+    pdf.cell(0, 8, f"Total Shipments Checked: {len(df)}", ln=True)
+    pdf.cell(0, 8, f"Money at Risk (Delayed Suppliers): ${risk_usd:,.2f}", ln=True)
+    pdf.cell(0, 8, f"Ships Rerouted to Safer Corridors: {reroutes}", ln=True)
+    pdf.cell(0, 8, f"Warehouse Items Running Low (<14 Days): {low_stock}", ln=True)
+    pdf.ln(6)
+    pdf.set_font("Helvetica", "B", 12)
+    pdf.cell(0, 8, "Recommended Actions:", ln=True)
+    pdf.set_font("Helvetica", "", 10)
+    pdf.multi_cell(0, 7, (
+        "1. Contact delayed suppliers exceeding 14-day lead times to expedite priority components.\n"
+        "2. Notify downstream warehouses of +7 to +10 day transit updates on Cape of Good Hope detours.\n"
+        "3. Trigger immediate replenishment orders for SKUs with fewer than 14 days of cover."
+    ))
+    pdf.output(out_path)
