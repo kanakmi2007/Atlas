@@ -62,22 +62,22 @@
 
     // ── Scene & Camera ──────────────────────────────────────────
     const scene  = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(42, W / H, 0.1, 1000);
-    camera.position.set(0, 0, 2.75); // Calibrated for ~52% visual width
+    const camera = new THREE.PerspectiveCamera(40, W / H, 0.1, 1000);
+    camera.position.set(0.04, 0, 2.48); // Slightly expanded and balanced
 
     // ── Lights ──────────────────────────────────────────────────
-    const ambientLight = new THREE.AmbientLight(0x0a1c38, 2.5);
+    const ambientLight = new THREE.AmbientLight(0x0a1c38, 2.8);
     scene.add(ambientLight);
 
-    const cyanLight = new THREE.PointLight(0x00e5ff, 2, 10);
+    const cyanLight = new THREE.PointLight(0x00e5ff, 2.2, 10);
     cyanLight.position.set(2, 2, 2.5);
     scene.add(cyanLight);
 
-    const purpleLight = new THREE.PointLight(0xa855f7, 1.8, 10);
+    const purpleLight = new THREE.PointLight(0xa855f7, 2.0, 10);
     purpleLight.position.set(-2, -1.5, 2);
     scene.add(purpleLight);
 
-    const GLOBE_R = 1.0;
+    const GLOBE_R = 1.06; // Expanded globe size for grand presence
 
     // ── 1. Digital Dot-Map Sphere ───────────────────────────────
     const dotTexture = generateDotMapTexture();

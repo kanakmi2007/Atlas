@@ -73,7 +73,6 @@
     gsap.set('.hero-desc', { opacity: 0, y: 20 });
     gsap.set('.hero-ctas', { opacity: 0, y: 15 });
     gsap.set('#globe-canvas', { opacity: 0 });
-    gsap.set('.hud-box', { opacity: 0, scale: 0.95 });
     gsap.set('.kpi-capsule', { opacity: 0, y: 30 });
     gsap.set('.futuristic-drone', { opacity: 0 });
 
@@ -84,10 +83,9 @@
       .to('.hero-desc', { opacity: 1, y: 0, duration: 0.5 }, 0.6)
       .to('.hero-ctas', { opacity: 1, y: 0, duration: 0.45 }, 0.75)
       .to('#globe-canvas', { opacity: 1, duration: 1.2 }, 0.5)
-      .to('.hud-box', { opacity: 1, scale: 1, duration: 0.55, stagger: 0.12 }, 0.8)
-      .to('.futuristic-drone', { opacity: 1, duration: 0.8, stagger: 0.2 }, 0.9)
-      .to('.kpi-capsule', { opacity: 1, y: 0, duration: 0.55, stagger: 0.12 }, 0.9)
-      .call(startCountUpAnimations, [], 1.4);
+      .to('.futuristic-drone', { opacity: 1, duration: 0.8, stagger: 0.2 }, 0.8)
+      .to('.kpi-capsule', { opacity: 1, y: 0, duration: 0.55, stagger: 0.12 }, 0.85)
+      .call(startCountUpAnimations, [], 1.3);
   }
 
   // ── 3. KPI Count-Up Animation (Matching Video Timestamps) ────
@@ -135,86 +133,9 @@
     }
   }
 
-  // ── 4. HUD Data Graphs Mini Chart ────────────────────────────
-  function initHUDGraph() {
-    const ctx = document.getElementById('telemetry-chart-canvas');
-    if (!ctx || typeof Chart === 'undefined') return;
-
-    const labels = ['', '', '', '', '', '', '', '', '', '', '', ''];
-    const data1  = [180, 220, 195, 260, 310, 277, 245, 290, 320, 285, 270, 277];
-    const data2  = [40, 55, 45, 60, 75, 68, 58, 70, 80, 65, 62, 64];
-
-    const chart = new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels,
-        datasets: [
-          {
-            data: data1,
-            borderColor: '#00e5ff',
-            backgroundColor: 'rgba(0, 229, 255, 0.12)',
-            borderWidth: 1.8,
-            fill: true,
-            tension: 0.42,
-            pointRadius: 0,
-          },
-          {
-            data: data2,
-            borderColor: '#a855f7',
-            backgroundColor: 'rgba(168, 85, 247, 0.08)',
-            borderWidth: 1.5,
-            fill: true,
-            tension: 0.42,
-            pointRadius: 0,
-          }
-        ],
-      },
-      options: {
-        responsive: false,
-        animation: { duration: 600 },
-        plugins: { legend: { display: false }, tooltip: { enabled: false } },
-        scales: {
-          x: { display: false },
-          y: { display: false },
-        },
-      },
-    });
-
-    // Animate subtle live data fluctuation
-    const flowEl = document.getElementById('tel-flow');
-    setInterval(() => {
-      chart.data.datasets[0].data.shift();
-      const next1 = 250 + Math.random() * 65;
-      chart.data.datasets[0].data.push(next1);
-
-      chart.data.datasets[1].data.shift();
-      const next2 = 50 + Math.random() * 25;
-      chart.data.datasets[1].data.push(next2);
-
-      chart.update('none');
-
-      if (flowEl) {
-        flowEl.textContent = Math.floor(next1 * 1000).toLocaleString();
-      }
-    }, 2400);
-  }
-
-  // ── 5. Live Telemetry Readouts ────────────────────────────────
-  function initTelemetryFlicker() {
-    const latEl = document.getElementById('tel-latency');
-    if (!latEl) return;
-
-    setInterval(() => {
-      const ms = 10 + Math.floor(Math.random() * 6);
-      latEl.textContent = ms + ' MS';
-    }, 2800);
-  }
-
   // ── Init on DOM Loaded ───────────────────────────────────────
   document.addEventListener('DOMContentLoaded', () => {
     initStarfield('particle-canvas');
-    initHUDGraph();
-    initTelemetryFlicker();
 
     requestAnimationFrame(() => {
       if (window.AtlasGlobe) {

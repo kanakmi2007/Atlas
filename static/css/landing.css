@@ -200,9 +200,9 @@ html, body {
 .hero-split {
   flex: 1;
   display: grid;
-  grid-template-columns: 42% 58%;
+  grid-template-columns: 40% 60%;
   align-items: center;
-  padding: 0 44px;
+  padding: 0 48px;
   min-height: 0;
   position: relative;
   z-index: 20;
@@ -213,8 +213,8 @@ html, body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 20px;
-  padding-right: 28px;
+  gap: 22px;
+  padding-right: 32px;
   z-index: 25;
 }
 
@@ -245,7 +245,7 @@ html, body {
 
 .hero-title {
   font-family: var(--font-heading);
-  font-size: clamp(38px, 3.8vw, 56px);
+  font-size: clamp(38px, 4vw, 58px);
   font-weight: 800;
   line-height: 1.1;
   letter-spacing: -0.02em;
@@ -316,11 +316,11 @@ html, body {
   transform: translateY(-1px);
 }
 
-/* Hero Right Column (3D Globe Canvas & HUD) */
+/* Hero Right Column (Expanded 3D Globe Canvas & Drones) */
 .hero-right {
   position: relative;
   height: 100%;
-  min-height: 460px;
+  min-height: 480px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -334,110 +334,7 @@ html, body {
   z-index: 10;
 }
 
-/* ── HUD Telemetry Cards ──────────────────────────────────── */
-.hud-box {
-  position: absolute;
-  background: rgba(8, 14, 40, 0.72);
-  border: 1px solid var(--border-glass);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border-radius: 12px;
-  padding: 10px 14px;
-  z-index: 25;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.45);
-}
-
-.hud-telemetry {
-  top: 6%;
-  left: 2%;
-  width: 165px;
-  border-left: 2px solid var(--accent-cyan);
-}
-
-.hud-header {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  margin-bottom: 6px;
-}
-
-.hud-dot {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: var(--accent-cyan);
-  box-shadow: 0 0 8px var(--accent-cyan);
-}
-
-.hud-title {
-  font-family: var(--font-mono);
-  font-size: 8.5px;
-  font-weight: 700;
-  letter-spacing: 0.15em;
-  color: var(--accent-cyan);
-}
-
-.hud-bars {
-  display: flex;
-  gap: 3px;
-  margin-bottom: 8px;
-}
-
-.hud-bars span {
-  height: 2px;
-  background: rgba(0, 229, 255, 0.4);
-}
-.hud-bars span:nth-child(1) { width: 30px; background: var(--accent-cyan); }
-.hud-bars span:nth-child(2) { width: 18px; }
-.hud-bars span:nth-child(3) { width: 10px; }
-
-.hud-stat-line {
-  display: flex;
-  justify-content: space-between;
-  font-family: var(--font-mono);
-  font-size: 9px;
-  margin-bottom: 3px;
-}
-
-.hud-code {
-  color: rgba(255, 255, 255, 0.45);
-}
-
-.hud-val {
-  font-weight: 600;
-  color: #ffffff;
-}
-
-.hud-val.live {
-  color: var(--accent-cyan);
-}
-
-/* HUD Data Graphs (Top Right) */
-.hud-graphs {
-  top: 5%;
-  right: 2%;
-  width: 195px;
-}
-
-#telemetry-chart-canvas {
-  width: 100% !important;
-  height: 65px !important;
-  margin: 4px 0;
-}
-
-.hud-graph-footer {
-  display: flex;
-  justify-content: space-between;
-  font-family: var(--font-mono);
-  font-size: 8.5px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  padding-top: 4px;
-}
-
-.hud-tag {
-  color: rgba(255, 255, 255, 0.4);
-}
-
+/* Color Tokens */
 .text-cyan {
   color: var(--accent-cyan);
 }
@@ -448,41 +345,6 @@ html, body {
 
 .text-teal {
   color: var(--accent-teal);
-}
-
-/* Bottom Right Telemetry Bars */
-.hud-bottom-telemetry {
-  position: absolute;
-  bottom: 8%;
-  right: 3%;
-  display: flex;
-  align-items: flex-end;
-  gap: 10px;
-  z-index: 25;
-}
-
-.hud-bars-vertical {
-  display: flex;
-  align-items: flex-end;
-  gap: 3px;
-  height: 24px;
-}
-
-.hud-bars-vertical span {
-  width: 3px;
-  background: rgba(0, 229, 255, 0.4);
-  border-radius: 1px;
-}
-.hud-bars-vertical span:nth-child(1) { height: 6px; }
-.hud-bars-vertical span:nth-child(2) { height: 12px; }
-.hud-bars-vertical span:nth-child(3) { height: 18px; }
-.hud-bars-vertical span:nth-child(4) { height: 22px; background: var(--accent-cyan); }
-.hud-bars-vertical span:nth-child(5) { height: 14px; }
-
-.hud-tele-code {
-  font-family: var(--font-mono);
-  font-size: 8.5px;
-  color: rgba(255, 255, 255, 0.45);
 }
 
 /* ── Drones ───────────────────────────────────────────────── */
@@ -501,13 +363,13 @@ html, body {
 }
 
 .drone-alpha {
-  top: 18%;
-  left: 6%;
+  top: 15%;
+  left: 4%;
 }
 
 .drone-beta {
-  bottom: 22%;
-  right: 8%;
+  bottom: 18%;
+  right: 5%;
 }
 
 .drone-plasma-jet {
