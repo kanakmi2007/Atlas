@@ -2,7 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import {
   Compass, ArrowRight, Zap, UploadCloud, ShieldAlert, Globe, FileCheck2,
   Send, ArrowLeft, Play, CheckCircle2, AlertTriangle, TrendingDown,
-  Ship, Package, Sparkles, X, Copy, Check, Sliders, BarChart3
+  Ship, Package, Sparkles, X, Copy, Check, Sliders, BarChart3,
+  Search, Mail, Plane
 } from 'lucide-react';
 import {
   Chart as ChartJS, CategoryScale, LinearScale, BarElement, ArcElement,
@@ -16,12 +17,7 @@ export default function App() {
   const [view, setView] = useState('hero'); // 'hero' | 'workspace'
   const [activeTab, setActiveTab] = useState('overview'); // 'overview' | 'actions' | 'simulator' | 'schedule'
   const [activeFile, setActiveFile] = useState('supply_chain_manifest.csv');
-  const [messages, setMessages] = useState([
-    {
-      role: 'ai',
-      text: "Hi! I'm Atlas, your autonomous supply chain co-pilot. I audit suppliers, model maritime reroutes, and stage emergency replenishment orders. Ask me anything about your active manifest or select a quick action below."
-    }
-  ]);
+  const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -397,28 +393,86 @@ export default function App() {
                   Atlas Supply Chain Co-Pilot
                 </div>
                 <button
-                  onClick={() => setMessages([{ role: 'ai', text: 'Chat cleared. How can I help with your supply chain operations?' }])}
-                  className="text-xs text-slate-400 hover:text-slate-700 cursor-pointer transition-colors"
+                  onClick={() => setMessages([])}
+                  className="text-xs font-medium text-slate-400 hover:text-slate-700 cursor-pointer transition-colors"
                 >
-                  Clear
+                  Clear Chat
                 </button>
               </div>
 
               {/* Chat Message Bubble Rendering (CLEAN TEXT ONLY, NO DUPLICATE KPI CARDS) */}
               <div className="flex-1 overflow-y-auto p-4 sm:p-5 space-y-4 bg-slate-50/60">
-                {messages.map((m, idx) => (
-                  <div key={idx} className={`flex flex-col ${m.role === 'user' ? 'items-end' : 'items-start'}`}>
-                    <div
-                      className={`max-w-[92%] rounded-2xl p-4 text-sm leading-relaxed ${
-                        m.role === 'user'
-                          ? 'bg-indigo-600 text-white rounded-tr-sm shadow-xs'
-                          : 'bg-white border border-slate-200 text-slate-800 rounded-tl-sm shadow-sm'
-                      }`}
-                    >
-                      <div className="whitespace-pre-line">{m.text}</div>
+                {messages.length === 0 ? (
+                  <div className="h-full min-h-[340px] flex flex-col items-center justify-center p-4 text-center">
+                    <div className="w-12 h-12 rounded-2xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600 shadow-2xs mb-3">
+                      <Sparkles className="w-6 h-6 text-indigo-600" />
+                    </div>
+                    <h3 className="text-base font-bold text-slate-900">Welcome to Atlas Co-Pilot</h3>
+                    <p className="text-xs text-slate-500 max-w-xs mt-1 mb-5">
+                      Your autonomous supply chain agent. Spot delayed suppliers, reroute ships, and prevent stockouts.
+                    </p>
+
+                    <div className="w-full max-w-sm space-y-2">
+                      <div className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider text-left mb-1.5 px-1">
+                        Try asking Atlas:
+                      </div>
+                      {[
+                        {
+                          icon: Search,
+                          iconBg: 'bg-sky-50 text-sky-600 border border-sky-100',
+                          title: 'Audit supply_chain_manifest.csv for top risk exposure',
+                          cmd: 'Audit supply_chain_manifest.csv for top risk exposure'
+                        },
+                        {
+                          icon: Mail,
+                          iconBg: 'bg-rose-50 text-rose-600 border border-rose-100',
+                          title: 'Draft an SLA escalation email for SHP-2004',
+                          cmd: 'Draft an SLA escalation email for SHP-2004'
+                        },
+                        {
+                          icon: Plane,
+                          iconBg: 'bg-indigo-50 text-indigo-600 border border-indigo-100',
+                          title: 'Simulate a 14-day delay with 35% air freight reroute',
+                          cmd: 'Simulate a 14-day delay with 35% air freight reroute'
+                        },
+                        {
+                          icon: Package,
+                          iconBg: 'bg-amber-50 text-amber-600 border border-amber-100',
+                          title: 'Which items are under 14 days of warehouse stock cover?',
+                          cmd: 'Which items are under 14 days of warehouse stock cover?'
+                        }
+                      ].map((card, idx) => (
+                        <button
+                          key={idx}
+                          onClick={() => sendMessage(card.cmd)}
+                          className="w-full text-left p-3 rounded-xl bg-white border border-slate-200 hover:border-indigo-300 hover:shadow-xs transition-all flex items-center gap-3 cursor-pointer group"
+                        >
+                          <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${card.iconBg}`}>
+                            <card.icon className="w-4 h-4" />
+                          </div>
+                          <span className="text-xs font-medium text-slate-700 group-hover:text-indigo-600 transition-colors flex-1 leading-snug">
+                            {card.title}
+                          </span>
+                          <ArrowRight className="w-3.5 h-3.5 text-slate-300 group-hover:text-indigo-600 group-hover:translate-x-0.5 transition-all shrink-0" />
+                        </button>
+                      ))}
                     </div>
                   </div>
-                ))}
+                ) : (
+                  messages.map((m, idx) => (
+                    <div key={idx} className={`flex flex-col ${m.role === 'user' ? 'items-end' : 'items-start'}`}>
+                      <div
+                        className={`max-w-[92%] rounded-2xl p-4 text-sm leading-relaxed ${
+                          m.role === 'user'
+                            ? 'bg-indigo-600 text-white rounded-tr-sm shadow-xs'
+                            : 'bg-white border border-slate-200 text-slate-800 rounded-tl-sm shadow-sm'
+                        }`}
+                      >
+                        <div className="whitespace-pre-line">{m.text}</div>
+                      </div>
+                    </div>
+                  ))
+                )}
                 {loading && (
                   <div className="bg-white border border-slate-200 rounded-2xl p-4 text-xs text-indigo-600 shadow-sm flex items-center gap-2.5 animate-pulse">
                     <span className="w-2 h-2 rounded-full bg-indigo-600 animate-ping" />
@@ -428,18 +482,18 @@ export default function App() {
                 <div ref={chatEndRef} />
               </div>
 
-              {/* Suggestion Chips */}
-              <div className="px-4 py-2.5 flex flex-wrap gap-1.5 border-t border-slate-200 bg-white">
+              {/* Enhanced Quick-Action Pills Above Input Box */}
+              <div className="px-4 py-2.5 flex flex-wrap gap-2 border-t border-slate-200 bg-white">
                 {[
-                  { label: 'Riskiest supplier?', cmd: 'Which supplier has the highest financial risk?' },
-                  { label: 'Draft SHP-1001 email', cmd: 'Draft a formal SLA delay escalation notice for SHP-1001 (Apex Microelectronics).' },
-                  { label: 'Simulate 14d delay', cmd: 'Simulate a 14 day delay with 35% air freight' },
+                  { label: 'Riskiest Supplier?', cmd: 'Which supplier has the highest financial risk?' },
+                  { label: 'Draft SHP-2004 Email', cmd: 'Draft an SLA escalation email for SHP-2004' },
+                  { label: 'Simulate 14d Delay', cmd: 'Simulate a 14 day delay with 35% air freight' },
                   { label: 'Autopilot Resolve', cmd: 'Auto-resolve all critical risks right now' }
                 ].map((chip, i) => (
                   <button
                     key={i}
                     onClick={() => sendMessage(chip.cmd)}
-                    className="text-[11px] px-3 py-1 rounded-full bg-slate-50 border border-slate-200 text-slate-600 hover:border-indigo-300 hover:text-indigo-600 hover:bg-indigo-50/50 transition-all cursor-pointer whitespace-nowrap shadow-2xs"
+                    className="text-xs px-3.5 py-1.5 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium transition-all cursor-pointer whitespace-nowrap border border-slate-200/80 shadow-2xs hover:shadow-xs"
                   >
                     {chip.label}
                   </button>
@@ -458,7 +512,7 @@ export default function App() {
                         sendMessage();
                       }
                     }}
-                    placeholder="Ask Atlas anything or give a command (Enter to send, Shift+Enter for newline)..."
+                    placeholder="Ask Atlas anything (e.g. 'Which suppliers breached SLA this week?')..."
                     rows={1}
                     className="flex-1 min-w-0 bg-transparent text-slate-900 placeholder-slate-400 focus:outline-none resize-none text-sm leading-relaxed py-1 px-2 max-h-32 overflow-y-auto"
                     style={{ minHeight: '44px', maxHeight: '120px' }}
