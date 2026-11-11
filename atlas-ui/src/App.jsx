@@ -106,8 +106,8 @@ export default function App() {
   const fileInputRef = useRef(null);
   const chatEndRef = useRef(null);
 
-  // Robust API Fetcher (respects VITE_API_BASE_URL, relative proxy, and local fallback)
-  const API_BASE = (import.meta.env.VITE_API_BASE_URL || '').replace(/\/$/, '');
+  // Robust API Fetcher (defaults to Render Production Backend)
+  const API_BASE = (import.meta.env.VITE_API_BASE_URL || 'https://atlas-backend-e6p7.onrender.com').replace(/\/$/, '');
 
   const fetchApi = async (endpoint, options = {}) => {
     const fullUrl = endpoint.startsWith('http')
@@ -155,11 +155,11 @@ export default function App() {
         res = await fetch(targetUrl);
         if (!res.ok) throw new Error('Not ok');
       } catch {
-        const direct = url.startsWith('http') ? url : `http://127.0.0.1:8080${url}`;
+        const direct = url.startsWith('http') ? url : `https://atlas-backend-e6p7.onrender.com${url}`;
         try {
           res = await fetch(direct);
         } catch {
-          res = await fetch(`http://127.0.0.1:8001${url}`);
+          res = await fetch(`http://127.0.0.1:8080${url}`);
         }
       }
       const text = await res.text();
@@ -210,17 +210,25 @@ export default function App() {
     try {
       let data;
       try {
-        data = await fetchApi('/api/query', {
+        data = await fetchApi('https://atlas-backend-e6p7.onrender.com/api/query', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ prompt: query, query })
         });
       } catch {
-        data = await fetchApi('/webhook', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ message: query })
-        });
+        try {
+          data = await fetchApi('/api/query', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ prompt: query, query })
+          });
+        } catch {
+          data = await fetchApi('/webhook', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ message: query })
+          });
+        }
       }
 
       const reply = data.reply || data.response || data.answer || 'Audit complete.';
@@ -230,7 +238,7 @@ export default function App() {
       if (data.ui_action) executeUiAction(data.ui_action);
       if (data.artifacts?.csv) loadScheduleCsv(data.artifacts.csv + '?t=' + Date.now());
     } catch (err) {
-      setMessages(prev => [...prev, { role: 'ai', text: 'Backend server is unreachable. Make sure uvicorn is running on port 8080.' }]);
+      setMessages(prev => [...prev, { role: 'ai', text: 'Backend server is unreachable. Please verify https://atlas-backend-e6p7.onrender.com.' }]);
     } finally {
       setLoading(false);
     }
@@ -253,7 +261,7 @@ export default function App() {
       if (data.live_actions) setLiveActions(data.live_actions);
       if (data.artifacts?.csv) loadScheduleCsv(data.artifacts.csv + '?t=' + Date.now());
     } catch {
-      setMessages(prev => [...prev, { role: 'ai', text: 'Failed to upload CSV. Check backend server on port 8080.' }]);
+      setMessages(prev => [...prev, { role: 'ai', text: 'Failed to upload CSV. Please verify backend server.' }]);
     } finally {
       setLoading(false);
       e.target.value = '';
