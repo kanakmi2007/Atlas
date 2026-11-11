@@ -107,12 +107,14 @@ def get_initial_state():
         })
 
 
-@app.get("/", response_class=HTMLResponse)
 @app.get("/demo-ui", response_class=HTMLResponse)
 def serve_ui():
-    with open("templates/dashboard.html", "r", encoding="utf-8") as f:
-        return HTMLResponse(content=f.read())
+    dashboard_file = BASE_DIR / "templates" / "dashboard.html"
 
+    return HTMLResponse(
+        content=dashboard_file.read_text(encoding="utf-8")
+    )
+@app.get("/", response_class=HTMLResponse)
 @app.get("/landing", response_class=HTMLResponse)
 async def landing_page():
     landing_file = BASE_DIR / "templates" / "landing.html"
