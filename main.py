@@ -124,7 +124,10 @@ BASE_PERSONA = (
     "4. Emergency warehouse buffer Purchase Orders (e.g. PO-8841 to PO-8846) for items with <14 days of cover.\n"
     "5. Geodesic Cape of Good Hope reroutes (+38% distance, +7 to +14 days) to bypass Red Sea / Suez maritime bottlenecks.\n\n"
     "Tone & Operational Philosophy: Authoritative, calm, clear, highly analytical, and actionable. "
-    "Always provide exact numbers, dollar exposure, lead times, and ready-to-execute operational decisions."
+    "Always provide exact numbers, dollar exposure, lead times, and ready-to-execute operational decisions.\n\n"
+    "CRITICAL OUTPUT CONSTRAINT:\n"
+    "DO NOT output or prepend fixed metric cards (such as AT RISK $3.29M, 4 Ships, 5 Items) on standard queries. "
+    "Respond strictly to the specific query asked. Only generate full metric summaries when the user explicitly asks for a 'Full Audit'."
 )
 
 
@@ -488,7 +491,7 @@ async def webhook(payload: ChatPayload):
                 "steps": result.get("steps", [])
             })
 
-        audit_keywords = ["audit", "check all", "check sample", "run check", "run full", "analyze manifest", "check shipments"]
+        audit_keywords = ["run full audit", "run audit", "full audit", "run full check", "check all shipments"]
         if any(k in lower for k in audit_keywords):
             result = run_full_audit(STATE["active_csv"])
             STATE["history"].append({"role": "user", "text": msg})
@@ -504,34 +507,16 @@ async def webhook(payload: ChatPayload):
                 "steps": result.get("steps", [])
             })
 
-        # Match FAQ first if relevant query
-        matched_faqs = search_faqs(msg, top_n=1)
-        if matched_faqs and any(k in lower for k in ["shp-", "taiwan", "lithium", "apex", "bavaria", "faq", "what is"]):
-            reply_str = matched_faqs[0]["answer"]
-            ui_act = None
-            if "email" in lower or "escalation" in lower:
-                ui_act = {"type": "open_email", "supplier": "Taiwan Semi Foundry", "shipment_id": "SHP-1004", "value": "$950,000", "lead_time": "32 days"}
-            elif "detour" in lower or "cape" in lower:
-                ui_act = {"type": "switch_tab", "tab": "schedule"}
-            elif "buffer" in lower or "po" in lower:
-                ui_act = {"type": "switch_tab", "tab": "actions"}
-
-            STATE["history"].append({"role": "user", "text": msg})
-            STATE["history"].append({"role": "assistant", "text": reply_str})
-
-            return JSONResponse(content={
-                "status": "chat",
-                "title": "Atlas Co-Pilot",
-                "reply": reply_str,
-                "metrics": _get_current_metrics(),
-                "ui_action": ui_act,
-                "live_actions": extract_live_actions(load_manifest_df(STATE["active_csv"])),
-                "artifacts": _get_artifacts_dict(),
-                "steps": []
-            })
-
+        logger.info(f"Webhook calling ask_atlas_chat for: {msg[:40]}")
         chat_res = ask_atlas_chat(msg, STATE["history"], STATE["active_csv"])
         reply_str = str(chat_res.get("reply", "Here is what I found in your shipment data."))
+
+        # If general FAQ requested, supplement with matching knowledge base item
+        if any(k in lower for k in ["faq", "what is atlas"]):
+            matched_faqs = search_faqs(msg, top_n=1)
+            if matched_faqs:
+                reply_str = matched_faqs[0]["answer"]
+
         STATE["history"].append({"role": "user", "text": msg})
         STATE["history"].append({"role": "assistant", "text": reply_str})
 
@@ -541,7 +526,7 @@ async def webhook(payload: ChatPayload):
             "reply": reply_str,
             "metrics": chat_res.get("metrics") or _get_current_metrics(),
             "ui_action": chat_res.get("ui_action"),
-            "live_actions": chat_res.get("live_actions") or {"escalations": [], "purchase_orders": [], "scorecard": []},
+            "live_actions": chat_res.get("live_actions") or extract_live_actions(load_manifest_df(STATE["active_csv"])),
             "artifacts": _get_artifacts_dict(),
             "steps": []
         })
