@@ -48,7 +48,7 @@ export default function App() {
   const fileInputRef = useRef(null);
   const chatEndRef = useRef(null);
 
-  // Robust API Fetcher (tries Vite proxy relative path first, then falls back to direct port 8001)
+  // Robust API Fetcher (tries Vite proxy relative path first, then falls back to direct port 8080 or 8001)
   const fetchApi = async (endpoint, options = {}) => {
     try {
       const res = await fetch(endpoint, options);
@@ -56,9 +56,12 @@ export default function App() {
       throw new Error(`HTTP ${res.status}`);
     } catch (err) {
       if (!endpoint.startsWith('http')) {
-        const directUrl = `http://127.0.0.1:8001${endpoint}`;
-        const res2 = await fetch(directUrl, options);
-        if (res2.ok) return await res2.json();
+        for (const port of [8080, 8001]) {
+          try {
+            const res2 = await fetch(`http://127.0.0.1:${port}${endpoint}`, options);
+            if (res2.ok) return await res2.json();
+          } catch {}
+        }
       }
       throw err;
     }
@@ -85,8 +88,12 @@ export default function App() {
         res = await fetch(url);
         if (!res.ok) throw new Error('Not ok');
       } catch {
-        const direct = url.startsWith('http') ? url : `http://127.0.0.1:8001${url}`;
-        res = await fetch(direct);
+        const direct = url.startsWith('http') ? url : `http://127.0.0.1:8080${url}`;
+        try {
+          res = await fetch(direct);
+        } catch {
+          res = await fetch(`http://127.0.0.1:8001${url}`);
+        }
       }
       const text = await res.text();
       const lines = text.trim().split('\n');
@@ -140,7 +147,7 @@ export default function App() {
       if (data.ui_action) executeUiAction(data.ui_action);
       if (data.artifacts?.csv) loadScheduleCsv(data.artifacts.csv + '?t=' + Date.now());
     } catch (err) {
-      setMessages(prev => [...prev, { role: 'ai', text: 'Backend server on port 8001 is unreachable. Make sure uvicorn is running on port 8001.' }]);
+      setMessages(prev => [...prev, { role: 'ai', text: 'Backend server is unreachable. Make sure uvicorn is running (e.g. uvicorn main:app --reload --port 8080).' }]);
     } finally {
       setLoading(false);
     }
@@ -163,7 +170,7 @@ export default function App() {
       if (data.live_actions) setLiveActions(data.live_actions);
       if (data.artifacts?.csv) loadScheduleCsv(data.artifacts.csv + '?t=' + Date.now());
     } catch {
-      setMessages(prev => [...prev, { role: 'ai', text: 'Failed to upload CSV. Check backend server on port 8001.' }]);
+      setMessages(prev => [...prev, { role: 'ai', text: 'Failed to upload CSV. Check backend server (port 8080/8001).' }]);
     } finally {
       setLoading(false);
       e.target.value = '';
