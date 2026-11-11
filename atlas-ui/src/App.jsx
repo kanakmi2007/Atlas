@@ -48,10 +48,18 @@ export default function App() {
   const fileInputRef = useRef(null);
   const chatEndRef = useRef(null);
 
-  // Robust API Fetcher (tries Vite proxy relative path first, then falls back to direct port 8080 or 8001)
+  // Robust API Fetcher (respects VITE_API_BASE_URL, relative proxy, and local fallback)
+  const API_BASE = (import.meta.env.VITE_API_BASE_URL || '').replace(/\/$/, '');
+
   const fetchApi = async (endpoint, options = {}) => {
+    const fullUrl = endpoint.startsWith('http')
+      ? endpoint
+      : API_BASE
+      ? `${API_BASE}${endpoint}`
+      : endpoint;
+
     try {
-      const res = await fetch(endpoint, options);
+      const res = await fetch(fullUrl, options);
       if (res.ok) return await res.json();
       throw new Error(`HTTP ${res.status}`);
     } catch (err) {
@@ -84,8 +92,9 @@ export default function App() {
   const loadScheduleCsv = async (url) => {
     try {
       let res;
+      const targetUrl = url.startsWith('http') ? url : (API_BASE ? `${API_BASE}${url}` : url);
       try {
-        res = await fetch(url);
+        res = await fetch(targetUrl);
         if (!res.ok) throw new Error('Not ok');
       } catch {
         const direct = url.startsWith('http') ? url : `http://127.0.0.1:8080${url}`;
