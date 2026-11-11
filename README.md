@@ -1,5 +1,13 @@
-# Atlas AI Co-Pilot
-> Autonomous Supply Chain Intelligence & Risk Mitigation Engine
+# ATLAS - Supply Chain Intelligence Platform
+Team Fusion - INNOVORTEX 4.0
+
+## Live Deployment Links
+
+- **Frontend Web Application:** https://atlas-ui-f7xs.onrender.com
+- **Backend API Service:** https://atlas-backend-e6p7.onrender.com
+- **Interactive API Documentation:** https://atlas-backend-e6p7.onrender.com/docs
+
+> **Note for Evaluators:** Hosted on Render free tier. If the link takes 15 to 20 seconds on the initial request, the instance is waking up from idle state. Subsequent queries run instantly.
 
 Atlas is an end-to-end, real-time supply chain operational co-pilot. It automatically audits logistics manifests (supply_chain_manifest.csv), detects vendor SLA breaches, quantifies financial risk exposure, simulates maritime corridor detours (e.g., Cape of Good Hope rerouting), and automates emergency buffer purchase orders.
 
