@@ -23,7 +23,7 @@ import logging
 from pathlib import Path
 from typing import Optional, List, Dict, Any, Union
 from dotenv import load_dotenv
-from fastapi import FastAPI, Request, status, UploadFile, File
+from fastapi import FastAPI, Request, status, UploadFile, File, Body
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
@@ -203,7 +203,7 @@ class ChatPayload(BaseModel):
 class QueryPayload(BaseModel):
     prompt: Optional[str] = None
     query: Optional[str] = None
-    model: Optional[str] = "gemini-1.5-flash"
+    model: Optional[str] = "gemini-3.8-flash"
 
 
 class OpenAIMessage(BaseModel):
@@ -212,7 +212,7 @@ class OpenAIMessage(BaseModel):
 
 
 class OpenAIChatPayload(BaseModel):
-    model: Optional[str] = "gemini-1.5-flash"
+    model: Optional[str] = "gemini-3.8-flash"
     messages: List[OpenAIMessage]
     temperature: Optional[float] = 0.2
     max_tokens: Optional[int] = 1024
@@ -250,7 +250,7 @@ def _get_current_metrics(df=None):
         }
 
 
-async def generate_atlas_response(prompt: str, model: str = "gemini-1.5-flash") -> str:
+def generate_atlas_response(prompt: str, model: str = "gemini-3.8-flash") -> str:
     """Core GenAI generation with multi-layered fallback to FAQ and contextual engine."""
     # 1. Search FAQ matches
     matched = search_faqs(prompt, top_n=1)
@@ -259,8 +259,8 @@ async def generate_atlas_response(prompt: str, model: str = "gemini-1.5-flash") 
     if genai_client:
         try:
             sys_inst = build_system_instruction(prompt)
-            # Use requested model, defaulting to gemini-1.5-flash
-            target_model = model if model and "gemini" in model else "gemini-1.5-flash"
+            # Use requested model, defaulting to gemini-3.8-flash
+            target_model = model if model and "gemini" in model else "gemini-3.8-flash"
             resp = genai_client.models.generate_content(
                 model=target_model,
                 contents=prompt,
@@ -304,7 +304,7 @@ def list_models():
         "object": "list",
         "data": [
             {
-                "id": "gemini-1.5-flash",
+                "id": "gemini-3.8-flash",
                 "object": "model",
                 "created": int(time.time()),
                 "owned_by": "google",
@@ -316,7 +316,7 @@ def list_models():
                 "owned_by": "google",
             },
             {
-                "id": "gemini-3.8-flash",
+                "id": "gemini-1.5-flash",
                 "object": "model",
                 "created": int(time.time()),
                 "owned_by": "google",
@@ -326,7 +326,7 @@ def list_models():
 
 
 @app.post("/v1/chat/completions")
-async def chat_completions(payload: OpenAIChatPayload):
+def chat_completions(payload: OpenAIChatPayload):
     """OpenAI-compatible completions endpoint supporting multi-modal and string messages."""
     user_prompt = "Audit supply_chain_manifest.csv"
     for msg in reversed(payload.messages):
@@ -338,13 +338,13 @@ async def chat_completions(payload: OpenAIChatPayload):
                 user_prompt = str(msg.content)
             break
 
-    reply_text = await generate_atlas_response(user_prompt, model=payload.model or "gemini-1.5-flash")
+    reply_text = generate_atlas_response(user_prompt, model=payload.model or "gemini-3.8-flash")
 
     return {
         "id": f"chatcmpl-{uuid.uuid4().hex[:12]}",
         "object": "chat.completion",
         "created": int(time.time()),
-        "model": payload.model or "gemini-1.5-flash",
+        "model": payload.model or "gemini-3.8-flash",
         "choices": [
             {
                 "index": 0,
@@ -364,23 +364,51 @@ async def chat_completions(payload: OpenAIChatPayload):
 
 
 @app.post("/api/query")
-async def api_query(request: Request):
-    """Atlas UI endpoint for Next.js / Vite dashboard."""
-    try:
-        body = await request.json()
-    except Exception:
-        body = {}
+def api_query(payload: Optional[Dict[str, Any]] = Body(default=None)):
+    """Atlas UI endpoint for Next.js / Vite dashboard with complete metrics, UI actions, and live actions."""
+    body = payload or {}
+    prompt = body.get("prompt") or body.get("query") or body.get("message") or "Audit active supply chain manifest"
+    model = body.get("model", "gemini-3.8-flash")
 
-    prompt = body.get("prompt") or body.get("query") or "Audit active supply chain manifest"
-    model = body.get("model", "gemini-1.5-flash")
-    
-    reply_text = await generate_atlas_response(prompt, model=model)
-    return {
-        "status": "success",
-        "response": reply_text,
-        "answer": reply_text,
-        "model": model,
-    }
+    try:
+        chat_res = ask_atlas_chat(prompt, STATE["history"], STATE["active_csv"])
+        reply_text = chat_res.get("reply")
+        if not reply_text:
+            reply_text = generate_atlas_response(prompt, model=model)
+
+        ui_action = chat_res.get("ui_action")
+        live_actions = chat_res.get("live_actions") or extract_live_actions(load_manifest_df(STATE["active_csv"]))
+        metrics = chat_res.get("metrics") or _get_current_metrics()
+        artifacts = _get_artifacts_dict()
+
+        STATE["history"].append({"role": "user", "text": prompt})
+        STATE["history"].append({"role": "assistant", "text": reply_text})
+
+        return {
+            "status": "success",
+            "reply": reply_text,
+            "response": reply_text,
+            "answer": reply_text,
+            "metrics": metrics,
+            "ui_action": ui_action,
+            "live_actions": live_actions,
+            "artifacts": artifacts,
+            "model": model,
+        }
+    except Exception as e:
+        logger.error(f"Error in api_query: {e}")
+        fallback_reply = generate_atlas_response(prompt, model=model)
+        return {
+            "status": "success",
+            "reply": fallback_reply,
+            "response": fallback_reply,
+            "answer": fallback_reply,
+            "metrics": _get_current_metrics(),
+            "ui_action": None,
+            "live_actions": extract_live_actions(load_manifest_df(STATE["active_csv"])),
+            "artifacts": _get_artifacts_dict(),
+            "model": model,
+        }
 
 
 @app.get("/initial-state")
@@ -430,7 +458,7 @@ async def landing_page():
 
 
 @app.post("/upload-csv")
-async def upload_csv(file: UploadFile = File(...)):
+def upload_csv(file: UploadFile = File(...)):
     """Uploads customer shipment CSV and executes full automated audit."""
     try:
         save_path = os.path.join("uploads", file.filename)
@@ -470,7 +498,7 @@ async def upload_csv(file: UploadFile = File(...)):
 
 
 @app.post("/webhook")
-async def webhook(payload: ChatPayload):
+def webhook(payload: ChatPayload):
     """Processes interactive chat requests, trigger commands, and autopilot resolutions."""
     try:
         msg = payload.message.strip()

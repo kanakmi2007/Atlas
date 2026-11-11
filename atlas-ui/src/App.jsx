@@ -13,6 +13,68 @@ import { Bar, Doughnut } from 'react-chartjs-2';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, ArcElement, Title, Tooltip, Legend);
 
+function WelcomeScreen({ onSelectPreset }) {
+  const presets = [
+    {
+      icon: Search,
+      iconBg: 'bg-sky-50 text-sky-600 border border-sky-100',
+      title: 'Audit supply_chain_manifest.csv for top risk exposure',
+      cmd: 'Audit supply_chain_manifest.csv for top risk exposure'
+    },
+    {
+      icon: Mail,
+      iconBg: 'bg-rose-50 text-rose-600 border border-rose-100',
+      title: 'Draft an SLA escalation email for SHP-2004',
+      cmd: 'Draft an SLA escalation email for SHP-2004'
+    },
+    {
+      icon: Plane,
+      iconBg: 'bg-indigo-50 text-indigo-600 border border-indigo-100',
+      title: 'Simulate a 14-day delay with 35% air freight reroute',
+      cmd: 'Simulate a 14-day delay with 35% air freight reroute'
+    },
+    {
+      icon: Package,
+      iconBg: 'bg-amber-50 text-amber-600 border border-amber-100',
+      title: 'Which items are under 14 days of warehouse stock cover?',
+      cmd: 'Which items are under 14 days of warehouse stock cover?'
+    }
+  ];
+
+  return (
+    <div className="h-full min-h-[340px] flex flex-col items-center justify-center p-4 text-center">
+      <div className="w-12 h-12 rounded-2xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600 shadow-2xs mb-3">
+        <Sparkles className="w-6 h-6 text-indigo-600" />
+      </div>
+      <h3 className="text-base font-bold text-slate-900">Welcome to Atlas Co-Pilot</h3>
+      <p className="text-xs text-slate-500 max-w-xs mt-1 mb-5">
+        Your autonomous supply chain agent. Spot delayed suppliers, reroute ships, and prevent stockouts.
+      </p>
+
+      <div className="w-full max-w-sm space-y-2">
+        <div className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider text-left mb-1.5 px-1">
+          Try asking Atlas:
+        </div>
+        {presets.map((card, idx) => (
+          <button
+            key={idx}
+            onClick={() => onSelectPreset(card.cmd)}
+            className="w-full text-left p-3 rounded-xl bg-white border border-slate-200 hover:border-indigo-300 hover:shadow-xs transition-all flex items-center gap-3 cursor-pointer group"
+          >
+            <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${card.iconBg}`}>
+              <card.icon className="w-4 h-4" />
+            </div>
+            <span className="text-xs font-medium text-slate-700 group-hover:text-indigo-600 transition-colors flex-1 leading-snug">
+              {card.title}
+            </span>
+            <ArrowRight className="w-3.5 h-3.5 text-slate-300 group-hover:text-indigo-600 group-hover:translate-x-0.5 transition-all shrink-0" />
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function App() {
   const [view, setView] = useState('hero'); // 'hero' | 'workspace'
   const [activeTab, setActiveTab] = useState('overview'); // 'overview' | 'actions' | 'simulator' | 'schedule'
@@ -131,6 +193,12 @@ export default function App() {
     }
   };
 
+  const handleClearChat = () => {
+    setMessages([]);
+    setInput('');
+    setLoading(false);
+  };
+
   const sendMessage = async (textToSend) => {
     const query = (textToSend ?? input).trim();
     if (!query) return;
@@ -140,13 +208,23 @@ export default function App() {
     setLoading(true);
 
     try {
-      const data = await fetchApi('/webhook', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: query })
-      });
-      // Assistant response renders text cleanly without repeating KPI cards
-      setMessages(prev => [...prev, { role: 'ai', text: data.reply }]);
+      let data;
+      try {
+        data = await fetchApi('/api/query', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ prompt: query, query })
+        });
+      } catch {
+        data = await fetchApi('/webhook', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: query })
+        });
+      }
+
+      const reply = data.reply || data.response || data.answer || 'Audit complete.';
+      setMessages(prev => [...prev, { role: 'ai', text: reply }]);
       if (data.metrics) setMetrics(data.metrics);
       if (data.live_actions) setLiveActions(data.live_actions);
       if (data.ui_action) executeUiAction(data.ui_action);
@@ -393,7 +471,7 @@ export default function App() {
                   Atlas Supply Chain Co-Pilot
                 </div>
                 <button
-                  onClick={() => setMessages([])}
+                  onClick={handleClearChat}
                   className="text-xs font-medium text-slate-400 hover:text-slate-700 cursor-pointer transition-colors"
                 >
                   Clear Chat
@@ -403,61 +481,7 @@ export default function App() {
               {/* Chat Message Bubble Rendering (CLEAN TEXT ONLY, NO DUPLICATE KPI CARDS) */}
               <div className="flex-1 overflow-y-auto p-4 sm:p-5 space-y-4 bg-slate-50/60">
                 {messages.length === 0 ? (
-                  <div className="h-full min-h-[340px] flex flex-col items-center justify-center p-4 text-center">
-                    <div className="w-12 h-12 rounded-2xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600 shadow-2xs mb-3">
-                      <Sparkles className="w-6 h-6 text-indigo-600" />
-                    </div>
-                    <h3 className="text-base font-bold text-slate-900">Welcome to Atlas Co-Pilot</h3>
-                    <p className="text-xs text-slate-500 max-w-xs mt-1 mb-5">
-                      Your autonomous supply chain agent. Spot delayed suppliers, reroute ships, and prevent stockouts.
-                    </p>
-
-                    <div className="w-full max-w-sm space-y-2">
-                      <div className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider text-left mb-1.5 px-1">
-                        Try asking Atlas:
-                      </div>
-                      {[
-                        {
-                          icon: Search,
-                          iconBg: 'bg-sky-50 text-sky-600 border border-sky-100',
-                          title: 'Audit supply_chain_manifest.csv for top risk exposure',
-                          cmd: 'Audit supply_chain_manifest.csv for top risk exposure'
-                        },
-                        {
-                          icon: Mail,
-                          iconBg: 'bg-rose-50 text-rose-600 border border-rose-100',
-                          title: 'Draft an SLA escalation email for SHP-2004',
-                          cmd: 'Draft an SLA escalation email for SHP-2004'
-                        },
-                        {
-                          icon: Plane,
-                          iconBg: 'bg-indigo-50 text-indigo-600 border border-indigo-100',
-                          title: 'Simulate a 14-day delay with 35% air freight reroute',
-                          cmd: 'Simulate a 14-day delay with 35% air freight reroute'
-                        },
-                        {
-                          icon: Package,
-                          iconBg: 'bg-amber-50 text-amber-600 border border-amber-100',
-                          title: 'Which items are under 14 days of warehouse stock cover?',
-                          cmd: 'Which items are under 14 days of warehouse stock cover?'
-                        }
-                      ].map((card, idx) => (
-                        <button
-                          key={idx}
-                          onClick={() => sendMessage(card.cmd)}
-                          className="w-full text-left p-3 rounded-xl bg-white border border-slate-200 hover:border-indigo-300 hover:shadow-xs transition-all flex items-center gap-3 cursor-pointer group"
-                        >
-                          <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${card.iconBg}`}>
-                            <card.icon className="w-4 h-4" />
-                          </div>
-                          <span className="text-xs font-medium text-slate-700 group-hover:text-indigo-600 transition-colors flex-1 leading-snug">
-                            {card.title}
-                          </span>
-                          <ArrowRight className="w-3.5 h-3.5 text-slate-300 group-hover:text-indigo-600 group-hover:translate-x-0.5 transition-all shrink-0" />
-                        </button>
-                      ))}
-                    </div>
-                  </div>
+                  <WelcomeScreen onSelectPreset={cmd => sendMessage(cmd)} />
                 ) : (
                   messages.map((m, idx) => (
                     <div key={idx} className={`flex flex-col ${m.role === 'user' ? 'items-end' : 'items-start'}`}>
