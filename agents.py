@@ -40,7 +40,11 @@ def _get_gemini_client():
     if not api_key or api_key == "your_key_here":
         return None
     try:
-        return genai.Client(api_key=api_key)
+        from google.genai.types import HttpRetryOptions
+        return genai.Client(
+            api_key=api_key,
+            http_options={"timeout": 10.0, "retry_options": HttpRetryOptions(attempts=1)}
+        )
     except Exception as e:
         print(f"[Warning] Failed to initialize Gemini client: {e}")
         return None

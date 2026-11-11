@@ -1,0 +1,2002 @@
+[
+  {
+    "question": "[1] What is the status of shipment SHP-1001 from Taiwan Semi Foundry?",
+    "answer": "Shipment SHP-1001 from Taiwan Semi Foundry is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[2] How to resolve delay for vendor Taiwan Semi Foundry (SHP-1002)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Taiwan Semi Foundry to cover the inventory deficit for SHP-1002."
+  },
+  {
+    "question": "[3] What is the financial risk exposure for Taiwan Semi Foundry?",
+    "answer": "Financial risk for Taiwan Semi Foundry is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[4] Draft SLA delay escalation email for SHP-1004 (Taiwan Semi Foundry).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1004 (Taiwan Semi Foundry)\nDear Operations Team,\nShipment SHP-1004 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[5] What component is delayed under shipment SHP-1005?",
+    "answer": "Shipment SHP-1005 contains critical supply chain components for Taiwan Semi Foundry. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[6] What is the status of shipment SHP-1006 from Taiwan Semi Foundry?",
+    "answer": "Shipment SHP-1006 from Taiwan Semi Foundry is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[7] How to resolve delay for vendor Taiwan Semi Foundry (SHP-1007)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Taiwan Semi Foundry to cover the inventory deficit for SHP-1007."
+  },
+  {
+    "question": "[8] What is the financial risk exposure for Taiwan Semi Foundry?",
+    "answer": "Financial risk for Taiwan Semi Foundry is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[9] Draft SLA delay escalation email for SHP-1009 (Taiwan Semi Foundry).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1009 (Taiwan Semi Foundry)\nDear Operations Team,\nShipment SHP-1009 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[10] What component is delayed under shipment SHP-1010?",
+    "answer": "Shipment SHP-1010 contains critical supply chain components for Taiwan Semi Foundry. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[11] What is the status of shipment SHP-1011 from Taiwan Semi Foundry?",
+    "answer": "Shipment SHP-1011 from Taiwan Semi Foundry is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[12] How to resolve delay for vendor Taiwan Semi Foundry (SHP-1012)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Taiwan Semi Foundry to cover the inventory deficit for SHP-1012."
+  },
+  {
+    "question": "[13] What is the financial risk exposure for Taiwan Semi Foundry?",
+    "answer": "Financial risk for Taiwan Semi Foundry is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[14] Draft SLA delay escalation email for SHP-1014 (Taiwan Semi Foundry).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1014 (Taiwan Semi Foundry)\nDear Operations Team,\nShipment SHP-1014 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[15] What component is delayed under shipment SHP-1015?",
+    "answer": "Shipment SHP-1015 contains critical supply chain components for Taiwan Semi Foundry. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[16] What is the status of shipment SHP-1016 from Taiwan Semi Foundry?",
+    "answer": "Shipment SHP-1016 from Taiwan Semi Foundry is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[17] How to resolve delay for vendor Taiwan Semi Foundry (SHP-1017)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Taiwan Semi Foundry to cover the inventory deficit for SHP-1017."
+  },
+  {
+    "question": "[18] What is the financial risk exposure for Taiwan Semi Foundry?",
+    "answer": "Financial risk for Taiwan Semi Foundry is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[19] Draft SLA delay escalation email for SHP-1019 (Taiwan Semi Foundry).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1019 (Taiwan Semi Foundry)\nDear Operations Team,\nShipment SHP-1019 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[20] What component is delayed under shipment SHP-1020?",
+    "answer": "Shipment SHP-1020 contains critical supply chain components for Taiwan Semi Foundry. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[21] What is the status of shipment SHP-1021 from Taiwan Semi Foundry?",
+    "answer": "Shipment SHP-1021 from Taiwan Semi Foundry is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[22] How to resolve delay for vendor Taiwan Semi Foundry (SHP-1022)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Taiwan Semi Foundry to cover the inventory deficit for SHP-1022."
+  },
+  {
+    "question": "[23] What is the financial risk exposure for Taiwan Semi Foundry?",
+    "answer": "Financial risk for Taiwan Semi Foundry is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[24] Draft SLA delay escalation email for SHP-1024 (Taiwan Semi Foundry).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1024 (Taiwan Semi Foundry)\nDear Operations Team,\nShipment SHP-1024 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[25] What component is delayed under shipment SHP-1025?",
+    "answer": "Shipment SHP-1025 contains critical supply chain components for Taiwan Semi Foundry. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[26] What is the status of shipment SHP-1026 from Taiwan Semi Foundry?",
+    "answer": "Shipment SHP-1026 from Taiwan Semi Foundry is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[27] How to resolve delay for vendor Taiwan Semi Foundry (SHP-1027)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Taiwan Semi Foundry to cover the inventory deficit for SHP-1027."
+  },
+  {
+    "question": "[28] What is the financial risk exposure for Taiwan Semi Foundry?",
+    "answer": "Financial risk for Taiwan Semi Foundry is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[29] Draft SLA delay escalation email for SHP-1029 (Taiwan Semi Foundry).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1029 (Taiwan Semi Foundry)\nDear Operations Team,\nShipment SHP-1029 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[30] What component is delayed under shipment SHP-1030?",
+    "answer": "Shipment SHP-1030 contains critical supply chain components for Taiwan Semi Foundry. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[31] What is the status of shipment SHP-1031 from Taiwan Semi Foundry?",
+    "answer": "Shipment SHP-1031 from Taiwan Semi Foundry is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[32] How to resolve delay for vendor Taiwan Semi Foundry (SHP-1032)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Taiwan Semi Foundry to cover the inventory deficit for SHP-1032."
+  },
+  {
+    "question": "[33] What is the financial risk exposure for Taiwan Semi Foundry?",
+    "answer": "Financial risk for Taiwan Semi Foundry is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[34] Draft SLA delay escalation email for SHP-1034 (Taiwan Semi Foundry).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1034 (Taiwan Semi Foundry)\nDear Operations Team,\nShipment SHP-1034 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[35] What component is delayed under shipment SHP-1035?",
+    "answer": "Shipment SHP-1035 contains critical supply chain components for Taiwan Semi Foundry. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[36] What is the status of shipment SHP-1036 from Taiwan Semi Foundry?",
+    "answer": "Shipment SHP-1036 from Taiwan Semi Foundry is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[37] How to resolve delay for vendor Taiwan Semi Foundry (SHP-1037)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Taiwan Semi Foundry to cover the inventory deficit for SHP-1037."
+  },
+  {
+    "question": "[38] What is the financial risk exposure for Taiwan Semi Foundry?",
+    "answer": "Financial risk for Taiwan Semi Foundry is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[39] Draft SLA delay escalation email for SHP-1039 (Taiwan Semi Foundry).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1039 (Taiwan Semi Foundry)\nDear Operations Team,\nShipment SHP-1039 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[40] What component is delayed under shipment SHP-1040?",
+    "answer": "Shipment SHP-1040 contains critical supply chain components for Taiwan Semi Foundry. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[41] What is the status of shipment SHP-1041 from Taiwan Semi Foundry?",
+    "answer": "Shipment SHP-1041 from Taiwan Semi Foundry is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[42] How to resolve delay for vendor Taiwan Semi Foundry (SHP-1042)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Taiwan Semi Foundry to cover the inventory deficit for SHP-1042."
+  },
+  {
+    "question": "[43] What is the financial risk exposure for Taiwan Semi Foundry?",
+    "answer": "Financial risk for Taiwan Semi Foundry is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[44] Draft SLA delay escalation email for SHP-1044 (Taiwan Semi Foundry).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1044 (Taiwan Semi Foundry)\nDear Operations Team,\nShipment SHP-1044 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[45] What component is delayed under shipment SHP-1045?",
+    "answer": "Shipment SHP-1045 contains critical supply chain components for Taiwan Semi Foundry. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[46] What is the status of shipment SHP-1046 from Taiwan Semi Foundry?",
+    "answer": "Shipment SHP-1046 from Taiwan Semi Foundry is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[47] How to resolve delay for vendor Taiwan Semi Foundry (SHP-1047)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Taiwan Semi Foundry to cover the inventory deficit for SHP-1047."
+  },
+  {
+    "question": "[48] What is the financial risk exposure for Taiwan Semi Foundry?",
+    "answer": "Financial risk for Taiwan Semi Foundry is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[49] Draft SLA delay escalation email for SHP-1049 (Taiwan Semi Foundry).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1049 (Taiwan Semi Foundry)\nDear Operations Team,\nShipment SHP-1049 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[50] What component is delayed under shipment SHP-1050?",
+    "answer": "Shipment SHP-1050 contains critical supply chain components for Taiwan Semi Foundry. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[51] What is the status of shipment SHP-1051 from Apex Microelectronics?",
+    "answer": "Shipment SHP-1051 from Apex Microelectronics is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[52] How to resolve delay for vendor Apex Microelectronics (SHP-1052)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Apex Microelectronics to cover the inventory deficit for SHP-1052."
+  },
+  {
+    "question": "[53] What is the financial risk exposure for Apex Microelectronics?",
+    "answer": "Financial risk for Apex Microelectronics is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[54] Draft SLA delay escalation email for SHP-1054 (Apex Microelectronics).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1054 (Apex Microelectronics)\nDear Operations Team,\nShipment SHP-1054 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[55] What component is delayed under shipment SHP-1055?",
+    "answer": "Shipment SHP-1055 contains critical supply chain components for Apex Microelectronics. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[56] What is the status of shipment SHP-1056 from Apex Microelectronics?",
+    "answer": "Shipment SHP-1056 from Apex Microelectronics is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[57] How to resolve delay for vendor Apex Microelectronics (SHP-1057)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Apex Microelectronics to cover the inventory deficit for SHP-1057."
+  },
+  {
+    "question": "[58] What is the financial risk exposure for Apex Microelectronics?",
+    "answer": "Financial risk for Apex Microelectronics is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[59] Draft SLA delay escalation email for SHP-1059 (Apex Microelectronics).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1059 (Apex Microelectronics)\nDear Operations Team,\nShipment SHP-1059 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[60] What component is delayed under shipment SHP-1060?",
+    "answer": "Shipment SHP-1060 contains critical supply chain components for Apex Microelectronics. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[61] What is the status of shipment SHP-1061 from Apex Microelectronics?",
+    "answer": "Shipment SHP-1061 from Apex Microelectronics is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[62] How to resolve delay for vendor Apex Microelectronics (SHP-1062)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Apex Microelectronics to cover the inventory deficit for SHP-1062."
+  },
+  {
+    "question": "[63] What is the financial risk exposure for Apex Microelectronics?",
+    "answer": "Financial risk for Apex Microelectronics is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[64] Draft SLA delay escalation email for SHP-1064 (Apex Microelectronics).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1064 (Apex Microelectronics)\nDear Operations Team,\nShipment SHP-1064 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[65] What component is delayed under shipment SHP-1065?",
+    "answer": "Shipment SHP-1065 contains critical supply chain components for Apex Microelectronics. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[66] What is the status of shipment SHP-1066 from Apex Microelectronics?",
+    "answer": "Shipment SHP-1066 from Apex Microelectronics is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[67] How to resolve delay for vendor Apex Microelectronics (SHP-1067)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Apex Microelectronics to cover the inventory deficit for SHP-1067."
+  },
+  {
+    "question": "[68] What is the financial risk exposure for Apex Microelectronics?",
+    "answer": "Financial risk for Apex Microelectronics is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[69] Draft SLA delay escalation email for SHP-1069 (Apex Microelectronics).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1069 (Apex Microelectronics)\nDear Operations Team,\nShipment SHP-1069 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[70] What component is delayed under shipment SHP-1070?",
+    "answer": "Shipment SHP-1070 contains critical supply chain components for Apex Microelectronics. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[71] What is the status of shipment SHP-1071 from Apex Microelectronics?",
+    "answer": "Shipment SHP-1071 from Apex Microelectronics is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[72] How to resolve delay for vendor Apex Microelectronics (SHP-1072)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Apex Microelectronics to cover the inventory deficit for SHP-1072."
+  },
+  {
+    "question": "[73] What is the financial risk exposure for Apex Microelectronics?",
+    "answer": "Financial risk for Apex Microelectronics is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[74] Draft SLA delay escalation email for SHP-1074 (Apex Microelectronics).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1074 (Apex Microelectronics)\nDear Operations Team,\nShipment SHP-1074 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[75] What component is delayed under shipment SHP-1075?",
+    "answer": "Shipment SHP-1075 contains critical supply chain components for Apex Microelectronics. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[76] What is the status of shipment SHP-1076 from Apex Microelectronics?",
+    "answer": "Shipment SHP-1076 from Apex Microelectronics is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[77] How to resolve delay for vendor Apex Microelectronics (SHP-1077)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Apex Microelectronics to cover the inventory deficit for SHP-1077."
+  },
+  {
+    "question": "[78] What is the financial risk exposure for Apex Microelectronics?",
+    "answer": "Financial risk for Apex Microelectronics is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[79] Draft SLA delay escalation email for SHP-1079 (Apex Microelectronics).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1079 (Apex Microelectronics)\nDear Operations Team,\nShipment SHP-1079 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[80] What component is delayed under shipment SHP-1080?",
+    "answer": "Shipment SHP-1080 contains critical supply chain components for Apex Microelectronics. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[81] What is the status of shipment SHP-1081 from Apex Microelectronics?",
+    "answer": "Shipment SHP-1081 from Apex Microelectronics is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[82] How to resolve delay for vendor Apex Microelectronics (SHP-1082)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Apex Microelectronics to cover the inventory deficit for SHP-1082."
+  },
+  {
+    "question": "[83] What is the financial risk exposure for Apex Microelectronics?",
+    "answer": "Financial risk for Apex Microelectronics is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[84] Draft SLA delay escalation email for SHP-1084 (Apex Microelectronics).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1084 (Apex Microelectronics)\nDear Operations Team,\nShipment SHP-1084 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[85] What component is delayed under shipment SHP-1085?",
+    "answer": "Shipment SHP-1085 contains critical supply chain components for Apex Microelectronics. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[86] What is the status of shipment SHP-1086 from Apex Microelectronics?",
+    "answer": "Shipment SHP-1086 from Apex Microelectronics is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[87] How to resolve delay for vendor Apex Microelectronics (SHP-1087)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Apex Microelectronics to cover the inventory deficit for SHP-1087."
+  },
+  {
+    "question": "[88] What is the financial risk exposure for Apex Microelectronics?",
+    "answer": "Financial risk for Apex Microelectronics is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[89] Draft SLA delay escalation email for SHP-1089 (Apex Microelectronics).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1089 (Apex Microelectronics)\nDear Operations Team,\nShipment SHP-1089 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[90] What component is delayed under shipment SHP-1090?",
+    "answer": "Shipment SHP-1090 contains critical supply chain components for Apex Microelectronics. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[91] What is the status of shipment SHP-1091 from Apex Microelectronics?",
+    "answer": "Shipment SHP-1091 from Apex Microelectronics is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[92] How to resolve delay for vendor Apex Microelectronics (SHP-1092)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Apex Microelectronics to cover the inventory deficit for SHP-1092."
+  },
+  {
+    "question": "[93] What is the financial risk exposure for Apex Microelectronics?",
+    "answer": "Financial risk for Apex Microelectronics is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[94] Draft SLA delay escalation email for SHP-1094 (Apex Microelectronics).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1094 (Apex Microelectronics)\nDear Operations Team,\nShipment SHP-1094 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[95] What component is delayed under shipment SHP-1095?",
+    "answer": "Shipment SHP-1095 contains critical supply chain components for Apex Microelectronics. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[96] What is the status of shipment SHP-1096 from Apex Microelectronics?",
+    "answer": "Shipment SHP-1096 from Apex Microelectronics is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[97] How to resolve delay for vendor Apex Microelectronics (SHP-1097)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Apex Microelectronics to cover the inventory deficit for SHP-1097."
+  },
+  {
+    "question": "[98] What is the financial risk exposure for Apex Microelectronics?",
+    "answer": "Financial risk for Apex Microelectronics is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[99] Draft SLA delay escalation email for SHP-1099 (Apex Microelectronics).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1099 (Apex Microelectronics)\nDear Operations Team,\nShipment SHP-1099 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[100] What component is delayed under shipment SHP-1000?",
+    "answer": "Shipment SHP-1000 contains critical supply chain components for Apex Microelectronics. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[101] What is the status of shipment SHP-1001 from Global Lithium Corp?",
+    "answer": "Shipment SHP-1001 from Global Lithium Corp is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[102] How to resolve delay for vendor Global Lithium Corp (SHP-1002)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Global Lithium Corp to cover the inventory deficit for SHP-1002."
+  },
+  {
+    "question": "[103] What is the financial risk exposure for Global Lithium Corp?",
+    "answer": "Financial risk for Global Lithium Corp is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[104] Draft SLA delay escalation email for SHP-1004 (Global Lithium Corp).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1004 (Global Lithium Corp)\nDear Operations Team,\nShipment SHP-1004 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[105] What component is delayed under shipment SHP-1005?",
+    "answer": "Shipment SHP-1005 contains critical supply chain components for Global Lithium Corp. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[106] What is the status of shipment SHP-1006 from Global Lithium Corp?",
+    "answer": "Shipment SHP-1006 from Global Lithium Corp is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[107] How to resolve delay for vendor Global Lithium Corp (SHP-1007)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Global Lithium Corp to cover the inventory deficit for SHP-1007."
+  },
+  {
+    "question": "[108] What is the financial risk exposure for Global Lithium Corp?",
+    "answer": "Financial risk for Global Lithium Corp is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[109] Draft SLA delay escalation email for SHP-1009 (Global Lithium Corp).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1009 (Global Lithium Corp)\nDear Operations Team,\nShipment SHP-1009 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[110] What component is delayed under shipment SHP-1010?",
+    "answer": "Shipment SHP-1010 contains critical supply chain components for Global Lithium Corp. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[111] What is the status of shipment SHP-1011 from Global Lithium Corp?",
+    "answer": "Shipment SHP-1011 from Global Lithium Corp is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[112] How to resolve delay for vendor Global Lithium Corp (SHP-1012)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Global Lithium Corp to cover the inventory deficit for SHP-1012."
+  },
+  {
+    "question": "[113] What is the financial risk exposure for Global Lithium Corp?",
+    "answer": "Financial risk for Global Lithium Corp is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[114] Draft SLA delay escalation email for SHP-1014 (Global Lithium Corp).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1014 (Global Lithium Corp)\nDear Operations Team,\nShipment SHP-1014 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[115] What component is delayed under shipment SHP-1015?",
+    "answer": "Shipment SHP-1015 contains critical supply chain components for Global Lithium Corp. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[116] What is the status of shipment SHP-1016 from Global Lithium Corp?",
+    "answer": "Shipment SHP-1016 from Global Lithium Corp is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[117] How to resolve delay for vendor Global Lithium Corp (SHP-1017)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Global Lithium Corp to cover the inventory deficit for SHP-1017."
+  },
+  {
+    "question": "[118] What is the financial risk exposure for Global Lithium Corp?",
+    "answer": "Financial risk for Global Lithium Corp is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[119] Draft SLA delay escalation email for SHP-1019 (Global Lithium Corp).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1019 (Global Lithium Corp)\nDear Operations Team,\nShipment SHP-1019 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[120] What component is delayed under shipment SHP-1020?",
+    "answer": "Shipment SHP-1020 contains critical supply chain components for Global Lithium Corp. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[121] What is the status of shipment SHP-1021 from Global Lithium Corp?",
+    "answer": "Shipment SHP-1021 from Global Lithium Corp is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[122] How to resolve delay for vendor Global Lithium Corp (SHP-1022)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Global Lithium Corp to cover the inventory deficit for SHP-1022."
+  },
+  {
+    "question": "[123] What is the financial risk exposure for Global Lithium Corp?",
+    "answer": "Financial risk for Global Lithium Corp is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[124] Draft SLA delay escalation email for SHP-1024 (Global Lithium Corp).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1024 (Global Lithium Corp)\nDear Operations Team,\nShipment SHP-1024 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[125] What component is delayed under shipment SHP-1025?",
+    "answer": "Shipment SHP-1025 contains critical supply chain components for Global Lithium Corp. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[126] What is the status of shipment SHP-1026 from Global Lithium Corp?",
+    "answer": "Shipment SHP-1026 from Global Lithium Corp is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[127] How to resolve delay for vendor Global Lithium Corp (SHP-1027)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Global Lithium Corp to cover the inventory deficit for SHP-1027."
+  },
+  {
+    "question": "[128] What is the financial risk exposure for Global Lithium Corp?",
+    "answer": "Financial risk for Global Lithium Corp is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[129] Draft SLA delay escalation email for SHP-1029 (Global Lithium Corp).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1029 (Global Lithium Corp)\nDear Operations Team,\nShipment SHP-1029 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[130] What component is delayed under shipment SHP-1030?",
+    "answer": "Shipment SHP-1030 contains critical supply chain components for Global Lithium Corp. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[131] What is the status of shipment SHP-1031 from Global Lithium Corp?",
+    "answer": "Shipment SHP-1031 from Global Lithium Corp is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[132] How to resolve delay for vendor Global Lithium Corp (SHP-1032)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Global Lithium Corp to cover the inventory deficit for SHP-1032."
+  },
+  {
+    "question": "[133] What is the financial risk exposure for Global Lithium Corp?",
+    "answer": "Financial risk for Global Lithium Corp is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[134] Draft SLA delay escalation email for SHP-1034 (Global Lithium Corp).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1034 (Global Lithium Corp)\nDear Operations Team,\nShipment SHP-1034 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[135] What component is delayed under shipment SHP-1035?",
+    "answer": "Shipment SHP-1035 contains critical supply chain components for Global Lithium Corp. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[136] What is the status of shipment SHP-1036 from Global Lithium Corp?",
+    "answer": "Shipment SHP-1036 from Global Lithium Corp is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[137] How to resolve delay for vendor Global Lithium Corp (SHP-1037)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Global Lithium Corp to cover the inventory deficit for SHP-1037."
+  },
+  {
+    "question": "[138] What is the financial risk exposure for Global Lithium Corp?",
+    "answer": "Financial risk for Global Lithium Corp is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[139] Draft SLA delay escalation email for SHP-1039 (Global Lithium Corp).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1039 (Global Lithium Corp)\nDear Operations Team,\nShipment SHP-1039 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[140] What component is delayed under shipment SHP-1040?",
+    "answer": "Shipment SHP-1040 contains critical supply chain components for Global Lithium Corp. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[141] What is the status of shipment SHP-1041 from Global Lithium Corp?",
+    "answer": "Shipment SHP-1041 from Global Lithium Corp is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[142] How to resolve delay for vendor Global Lithium Corp (SHP-1042)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Global Lithium Corp to cover the inventory deficit for SHP-1042."
+  },
+  {
+    "question": "[143] What is the financial risk exposure for Global Lithium Corp?",
+    "answer": "Financial risk for Global Lithium Corp is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[144] Draft SLA delay escalation email for SHP-1044 (Global Lithium Corp).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1044 (Global Lithium Corp)\nDear Operations Team,\nShipment SHP-1044 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[145] What component is delayed under shipment SHP-1045?",
+    "answer": "Shipment SHP-1045 contains critical supply chain components for Global Lithium Corp. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[146] What is the status of shipment SHP-1046 from Global Lithium Corp?",
+    "answer": "Shipment SHP-1046 from Global Lithium Corp is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[147] How to resolve delay for vendor Global Lithium Corp (SHP-1047)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Global Lithium Corp to cover the inventory deficit for SHP-1047."
+  },
+  {
+    "question": "[148] What is the financial risk exposure for Global Lithium Corp?",
+    "answer": "Financial risk for Global Lithium Corp is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[149] Draft SLA delay escalation email for SHP-1049 (Global Lithium Corp).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1049 (Global Lithium Corp)\nDear Operations Team,\nShipment SHP-1049 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[150] What component is delayed under shipment SHP-1050?",
+    "answer": "Shipment SHP-1050 contains critical supply chain components for Global Lithium Corp. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[151] What is the status of shipment SHP-1051 from Bavaria Spec Alloys?",
+    "answer": "Shipment SHP-1051 from Bavaria Spec Alloys is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[152] How to resolve delay for vendor Bavaria Spec Alloys (SHP-1052)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Bavaria Spec Alloys to cover the inventory deficit for SHP-1052."
+  },
+  {
+    "question": "[153] What is the financial risk exposure for Bavaria Spec Alloys?",
+    "answer": "Financial risk for Bavaria Spec Alloys is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[154] Draft SLA delay escalation email for SHP-1054 (Bavaria Spec Alloys).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1054 (Bavaria Spec Alloys)\nDear Operations Team,\nShipment SHP-1054 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[155] What component is delayed under shipment SHP-1055?",
+    "answer": "Shipment SHP-1055 contains critical supply chain components for Bavaria Spec Alloys. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[156] What is the status of shipment SHP-1056 from Bavaria Spec Alloys?",
+    "answer": "Shipment SHP-1056 from Bavaria Spec Alloys is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[157] How to resolve delay for vendor Bavaria Spec Alloys (SHP-1057)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Bavaria Spec Alloys to cover the inventory deficit for SHP-1057."
+  },
+  {
+    "question": "[158] What is the financial risk exposure for Bavaria Spec Alloys?",
+    "answer": "Financial risk for Bavaria Spec Alloys is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[159] Draft SLA delay escalation email for SHP-1059 (Bavaria Spec Alloys).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1059 (Bavaria Spec Alloys)\nDear Operations Team,\nShipment SHP-1059 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[160] What component is delayed under shipment SHP-1060?",
+    "answer": "Shipment SHP-1060 contains critical supply chain components for Bavaria Spec Alloys. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[161] What is the status of shipment SHP-1061 from Bavaria Spec Alloys?",
+    "answer": "Shipment SHP-1061 from Bavaria Spec Alloys is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[162] How to resolve delay for vendor Bavaria Spec Alloys (SHP-1062)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Bavaria Spec Alloys to cover the inventory deficit for SHP-1062."
+  },
+  {
+    "question": "[163] What is the financial risk exposure for Bavaria Spec Alloys?",
+    "answer": "Financial risk for Bavaria Spec Alloys is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[164] Draft SLA delay escalation email for SHP-1064 (Bavaria Spec Alloys).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1064 (Bavaria Spec Alloys)\nDear Operations Team,\nShipment SHP-1064 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[165] What component is delayed under shipment SHP-1065?",
+    "answer": "Shipment SHP-1065 contains critical supply chain components for Bavaria Spec Alloys. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[166] What is the status of shipment SHP-1066 from Bavaria Spec Alloys?",
+    "answer": "Shipment SHP-1066 from Bavaria Spec Alloys is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[167] How to resolve delay for vendor Bavaria Spec Alloys (SHP-1067)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Bavaria Spec Alloys to cover the inventory deficit for SHP-1067."
+  },
+  {
+    "question": "[168] What is the financial risk exposure for Bavaria Spec Alloys?",
+    "answer": "Financial risk for Bavaria Spec Alloys is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[169] Draft SLA delay escalation email for SHP-1069 (Bavaria Spec Alloys).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1069 (Bavaria Spec Alloys)\nDear Operations Team,\nShipment SHP-1069 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[170] What component is delayed under shipment SHP-1070?",
+    "answer": "Shipment SHP-1070 contains critical supply chain components for Bavaria Spec Alloys. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[171] What is the status of shipment SHP-1071 from Bavaria Spec Alloys?",
+    "answer": "Shipment SHP-1071 from Bavaria Spec Alloys is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[172] How to resolve delay for vendor Bavaria Spec Alloys (SHP-1072)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Bavaria Spec Alloys to cover the inventory deficit for SHP-1072."
+  },
+  {
+    "question": "[173] What is the financial risk exposure for Bavaria Spec Alloys?",
+    "answer": "Financial risk for Bavaria Spec Alloys is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[174] Draft SLA delay escalation email for SHP-1074 (Bavaria Spec Alloys).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1074 (Bavaria Spec Alloys)\nDear Operations Team,\nShipment SHP-1074 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[175] What component is delayed under shipment SHP-1075?",
+    "answer": "Shipment SHP-1075 contains critical supply chain components for Bavaria Spec Alloys. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[176] What is the status of shipment SHP-1076 from Bavaria Spec Alloys?",
+    "answer": "Shipment SHP-1076 from Bavaria Spec Alloys is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[177] How to resolve delay for vendor Bavaria Spec Alloys (SHP-1077)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Bavaria Spec Alloys to cover the inventory deficit for SHP-1077."
+  },
+  {
+    "question": "[178] What is the financial risk exposure for Bavaria Spec Alloys?",
+    "answer": "Financial risk for Bavaria Spec Alloys is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[179] Draft SLA delay escalation email for SHP-1079 (Bavaria Spec Alloys).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1079 (Bavaria Spec Alloys)\nDear Operations Team,\nShipment SHP-1079 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[180] What component is delayed under shipment SHP-1080?",
+    "answer": "Shipment SHP-1080 contains critical supply chain components for Bavaria Spec Alloys. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[181] What is the status of shipment SHP-1081 from Bavaria Spec Alloys?",
+    "answer": "Shipment SHP-1081 from Bavaria Spec Alloys is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[182] How to resolve delay for vendor Bavaria Spec Alloys (SHP-1082)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Bavaria Spec Alloys to cover the inventory deficit for SHP-1082."
+  },
+  {
+    "question": "[183] What is the financial risk exposure for Bavaria Spec Alloys?",
+    "answer": "Financial risk for Bavaria Spec Alloys is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[184] Draft SLA delay escalation email for SHP-1084 (Bavaria Spec Alloys).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1084 (Bavaria Spec Alloys)\nDear Operations Team,\nShipment SHP-1084 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[185] What component is delayed under shipment SHP-1085?",
+    "answer": "Shipment SHP-1085 contains critical supply chain components for Bavaria Spec Alloys. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[186] What is the status of shipment SHP-1086 from Bavaria Spec Alloys?",
+    "answer": "Shipment SHP-1086 from Bavaria Spec Alloys is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[187] How to resolve delay for vendor Bavaria Spec Alloys (SHP-1087)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Bavaria Spec Alloys to cover the inventory deficit for SHP-1087."
+  },
+  {
+    "question": "[188] What is the financial risk exposure for Bavaria Spec Alloys?",
+    "answer": "Financial risk for Bavaria Spec Alloys is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[189] Draft SLA delay escalation email for SHP-1089 (Bavaria Spec Alloys).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1089 (Bavaria Spec Alloys)\nDear Operations Team,\nShipment SHP-1089 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[190] What component is delayed under shipment SHP-1090?",
+    "answer": "Shipment SHP-1090 contains critical supply chain components for Bavaria Spec Alloys. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[191] What is the status of shipment SHP-1091 from Bavaria Spec Alloys?",
+    "answer": "Shipment SHP-1091 from Bavaria Spec Alloys is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[192] How to resolve delay for vendor Bavaria Spec Alloys (SHP-1092)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Bavaria Spec Alloys to cover the inventory deficit for SHP-1092."
+  },
+  {
+    "question": "[193] What is the financial risk exposure for Bavaria Spec Alloys?",
+    "answer": "Financial risk for Bavaria Spec Alloys is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[194] Draft SLA delay escalation email for SHP-1094 (Bavaria Spec Alloys).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1094 (Bavaria Spec Alloys)\nDear Operations Team,\nShipment SHP-1094 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[195] What component is delayed under shipment SHP-1095?",
+    "answer": "Shipment SHP-1095 contains critical supply chain components for Bavaria Spec Alloys. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[196] What is the status of shipment SHP-1096 from Bavaria Spec Alloys?",
+    "answer": "Shipment SHP-1096 from Bavaria Spec Alloys is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[197] How to resolve delay for vendor Bavaria Spec Alloys (SHP-1097)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Bavaria Spec Alloys to cover the inventory deficit for SHP-1097."
+  },
+  {
+    "question": "[198] What is the financial risk exposure for Bavaria Spec Alloys?",
+    "answer": "Financial risk for Bavaria Spec Alloys is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[199] Draft SLA delay escalation email for SHP-1099 (Bavaria Spec Alloys).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1099 (Bavaria Spec Alloys)\nDear Operations Team,\nShipment SHP-1099 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[200] What component is delayed under shipment SHP-1000?",
+    "answer": "Shipment SHP-1000 contains critical supply chain components for Bavaria Spec Alloys. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[201] What is the status of shipment SHP-1001 from Shenzhen Micro Sensors?",
+    "answer": "Shipment SHP-1001 from Shenzhen Micro Sensors is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[202] How to resolve delay for vendor Shenzhen Micro Sensors (SHP-1002)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Shenzhen Micro Sensors to cover the inventory deficit for SHP-1002."
+  },
+  {
+    "question": "[203] What is the financial risk exposure for Shenzhen Micro Sensors?",
+    "answer": "Financial risk for Shenzhen Micro Sensors is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[204] Draft SLA delay escalation email for SHP-1004 (Shenzhen Micro Sensors).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1004 (Shenzhen Micro Sensors)\nDear Operations Team,\nShipment SHP-1004 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[205] What component is delayed under shipment SHP-1005?",
+    "answer": "Shipment SHP-1005 contains critical supply chain components for Shenzhen Micro Sensors. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[206] What is the status of shipment SHP-1006 from Shenzhen Micro Sensors?",
+    "answer": "Shipment SHP-1006 from Shenzhen Micro Sensors is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[207] How to resolve delay for vendor Shenzhen Micro Sensors (SHP-1007)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Shenzhen Micro Sensors to cover the inventory deficit for SHP-1007."
+  },
+  {
+    "question": "[208] What is the financial risk exposure for Shenzhen Micro Sensors?",
+    "answer": "Financial risk for Shenzhen Micro Sensors is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[209] Draft SLA delay escalation email for SHP-1009 (Shenzhen Micro Sensors).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1009 (Shenzhen Micro Sensors)\nDear Operations Team,\nShipment SHP-1009 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[210] What component is delayed under shipment SHP-1010?",
+    "answer": "Shipment SHP-1010 contains critical supply chain components for Shenzhen Micro Sensors. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[211] What is the status of shipment SHP-1011 from Shenzhen Micro Sensors?",
+    "answer": "Shipment SHP-1011 from Shenzhen Micro Sensors is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[212] How to resolve delay for vendor Shenzhen Micro Sensors (SHP-1012)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Shenzhen Micro Sensors to cover the inventory deficit for SHP-1012."
+  },
+  {
+    "question": "[213] What is the financial risk exposure for Shenzhen Micro Sensors?",
+    "answer": "Financial risk for Shenzhen Micro Sensors is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[214] Draft SLA delay escalation email for SHP-1014 (Shenzhen Micro Sensors).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1014 (Shenzhen Micro Sensors)\nDear Operations Team,\nShipment SHP-1014 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[215] What component is delayed under shipment SHP-1015?",
+    "answer": "Shipment SHP-1015 contains critical supply chain components for Shenzhen Micro Sensors. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[216] What is the status of shipment SHP-1016 from Shenzhen Micro Sensors?",
+    "answer": "Shipment SHP-1016 from Shenzhen Micro Sensors is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[217] How to resolve delay for vendor Shenzhen Micro Sensors (SHP-1017)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Shenzhen Micro Sensors to cover the inventory deficit for SHP-1017."
+  },
+  {
+    "question": "[218] What is the financial risk exposure for Shenzhen Micro Sensors?",
+    "answer": "Financial risk for Shenzhen Micro Sensors is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[219] Draft SLA delay escalation email for SHP-1019 (Shenzhen Micro Sensors).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1019 (Shenzhen Micro Sensors)\nDear Operations Team,\nShipment SHP-1019 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[220] What component is delayed under shipment SHP-1020?",
+    "answer": "Shipment SHP-1020 contains critical supply chain components for Shenzhen Micro Sensors. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[221] What is the status of shipment SHP-1021 from Shenzhen Micro Sensors?",
+    "answer": "Shipment SHP-1021 from Shenzhen Micro Sensors is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[222] How to resolve delay for vendor Shenzhen Micro Sensors (SHP-1022)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Shenzhen Micro Sensors to cover the inventory deficit for SHP-1022."
+  },
+  {
+    "question": "[223] What is the financial risk exposure for Shenzhen Micro Sensors?",
+    "answer": "Financial risk for Shenzhen Micro Sensors is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[224] Draft SLA delay escalation email for SHP-1024 (Shenzhen Micro Sensors).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1024 (Shenzhen Micro Sensors)\nDear Operations Team,\nShipment SHP-1024 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[225] What component is delayed under shipment SHP-1025?",
+    "answer": "Shipment SHP-1025 contains critical supply chain components for Shenzhen Micro Sensors. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[226] What is the status of shipment SHP-1026 from Shenzhen Micro Sensors?",
+    "answer": "Shipment SHP-1026 from Shenzhen Micro Sensors is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[227] How to resolve delay for vendor Shenzhen Micro Sensors (SHP-1027)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Shenzhen Micro Sensors to cover the inventory deficit for SHP-1027."
+  },
+  {
+    "question": "[228] What is the financial risk exposure for Shenzhen Micro Sensors?",
+    "answer": "Financial risk for Shenzhen Micro Sensors is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[229] Draft SLA delay escalation email for SHP-1029 (Shenzhen Micro Sensors).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1029 (Shenzhen Micro Sensors)\nDear Operations Team,\nShipment SHP-1029 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[230] What component is delayed under shipment SHP-1030?",
+    "answer": "Shipment SHP-1030 contains critical supply chain components for Shenzhen Micro Sensors. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[231] What is the status of shipment SHP-1031 from Shenzhen Micro Sensors?",
+    "answer": "Shipment SHP-1031 from Shenzhen Micro Sensors is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[232] How to resolve delay for vendor Shenzhen Micro Sensors (SHP-1032)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Shenzhen Micro Sensors to cover the inventory deficit for SHP-1032."
+  },
+  {
+    "question": "[233] What is the financial risk exposure for Shenzhen Micro Sensors?",
+    "answer": "Financial risk for Shenzhen Micro Sensors is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[234] Draft SLA delay escalation email for SHP-1034 (Shenzhen Micro Sensors).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1034 (Shenzhen Micro Sensors)\nDear Operations Team,\nShipment SHP-1034 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[235] What component is delayed under shipment SHP-1035?",
+    "answer": "Shipment SHP-1035 contains critical supply chain components for Shenzhen Micro Sensors. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[236] What is the status of shipment SHP-1036 from Shenzhen Micro Sensors?",
+    "answer": "Shipment SHP-1036 from Shenzhen Micro Sensors is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[237] How to resolve delay for vendor Shenzhen Micro Sensors (SHP-1037)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Shenzhen Micro Sensors to cover the inventory deficit for SHP-1037."
+  },
+  {
+    "question": "[238] What is the financial risk exposure for Shenzhen Micro Sensors?",
+    "answer": "Financial risk for Shenzhen Micro Sensors is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[239] Draft SLA delay escalation email for SHP-1039 (Shenzhen Micro Sensors).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1039 (Shenzhen Micro Sensors)\nDear Operations Team,\nShipment SHP-1039 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[240] What component is delayed under shipment SHP-1040?",
+    "answer": "Shipment SHP-1040 contains critical supply chain components for Shenzhen Micro Sensors. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[241] What is the status of shipment SHP-1041 from Shenzhen Micro Sensors?",
+    "answer": "Shipment SHP-1041 from Shenzhen Micro Sensors is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[242] How to resolve delay for vendor Shenzhen Micro Sensors (SHP-1042)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Shenzhen Micro Sensors to cover the inventory deficit for SHP-1042."
+  },
+  {
+    "question": "[243] What is the financial risk exposure for Shenzhen Micro Sensors?",
+    "answer": "Financial risk for Shenzhen Micro Sensors is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[244] Draft SLA delay escalation email for SHP-1044 (Shenzhen Micro Sensors).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1044 (Shenzhen Micro Sensors)\nDear Operations Team,\nShipment SHP-1044 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[245] What component is delayed under shipment SHP-1045?",
+    "answer": "Shipment SHP-1045 contains critical supply chain components for Shenzhen Micro Sensors. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[246] What is the status of shipment SHP-1046 from Shenzhen Micro Sensors?",
+    "answer": "Shipment SHP-1046 from Shenzhen Micro Sensors is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[247] How to resolve delay for vendor Shenzhen Micro Sensors (SHP-1047)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Shenzhen Micro Sensors to cover the inventory deficit for SHP-1047."
+  },
+  {
+    "question": "[248] What is the financial risk exposure for Shenzhen Micro Sensors?",
+    "answer": "Financial risk for Shenzhen Micro Sensors is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[249] Draft SLA delay escalation email for SHP-1049 (Shenzhen Micro Sensors).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1049 (Shenzhen Micro Sensors)\nDear Operations Team,\nShipment SHP-1049 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[250] What component is delayed under shipment SHP-1050?",
+    "answer": "Shipment SHP-1050 contains critical supply chain components for Shenzhen Micro Sensors. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[251] What is the status of shipment SHP-1051 from Seoul Optoelectronics?",
+    "answer": "Shipment SHP-1051 from Seoul Optoelectronics is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[252] How to resolve delay for vendor Seoul Optoelectronics (SHP-1052)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Seoul Optoelectronics to cover the inventory deficit for SHP-1052."
+  },
+  {
+    "question": "[253] What is the financial risk exposure for Seoul Optoelectronics?",
+    "answer": "Financial risk for Seoul Optoelectronics is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[254] Draft SLA delay escalation email for SHP-1054 (Seoul Optoelectronics).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1054 (Seoul Optoelectronics)\nDear Operations Team,\nShipment SHP-1054 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[255] What component is delayed under shipment SHP-1055?",
+    "answer": "Shipment SHP-1055 contains critical supply chain components for Seoul Optoelectronics. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[256] What is the status of shipment SHP-1056 from Seoul Optoelectronics?",
+    "answer": "Shipment SHP-1056 from Seoul Optoelectronics is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[257] How to resolve delay for vendor Seoul Optoelectronics (SHP-1057)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Seoul Optoelectronics to cover the inventory deficit for SHP-1057."
+  },
+  {
+    "question": "[258] What is the financial risk exposure for Seoul Optoelectronics?",
+    "answer": "Financial risk for Seoul Optoelectronics is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[259] Draft SLA delay escalation email for SHP-1059 (Seoul Optoelectronics).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1059 (Seoul Optoelectronics)\nDear Operations Team,\nShipment SHP-1059 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[260] What component is delayed under shipment SHP-1060?",
+    "answer": "Shipment SHP-1060 contains critical supply chain components for Seoul Optoelectronics. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[261] What is the status of shipment SHP-1061 from Seoul Optoelectronics?",
+    "answer": "Shipment SHP-1061 from Seoul Optoelectronics is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[262] How to resolve delay for vendor Seoul Optoelectronics (SHP-1062)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Seoul Optoelectronics to cover the inventory deficit for SHP-1062."
+  },
+  {
+    "question": "[263] What is the financial risk exposure for Seoul Optoelectronics?",
+    "answer": "Financial risk for Seoul Optoelectronics is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[264] Draft SLA delay escalation email for SHP-1064 (Seoul Optoelectronics).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1064 (Seoul Optoelectronics)\nDear Operations Team,\nShipment SHP-1064 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[265] What component is delayed under shipment SHP-1065?",
+    "answer": "Shipment SHP-1065 contains critical supply chain components for Seoul Optoelectronics. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[266] What is the status of shipment SHP-1066 from Seoul Optoelectronics?",
+    "answer": "Shipment SHP-1066 from Seoul Optoelectronics is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[267] How to resolve delay for vendor Seoul Optoelectronics (SHP-1067)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Seoul Optoelectronics to cover the inventory deficit for SHP-1067."
+  },
+  {
+    "question": "[268] What is the financial risk exposure for Seoul Optoelectronics?",
+    "answer": "Financial risk for Seoul Optoelectronics is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[269] Draft SLA delay escalation email for SHP-1069 (Seoul Optoelectronics).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1069 (Seoul Optoelectronics)\nDear Operations Team,\nShipment SHP-1069 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[270] What component is delayed under shipment SHP-1070?",
+    "answer": "Shipment SHP-1070 contains critical supply chain components for Seoul Optoelectronics. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[271] What is the status of shipment SHP-1071 from Seoul Optoelectronics?",
+    "answer": "Shipment SHP-1071 from Seoul Optoelectronics is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[272] How to resolve delay for vendor Seoul Optoelectronics (SHP-1072)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Seoul Optoelectronics to cover the inventory deficit for SHP-1072."
+  },
+  {
+    "question": "[273] What is the financial risk exposure for Seoul Optoelectronics?",
+    "answer": "Financial risk for Seoul Optoelectronics is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[274] Draft SLA delay escalation email for SHP-1074 (Seoul Optoelectronics).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1074 (Seoul Optoelectronics)\nDear Operations Team,\nShipment SHP-1074 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[275] What component is delayed under shipment SHP-1075?",
+    "answer": "Shipment SHP-1075 contains critical supply chain components for Seoul Optoelectronics. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[276] What is the status of shipment SHP-1076 from Seoul Optoelectronics?",
+    "answer": "Shipment SHP-1076 from Seoul Optoelectronics is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[277] How to resolve delay for vendor Seoul Optoelectronics (SHP-1077)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Seoul Optoelectronics to cover the inventory deficit for SHP-1077."
+  },
+  {
+    "question": "[278] What is the financial risk exposure for Seoul Optoelectronics?",
+    "answer": "Financial risk for Seoul Optoelectronics is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[279] Draft SLA delay escalation email for SHP-1079 (Seoul Optoelectronics).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1079 (Seoul Optoelectronics)\nDear Operations Team,\nShipment SHP-1079 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[280] What component is delayed under shipment SHP-1080?",
+    "answer": "Shipment SHP-1080 contains critical supply chain components for Seoul Optoelectronics. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[281] What is the status of shipment SHP-1081 from Seoul Optoelectronics?",
+    "answer": "Shipment SHP-1081 from Seoul Optoelectronics is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[282] How to resolve delay for vendor Seoul Optoelectronics (SHP-1082)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Seoul Optoelectronics to cover the inventory deficit for SHP-1082."
+  },
+  {
+    "question": "[283] What is the financial risk exposure for Seoul Optoelectronics?",
+    "answer": "Financial risk for Seoul Optoelectronics is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[284] Draft SLA delay escalation email for SHP-1084 (Seoul Optoelectronics).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1084 (Seoul Optoelectronics)\nDear Operations Team,\nShipment SHP-1084 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[285] What component is delayed under shipment SHP-1085?",
+    "answer": "Shipment SHP-1085 contains critical supply chain components for Seoul Optoelectronics. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[286] What is the status of shipment SHP-1086 from Seoul Optoelectronics?",
+    "answer": "Shipment SHP-1086 from Seoul Optoelectronics is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[287] How to resolve delay for vendor Seoul Optoelectronics (SHP-1087)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Seoul Optoelectronics to cover the inventory deficit for SHP-1087."
+  },
+  {
+    "question": "[288] What is the financial risk exposure for Seoul Optoelectronics?",
+    "answer": "Financial risk for Seoul Optoelectronics is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[289] Draft SLA delay escalation email for SHP-1089 (Seoul Optoelectronics).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1089 (Seoul Optoelectronics)\nDear Operations Team,\nShipment SHP-1089 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[290] What component is delayed under shipment SHP-1090?",
+    "answer": "Shipment SHP-1090 contains critical supply chain components for Seoul Optoelectronics. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[291] What is the status of shipment SHP-1091 from Seoul Optoelectronics?",
+    "answer": "Shipment SHP-1091 from Seoul Optoelectronics is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[292] How to resolve delay for vendor Seoul Optoelectronics (SHP-1092)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Seoul Optoelectronics to cover the inventory deficit for SHP-1092."
+  },
+  {
+    "question": "[293] What is the financial risk exposure for Seoul Optoelectronics?",
+    "answer": "Financial risk for Seoul Optoelectronics is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[294] Draft SLA delay escalation email for SHP-1094 (Seoul Optoelectronics).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1094 (Seoul Optoelectronics)\nDear Operations Team,\nShipment SHP-1094 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[295] What component is delayed under shipment SHP-1095?",
+    "answer": "Shipment SHP-1095 contains critical supply chain components for Seoul Optoelectronics. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[296] What is the status of shipment SHP-1096 from Seoul Optoelectronics?",
+    "answer": "Shipment SHP-1096 from Seoul Optoelectronics is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[297] How to resolve delay for vendor Seoul Optoelectronics (SHP-1097)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Seoul Optoelectronics to cover the inventory deficit for SHP-1097."
+  },
+  {
+    "question": "[298] What is the financial risk exposure for Seoul Optoelectronics?",
+    "answer": "Financial risk for Seoul Optoelectronics is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[299] Draft SLA delay escalation email for SHP-1099 (Seoul Optoelectronics).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1099 (Seoul Optoelectronics)\nDear Operations Team,\nShipment SHP-1099 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[300] What component is delayed under shipment SHP-1000?",
+    "answer": "Shipment SHP-1000 contains critical supply chain components for Seoul Optoelectronics. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[301] What is the status of shipment SHP-1001 from Nordic Silicon Works?",
+    "answer": "Shipment SHP-1001 from Nordic Silicon Works is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[302] How to resolve delay for vendor Nordic Silicon Works (SHP-1002)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Nordic Silicon Works to cover the inventory deficit for SHP-1002."
+  },
+  {
+    "question": "[303] What is the financial risk exposure for Nordic Silicon Works?",
+    "answer": "Financial risk for Nordic Silicon Works is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[304] Draft SLA delay escalation email for SHP-1004 (Nordic Silicon Works).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1004 (Nordic Silicon Works)\nDear Operations Team,\nShipment SHP-1004 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[305] What component is delayed under shipment SHP-1005?",
+    "answer": "Shipment SHP-1005 contains critical supply chain components for Nordic Silicon Works. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[306] What is the status of shipment SHP-1006 from Nordic Silicon Works?",
+    "answer": "Shipment SHP-1006 from Nordic Silicon Works is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[307] How to resolve delay for vendor Nordic Silicon Works (SHP-1007)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Nordic Silicon Works to cover the inventory deficit for SHP-1007."
+  },
+  {
+    "question": "[308] What is the financial risk exposure for Nordic Silicon Works?",
+    "answer": "Financial risk for Nordic Silicon Works is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[309] Draft SLA delay escalation email for SHP-1009 (Nordic Silicon Works).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1009 (Nordic Silicon Works)\nDear Operations Team,\nShipment SHP-1009 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[310] What component is delayed under shipment SHP-1010?",
+    "answer": "Shipment SHP-1010 contains critical supply chain components for Nordic Silicon Works. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[311] What is the status of shipment SHP-1011 from Nordic Silicon Works?",
+    "answer": "Shipment SHP-1011 from Nordic Silicon Works is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[312] How to resolve delay for vendor Nordic Silicon Works (SHP-1012)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Nordic Silicon Works to cover the inventory deficit for SHP-1012."
+  },
+  {
+    "question": "[313] What is the financial risk exposure for Nordic Silicon Works?",
+    "answer": "Financial risk for Nordic Silicon Works is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[314] Draft SLA delay escalation email for SHP-1014 (Nordic Silicon Works).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1014 (Nordic Silicon Works)\nDear Operations Team,\nShipment SHP-1014 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[315] What component is delayed under shipment SHP-1015?",
+    "answer": "Shipment SHP-1015 contains critical supply chain components for Nordic Silicon Works. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[316] What is the status of shipment SHP-1016 from Nordic Silicon Works?",
+    "answer": "Shipment SHP-1016 from Nordic Silicon Works is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[317] How to resolve delay for vendor Nordic Silicon Works (SHP-1017)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Nordic Silicon Works to cover the inventory deficit for SHP-1017."
+  },
+  {
+    "question": "[318] What is the financial risk exposure for Nordic Silicon Works?",
+    "answer": "Financial risk for Nordic Silicon Works is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[319] Draft SLA delay escalation email for SHP-1019 (Nordic Silicon Works).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1019 (Nordic Silicon Works)\nDear Operations Team,\nShipment SHP-1019 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[320] What component is delayed under shipment SHP-1020?",
+    "answer": "Shipment SHP-1020 contains critical supply chain components for Nordic Silicon Works. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[321] What is the status of shipment SHP-1021 from Nordic Silicon Works?",
+    "answer": "Shipment SHP-1021 from Nordic Silicon Works is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[322] How to resolve delay for vendor Nordic Silicon Works (SHP-1022)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Nordic Silicon Works to cover the inventory deficit for SHP-1022."
+  },
+  {
+    "question": "[323] What is the financial risk exposure for Nordic Silicon Works?",
+    "answer": "Financial risk for Nordic Silicon Works is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[324] Draft SLA delay escalation email for SHP-1024 (Nordic Silicon Works).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1024 (Nordic Silicon Works)\nDear Operations Team,\nShipment SHP-1024 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[325] What component is delayed under shipment SHP-1025?",
+    "answer": "Shipment SHP-1025 contains critical supply chain components for Nordic Silicon Works. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[326] What is the status of shipment SHP-1026 from Nordic Silicon Works?",
+    "answer": "Shipment SHP-1026 from Nordic Silicon Works is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[327] How to resolve delay for vendor Nordic Silicon Works (SHP-1027)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Nordic Silicon Works to cover the inventory deficit for SHP-1027."
+  },
+  {
+    "question": "[328] What is the financial risk exposure for Nordic Silicon Works?",
+    "answer": "Financial risk for Nordic Silicon Works is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[329] Draft SLA delay escalation email for SHP-1029 (Nordic Silicon Works).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1029 (Nordic Silicon Works)\nDear Operations Team,\nShipment SHP-1029 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[330] What component is delayed under shipment SHP-1030?",
+    "answer": "Shipment SHP-1030 contains critical supply chain components for Nordic Silicon Works. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[331] What is the status of shipment SHP-1031 from Nordic Silicon Works?",
+    "answer": "Shipment SHP-1031 from Nordic Silicon Works is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[332] How to resolve delay for vendor Nordic Silicon Works (SHP-1032)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Nordic Silicon Works to cover the inventory deficit for SHP-1032."
+  },
+  {
+    "question": "[333] What is the financial risk exposure for Nordic Silicon Works?",
+    "answer": "Financial risk for Nordic Silicon Works is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[334] Draft SLA delay escalation email for SHP-1034 (Nordic Silicon Works).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1034 (Nordic Silicon Works)\nDear Operations Team,\nShipment SHP-1034 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[335] What component is delayed under shipment SHP-1035?",
+    "answer": "Shipment SHP-1035 contains critical supply chain components for Nordic Silicon Works. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[336] What is the status of shipment SHP-1036 from Nordic Silicon Works?",
+    "answer": "Shipment SHP-1036 from Nordic Silicon Works is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[337] How to resolve delay for vendor Nordic Silicon Works (SHP-1037)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Nordic Silicon Works to cover the inventory deficit for SHP-1037."
+  },
+  {
+    "question": "[338] What is the financial risk exposure for Nordic Silicon Works?",
+    "answer": "Financial risk for Nordic Silicon Works is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[339] Draft SLA delay escalation email for SHP-1039 (Nordic Silicon Works).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1039 (Nordic Silicon Works)\nDear Operations Team,\nShipment SHP-1039 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[340] What component is delayed under shipment SHP-1040?",
+    "answer": "Shipment SHP-1040 contains critical supply chain components for Nordic Silicon Works. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[341] What is the status of shipment SHP-1041 from Nordic Silicon Works?",
+    "answer": "Shipment SHP-1041 from Nordic Silicon Works is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[342] How to resolve delay for vendor Nordic Silicon Works (SHP-1042)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Nordic Silicon Works to cover the inventory deficit for SHP-1042."
+  },
+  {
+    "question": "[343] What is the financial risk exposure for Nordic Silicon Works?",
+    "answer": "Financial risk for Nordic Silicon Works is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[344] Draft SLA delay escalation email for SHP-1044 (Nordic Silicon Works).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1044 (Nordic Silicon Works)\nDear Operations Team,\nShipment SHP-1044 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[345] What component is delayed under shipment SHP-1045?",
+    "answer": "Shipment SHP-1045 contains critical supply chain components for Nordic Silicon Works. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[346] What is the status of shipment SHP-1046 from Nordic Silicon Works?",
+    "answer": "Shipment SHP-1046 from Nordic Silicon Works is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[347] How to resolve delay for vendor Nordic Silicon Works (SHP-1047)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Nordic Silicon Works to cover the inventory deficit for SHP-1047."
+  },
+  {
+    "question": "[348] What is the financial risk exposure for Nordic Silicon Works?",
+    "answer": "Financial risk for Nordic Silicon Works is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[349] Draft SLA delay escalation email for SHP-1049 (Nordic Silicon Works).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1049 (Nordic Silicon Works)\nDear Operations Team,\nShipment SHP-1049 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[350] What component is delayed under shipment SHP-1050?",
+    "answer": "Shipment SHP-1050 contains critical supply chain components for Nordic Silicon Works. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[351] What is the status of shipment SHP-1051 from Tokyo Precision Bearings?",
+    "answer": "Shipment SHP-1051 from Tokyo Precision Bearings is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[352] How to resolve delay for vendor Tokyo Precision Bearings (SHP-1052)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Tokyo Precision Bearings to cover the inventory deficit for SHP-1052."
+  },
+  {
+    "question": "[353] What is the financial risk exposure for Tokyo Precision Bearings?",
+    "answer": "Financial risk for Tokyo Precision Bearings is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[354] Draft SLA delay escalation email for SHP-1054 (Tokyo Precision Bearings).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1054 (Tokyo Precision Bearings)\nDear Operations Team,\nShipment SHP-1054 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[355] What component is delayed under shipment SHP-1055?",
+    "answer": "Shipment SHP-1055 contains critical supply chain components for Tokyo Precision Bearings. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[356] What is the status of shipment SHP-1056 from Tokyo Precision Bearings?",
+    "answer": "Shipment SHP-1056 from Tokyo Precision Bearings is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[357] How to resolve delay for vendor Tokyo Precision Bearings (SHP-1057)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Tokyo Precision Bearings to cover the inventory deficit for SHP-1057."
+  },
+  {
+    "question": "[358] What is the financial risk exposure for Tokyo Precision Bearings?",
+    "answer": "Financial risk for Tokyo Precision Bearings is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[359] Draft SLA delay escalation email for SHP-1059 (Tokyo Precision Bearings).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1059 (Tokyo Precision Bearings)\nDear Operations Team,\nShipment SHP-1059 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[360] What component is delayed under shipment SHP-1060?",
+    "answer": "Shipment SHP-1060 contains critical supply chain components for Tokyo Precision Bearings. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[361] What is the status of shipment SHP-1061 from Tokyo Precision Bearings?",
+    "answer": "Shipment SHP-1061 from Tokyo Precision Bearings is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[362] How to resolve delay for vendor Tokyo Precision Bearings (SHP-1062)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Tokyo Precision Bearings to cover the inventory deficit for SHP-1062."
+  },
+  {
+    "question": "[363] What is the financial risk exposure for Tokyo Precision Bearings?",
+    "answer": "Financial risk for Tokyo Precision Bearings is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[364] Draft SLA delay escalation email for SHP-1064 (Tokyo Precision Bearings).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1064 (Tokyo Precision Bearings)\nDear Operations Team,\nShipment SHP-1064 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[365] What component is delayed under shipment SHP-1065?",
+    "answer": "Shipment SHP-1065 contains critical supply chain components for Tokyo Precision Bearings. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[366] What is the status of shipment SHP-1066 from Tokyo Precision Bearings?",
+    "answer": "Shipment SHP-1066 from Tokyo Precision Bearings is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[367] How to resolve delay for vendor Tokyo Precision Bearings (SHP-1067)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Tokyo Precision Bearings to cover the inventory deficit for SHP-1067."
+  },
+  {
+    "question": "[368] What is the financial risk exposure for Tokyo Precision Bearings?",
+    "answer": "Financial risk for Tokyo Precision Bearings is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[369] Draft SLA delay escalation email for SHP-1069 (Tokyo Precision Bearings).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1069 (Tokyo Precision Bearings)\nDear Operations Team,\nShipment SHP-1069 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[370] What component is delayed under shipment SHP-1070?",
+    "answer": "Shipment SHP-1070 contains critical supply chain components for Tokyo Precision Bearings. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[371] What is the status of shipment SHP-1071 from Tokyo Precision Bearings?",
+    "answer": "Shipment SHP-1071 from Tokyo Precision Bearings is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[372] How to resolve delay for vendor Tokyo Precision Bearings (SHP-1072)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Tokyo Precision Bearings to cover the inventory deficit for SHP-1072."
+  },
+  {
+    "question": "[373] What is the financial risk exposure for Tokyo Precision Bearings?",
+    "answer": "Financial risk for Tokyo Precision Bearings is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[374] Draft SLA delay escalation email for SHP-1074 (Tokyo Precision Bearings).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1074 (Tokyo Precision Bearings)\nDear Operations Team,\nShipment SHP-1074 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[375] What component is delayed under shipment SHP-1075?",
+    "answer": "Shipment SHP-1075 contains critical supply chain components for Tokyo Precision Bearings. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[376] What is the status of shipment SHP-1076 from Tokyo Precision Bearings?",
+    "answer": "Shipment SHP-1076 from Tokyo Precision Bearings is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[377] How to resolve delay for vendor Tokyo Precision Bearings (SHP-1077)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Tokyo Precision Bearings to cover the inventory deficit for SHP-1077."
+  },
+  {
+    "question": "[378] What is the financial risk exposure for Tokyo Precision Bearings?",
+    "answer": "Financial risk for Tokyo Precision Bearings is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[379] Draft SLA delay escalation email for SHP-1079 (Tokyo Precision Bearings).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1079 (Tokyo Precision Bearings)\nDear Operations Team,\nShipment SHP-1079 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[380] What component is delayed under shipment SHP-1080?",
+    "answer": "Shipment SHP-1080 contains critical supply chain components for Tokyo Precision Bearings. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[381] What is the status of shipment SHP-1081 from Tokyo Precision Bearings?",
+    "answer": "Shipment SHP-1081 from Tokyo Precision Bearings is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[382] How to resolve delay for vendor Tokyo Precision Bearings (SHP-1082)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Tokyo Precision Bearings to cover the inventory deficit for SHP-1082."
+  },
+  {
+    "question": "[383] What is the financial risk exposure for Tokyo Precision Bearings?",
+    "answer": "Financial risk for Tokyo Precision Bearings is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[384] Draft SLA delay escalation email for SHP-1084 (Tokyo Precision Bearings).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1084 (Tokyo Precision Bearings)\nDear Operations Team,\nShipment SHP-1084 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[385] What component is delayed under shipment SHP-1085?",
+    "answer": "Shipment SHP-1085 contains critical supply chain components for Tokyo Precision Bearings. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[386] What is the status of shipment SHP-1086 from Tokyo Precision Bearings?",
+    "answer": "Shipment SHP-1086 from Tokyo Precision Bearings is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[387] How to resolve delay for vendor Tokyo Precision Bearings (SHP-1087)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Tokyo Precision Bearings to cover the inventory deficit for SHP-1087."
+  },
+  {
+    "question": "[388] What is the financial risk exposure for Tokyo Precision Bearings?",
+    "answer": "Financial risk for Tokyo Precision Bearings is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[389] Draft SLA delay escalation email for SHP-1089 (Tokyo Precision Bearings).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1089 (Tokyo Precision Bearings)\nDear Operations Team,\nShipment SHP-1089 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[390] What component is delayed under shipment SHP-1090?",
+    "answer": "Shipment SHP-1090 contains critical supply chain components for Tokyo Precision Bearings. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[391] What is the status of shipment SHP-1091 from Tokyo Precision Bearings?",
+    "answer": "Shipment SHP-1091 from Tokyo Precision Bearings is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[392] How to resolve delay for vendor Tokyo Precision Bearings (SHP-1092)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Tokyo Precision Bearings to cover the inventory deficit for SHP-1092."
+  },
+  {
+    "question": "[393] What is the financial risk exposure for Tokyo Precision Bearings?",
+    "answer": "Financial risk for Tokyo Precision Bearings is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[394] Draft SLA delay escalation email for SHP-1094 (Tokyo Precision Bearings).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1094 (Tokyo Precision Bearings)\nDear Operations Team,\nShipment SHP-1094 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[395] What component is delayed under shipment SHP-1095?",
+    "answer": "Shipment SHP-1095 contains critical supply chain components for Tokyo Precision Bearings. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[396] What is the status of shipment SHP-1096 from Tokyo Precision Bearings?",
+    "answer": "Shipment SHP-1096 from Tokyo Precision Bearings is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[397] How to resolve delay for vendor Tokyo Precision Bearings (SHP-1097)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Tokyo Precision Bearings to cover the inventory deficit for SHP-1097."
+  },
+  {
+    "question": "[398] What is the financial risk exposure for Tokyo Precision Bearings?",
+    "answer": "Financial risk for Tokyo Precision Bearings is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[399] Draft SLA delay escalation email for SHP-1099 (Tokyo Precision Bearings).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1099 (Tokyo Precision Bearings)\nDear Operations Team,\nShipment SHP-1099 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[400] What component is delayed under shipment SHP-1000?",
+    "answer": "Shipment SHP-1000 contains critical supply chain components for Tokyo Precision Bearings. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[401] What is the status of shipment SHP-1001 from Pacific Rare Earths?",
+    "answer": "Shipment SHP-1001 from Pacific Rare Earths is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[402] How to resolve delay for vendor Pacific Rare Earths (SHP-1002)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Pacific Rare Earths to cover the inventory deficit for SHP-1002."
+  },
+  {
+    "question": "[403] What is the financial risk exposure for Pacific Rare Earths?",
+    "answer": "Financial risk for Pacific Rare Earths is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[404] Draft SLA delay escalation email for SHP-1004 (Pacific Rare Earths).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1004 (Pacific Rare Earths)\nDear Operations Team,\nShipment SHP-1004 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[405] What component is delayed under shipment SHP-1005?",
+    "answer": "Shipment SHP-1005 contains critical supply chain components for Pacific Rare Earths. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[406] What is the status of shipment SHP-1006 from Pacific Rare Earths?",
+    "answer": "Shipment SHP-1006 from Pacific Rare Earths is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[407] How to resolve delay for vendor Pacific Rare Earths (SHP-1007)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Pacific Rare Earths to cover the inventory deficit for SHP-1007."
+  },
+  {
+    "question": "[408] What is the financial risk exposure for Pacific Rare Earths?",
+    "answer": "Financial risk for Pacific Rare Earths is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[409] Draft SLA delay escalation email for SHP-1009 (Pacific Rare Earths).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1009 (Pacific Rare Earths)\nDear Operations Team,\nShipment SHP-1009 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[410] What component is delayed under shipment SHP-1010?",
+    "answer": "Shipment SHP-1010 contains critical supply chain components for Pacific Rare Earths. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[411] What is the status of shipment SHP-1011 from Pacific Rare Earths?",
+    "answer": "Shipment SHP-1011 from Pacific Rare Earths is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[412] How to resolve delay for vendor Pacific Rare Earths (SHP-1012)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Pacific Rare Earths to cover the inventory deficit for SHP-1012."
+  },
+  {
+    "question": "[413] What is the financial risk exposure for Pacific Rare Earths?",
+    "answer": "Financial risk for Pacific Rare Earths is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[414] Draft SLA delay escalation email for SHP-1014 (Pacific Rare Earths).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1014 (Pacific Rare Earths)\nDear Operations Team,\nShipment SHP-1014 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[415] What component is delayed under shipment SHP-1015?",
+    "answer": "Shipment SHP-1015 contains critical supply chain components for Pacific Rare Earths. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[416] What is the status of shipment SHP-1016 from Pacific Rare Earths?",
+    "answer": "Shipment SHP-1016 from Pacific Rare Earths is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[417] How to resolve delay for vendor Pacific Rare Earths (SHP-1017)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Pacific Rare Earths to cover the inventory deficit for SHP-1017."
+  },
+  {
+    "question": "[418] What is the financial risk exposure for Pacific Rare Earths?",
+    "answer": "Financial risk for Pacific Rare Earths is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[419] Draft SLA delay escalation email for SHP-1019 (Pacific Rare Earths).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1019 (Pacific Rare Earths)\nDear Operations Team,\nShipment SHP-1019 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[420] What component is delayed under shipment SHP-1020?",
+    "answer": "Shipment SHP-1020 contains critical supply chain components for Pacific Rare Earths. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[421] What is the status of shipment SHP-1021 from Pacific Rare Earths?",
+    "answer": "Shipment SHP-1021 from Pacific Rare Earths is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[422] How to resolve delay for vendor Pacific Rare Earths (SHP-1022)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Pacific Rare Earths to cover the inventory deficit for SHP-1022."
+  },
+  {
+    "question": "[423] What is the financial risk exposure for Pacific Rare Earths?",
+    "answer": "Financial risk for Pacific Rare Earths is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[424] Draft SLA delay escalation email for SHP-1024 (Pacific Rare Earths).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1024 (Pacific Rare Earths)\nDear Operations Team,\nShipment SHP-1024 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[425] What component is delayed under shipment SHP-1025?",
+    "answer": "Shipment SHP-1025 contains critical supply chain components for Pacific Rare Earths. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[426] What is the status of shipment SHP-1026 from Pacific Rare Earths?",
+    "answer": "Shipment SHP-1026 from Pacific Rare Earths is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[427] How to resolve delay for vendor Pacific Rare Earths (SHP-1027)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Pacific Rare Earths to cover the inventory deficit for SHP-1027."
+  },
+  {
+    "question": "[428] What is the financial risk exposure for Pacific Rare Earths?",
+    "answer": "Financial risk for Pacific Rare Earths is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[429] Draft SLA delay escalation email for SHP-1029 (Pacific Rare Earths).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1029 (Pacific Rare Earths)\nDear Operations Team,\nShipment SHP-1029 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[430] What component is delayed under shipment SHP-1030?",
+    "answer": "Shipment SHP-1030 contains critical supply chain components for Pacific Rare Earths. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[431] What is the status of shipment SHP-1031 from Pacific Rare Earths?",
+    "answer": "Shipment SHP-1031 from Pacific Rare Earths is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[432] How to resolve delay for vendor Pacific Rare Earths (SHP-1032)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Pacific Rare Earths to cover the inventory deficit for SHP-1032."
+  },
+  {
+    "question": "[433] What is the financial risk exposure for Pacific Rare Earths?",
+    "answer": "Financial risk for Pacific Rare Earths is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[434] Draft SLA delay escalation email for SHP-1034 (Pacific Rare Earths).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1034 (Pacific Rare Earths)\nDear Operations Team,\nShipment SHP-1034 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[435] What component is delayed under shipment SHP-1035?",
+    "answer": "Shipment SHP-1035 contains critical supply chain components for Pacific Rare Earths. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[436] What is the status of shipment SHP-1036 from Pacific Rare Earths?",
+    "answer": "Shipment SHP-1036 from Pacific Rare Earths is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[437] How to resolve delay for vendor Pacific Rare Earths (SHP-1037)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Pacific Rare Earths to cover the inventory deficit for SHP-1037."
+  },
+  {
+    "question": "[438] What is the financial risk exposure for Pacific Rare Earths?",
+    "answer": "Financial risk for Pacific Rare Earths is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[439] Draft SLA delay escalation email for SHP-1039 (Pacific Rare Earths).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1039 (Pacific Rare Earths)\nDear Operations Team,\nShipment SHP-1039 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[440] What component is delayed under shipment SHP-1040?",
+    "answer": "Shipment SHP-1040 contains critical supply chain components for Pacific Rare Earths. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[441] What is the status of shipment SHP-1041 from Pacific Rare Earths?",
+    "answer": "Shipment SHP-1041 from Pacific Rare Earths is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[442] How to resolve delay for vendor Pacific Rare Earths (SHP-1042)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Pacific Rare Earths to cover the inventory deficit for SHP-1042."
+  },
+  {
+    "question": "[443] What is the financial risk exposure for Pacific Rare Earths?",
+    "answer": "Financial risk for Pacific Rare Earths is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[444] Draft SLA delay escalation email for SHP-1044 (Pacific Rare Earths).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1044 (Pacific Rare Earths)\nDear Operations Team,\nShipment SHP-1044 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[445] What component is delayed under shipment SHP-1045?",
+    "answer": "Shipment SHP-1045 contains critical supply chain components for Pacific Rare Earths. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[446] What is the status of shipment SHP-1046 from Pacific Rare Earths?",
+    "answer": "Shipment SHP-1046 from Pacific Rare Earths is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[447] How to resolve delay for vendor Pacific Rare Earths (SHP-1047)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Pacific Rare Earths to cover the inventory deficit for SHP-1047."
+  },
+  {
+    "question": "[448] What is the financial risk exposure for Pacific Rare Earths?",
+    "answer": "Financial risk for Pacific Rare Earths is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[449] Draft SLA delay escalation email for SHP-1049 (Pacific Rare Earths).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1049 (Pacific Rare Earths)\nDear Operations Team,\nShipment SHP-1049 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[450] What component is delayed under shipment SHP-1050?",
+    "answer": "Shipment SHP-1050 contains critical supply chain components for Pacific Rare Earths. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[451] What is the status of shipment SHP-1051 from Dresden Polymer Solutions?",
+    "answer": "Shipment SHP-1051 from Dresden Polymer Solutions is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[452] How to resolve delay for vendor Dresden Polymer Solutions (SHP-1052)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Dresden Polymer Solutions to cover the inventory deficit for SHP-1052."
+  },
+  {
+    "question": "[453] What is the financial risk exposure for Dresden Polymer Solutions?",
+    "answer": "Financial risk for Dresden Polymer Solutions is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[454] Draft SLA delay escalation email for SHP-1054 (Dresden Polymer Solutions).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1054 (Dresden Polymer Solutions)\nDear Operations Team,\nShipment SHP-1054 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[455] What component is delayed under shipment SHP-1055?",
+    "answer": "Shipment SHP-1055 contains critical supply chain components for Dresden Polymer Solutions. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[456] What is the status of shipment SHP-1056 from Dresden Polymer Solutions?",
+    "answer": "Shipment SHP-1056 from Dresden Polymer Solutions is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[457] How to resolve delay for vendor Dresden Polymer Solutions (SHP-1057)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Dresden Polymer Solutions to cover the inventory deficit for SHP-1057."
+  },
+  {
+    "question": "[458] What is the financial risk exposure for Dresden Polymer Solutions?",
+    "answer": "Financial risk for Dresden Polymer Solutions is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[459] Draft SLA delay escalation email for SHP-1059 (Dresden Polymer Solutions).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1059 (Dresden Polymer Solutions)\nDear Operations Team,\nShipment SHP-1059 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[460] What component is delayed under shipment SHP-1060?",
+    "answer": "Shipment SHP-1060 contains critical supply chain components for Dresden Polymer Solutions. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[461] What is the status of shipment SHP-1061 from Dresden Polymer Solutions?",
+    "answer": "Shipment SHP-1061 from Dresden Polymer Solutions is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[462] How to resolve delay for vendor Dresden Polymer Solutions (SHP-1062)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Dresden Polymer Solutions to cover the inventory deficit for SHP-1062."
+  },
+  {
+    "question": "[463] What is the financial risk exposure for Dresden Polymer Solutions?",
+    "answer": "Financial risk for Dresden Polymer Solutions is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[464] Draft SLA delay escalation email for SHP-1064 (Dresden Polymer Solutions).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1064 (Dresden Polymer Solutions)\nDear Operations Team,\nShipment SHP-1064 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[465] What component is delayed under shipment SHP-1065?",
+    "answer": "Shipment SHP-1065 contains critical supply chain components for Dresden Polymer Solutions. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[466] What is the status of shipment SHP-1066 from Dresden Polymer Solutions?",
+    "answer": "Shipment SHP-1066 from Dresden Polymer Solutions is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[467] How to resolve delay for vendor Dresden Polymer Solutions (SHP-1067)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Dresden Polymer Solutions to cover the inventory deficit for SHP-1067."
+  },
+  {
+    "question": "[468] What is the financial risk exposure for Dresden Polymer Solutions?",
+    "answer": "Financial risk for Dresden Polymer Solutions is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[469] Draft SLA delay escalation email for SHP-1069 (Dresden Polymer Solutions).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1069 (Dresden Polymer Solutions)\nDear Operations Team,\nShipment SHP-1069 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[470] What component is delayed under shipment SHP-1070?",
+    "answer": "Shipment SHP-1070 contains critical supply chain components for Dresden Polymer Solutions. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[471] What is the status of shipment SHP-1071 from Dresden Polymer Solutions?",
+    "answer": "Shipment SHP-1071 from Dresden Polymer Solutions is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[472] How to resolve delay for vendor Dresden Polymer Solutions (SHP-1072)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Dresden Polymer Solutions to cover the inventory deficit for SHP-1072."
+  },
+  {
+    "question": "[473] What is the financial risk exposure for Dresden Polymer Solutions?",
+    "answer": "Financial risk for Dresden Polymer Solutions is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[474] Draft SLA delay escalation email for SHP-1074 (Dresden Polymer Solutions).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1074 (Dresden Polymer Solutions)\nDear Operations Team,\nShipment SHP-1074 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[475] What component is delayed under shipment SHP-1075?",
+    "answer": "Shipment SHP-1075 contains critical supply chain components for Dresden Polymer Solutions. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[476] What is the status of shipment SHP-1076 from Dresden Polymer Solutions?",
+    "answer": "Shipment SHP-1076 from Dresden Polymer Solutions is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[477] How to resolve delay for vendor Dresden Polymer Solutions (SHP-1077)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Dresden Polymer Solutions to cover the inventory deficit for SHP-1077."
+  },
+  {
+    "question": "[478] What is the financial risk exposure for Dresden Polymer Solutions?",
+    "answer": "Financial risk for Dresden Polymer Solutions is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[479] Draft SLA delay escalation email for SHP-1079 (Dresden Polymer Solutions).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1079 (Dresden Polymer Solutions)\nDear Operations Team,\nShipment SHP-1079 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[480] What component is delayed under shipment SHP-1080?",
+    "answer": "Shipment SHP-1080 contains critical supply chain components for Dresden Polymer Solutions. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[481] What is the status of shipment SHP-1081 from Dresden Polymer Solutions?",
+    "answer": "Shipment SHP-1081 from Dresden Polymer Solutions is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[482] How to resolve delay for vendor Dresden Polymer Solutions (SHP-1082)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Dresden Polymer Solutions to cover the inventory deficit for SHP-1082."
+  },
+  {
+    "question": "[483] What is the financial risk exposure for Dresden Polymer Solutions?",
+    "answer": "Financial risk for Dresden Polymer Solutions is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[484] Draft SLA delay escalation email for SHP-1084 (Dresden Polymer Solutions).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1084 (Dresden Polymer Solutions)\nDear Operations Team,\nShipment SHP-1084 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[485] What component is delayed under shipment SHP-1085?",
+    "answer": "Shipment SHP-1085 contains critical supply chain components for Dresden Polymer Solutions. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[486] What is the status of shipment SHP-1086 from Dresden Polymer Solutions?",
+    "answer": "Shipment SHP-1086 from Dresden Polymer Solutions is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[487] How to resolve delay for vendor Dresden Polymer Solutions (SHP-1087)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Dresden Polymer Solutions to cover the inventory deficit for SHP-1087."
+  },
+  {
+    "question": "[488] What is the financial risk exposure for Dresden Polymer Solutions?",
+    "answer": "Financial risk for Dresden Polymer Solutions is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[489] Draft SLA delay escalation email for SHP-1089 (Dresden Polymer Solutions).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1089 (Dresden Polymer Solutions)\nDear Operations Team,\nShipment SHP-1089 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[490] What component is delayed under shipment SHP-1090?",
+    "answer": "Shipment SHP-1090 contains critical supply chain components for Dresden Polymer Solutions. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[491] What is the status of shipment SHP-1091 from Dresden Polymer Solutions?",
+    "answer": "Shipment SHP-1091 from Dresden Polymer Solutions is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[492] How to resolve delay for vendor Dresden Polymer Solutions (SHP-1092)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Dresden Polymer Solutions to cover the inventory deficit for SHP-1092."
+  },
+  {
+    "question": "[493] What is the financial risk exposure for Dresden Polymer Solutions?",
+    "answer": "Financial risk for Dresden Polymer Solutions is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[494] Draft SLA delay escalation email for SHP-1094 (Dresden Polymer Solutions).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1094 (Dresden Polymer Solutions)\nDear Operations Team,\nShipment SHP-1094 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[495] What component is delayed under shipment SHP-1095?",
+    "answer": "Shipment SHP-1095 contains critical supply chain components for Dresden Polymer Solutions. Buffer inventory covers less than 14 days."
+  },
+  {
+    "question": "[496] What is the status of shipment SHP-1096 from Dresden Polymer Solutions?",
+    "answer": "Shipment SHP-1096 from Dresden Polymer Solutions is currently experiencing SLA delays due to maritime route bottlenecks. Cape detour authorized."
+  },
+  {
+    "question": "[497] How to resolve delay for vendor Dresden Polymer Solutions (SHP-1097)?",
+    "answer": "Issue an emergency buffer PO and authorize Cape detour for Dresden Polymer Solutions to cover the inventory deficit for SHP-1097."
+  },
+  {
+    "question": "[498] What is the financial risk exposure for Dresden Polymer Solutions?",
+    "answer": "Financial risk for Dresden Polymer Solutions is flagged high due to potential assembly line shutdown if replacement stock is delayed past 14 days."
+  },
+  {
+    "question": "[499] Draft SLA delay escalation email for SHP-1099 (Dresden Polymer Solutions).",
+    "answer": "Subject: URGENT: SLA Escalation - Shipment SHP-1099 (Dresden Polymer Solutions)\nDear Operations Team,\nShipment SHP-1099 is delayed. Please confirm Cape detour and buffer PO status immediately."
+  },
+  {
+    "question": "[500] What component is delayed under shipment SHP-1000?",
+    "answer": "Shipment SHP-1000 contains critical supply chain components for Dresden Polymer Solutions. Buffer inventory covers less than 14 days."
+  }
+]
